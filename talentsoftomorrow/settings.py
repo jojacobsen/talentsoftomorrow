@@ -11,6 +11,13 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
+import datetime
+import djcelery
+from datetime import timedelta
+
+djcelery.setup_loader()
+BROKER_URL = 'amqp://rabbit:rabbit331@localhost:5672/stats'
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,7 +27,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ')kdw7cyx(%u5(8(w@501lr2tg4r8&ihm0m96k$6b3*2d%-!pu('
+SECRET_KEY = '!-jf7r%F!§fdsaDdA!!eâsdfW2dsadfT"$§%GEW'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -38,9 +45,31 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework.authtoken',
+    'rest_framework',
+    'kombu.transport.django',
+    'djcelery',
+    'opbeat.contrib.django',
+    'django.contrib.humanize',
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+    ),
+    'DEFAULT_PARSER_CLASSES': (
+        'rest_framework.parsers.JSONParser',
+    ),
+    'PAGE_SIZE': 100
+}
+
 MIDDLEWARE_CLASSES = [
+    'opbeat.contrib.django.middleware.OpbeatAPMMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -52,6 +81,8 @@ MIDDLEWARE_CLASSES = [
 ]
 
 ROOT_URLCONF = 'talentsoftomorrow.urls'
+
+LOGIN_REDIRECT_URL = "/"
 
 TEMPLATES = [
     {
@@ -68,6 +99,37 @@ TEMPLATES = [
         },
     },
 ]
+
+JWT_AUTH = {
+    'JWT_ENCODE_HANDLER':
+    'rest_framework_jwt.utils.jwt_encode_handler',
+
+    'JWT_DECODE_HANDLER':
+    'rest_framework_jwt.utils.jwt_decode_handler',
+
+    'JWT_PAYLOAD_HANDLER':
+    'rest_framework_jwt.utils.jwt_payload_handler',
+
+    'JWT_PAYLOAD_GET_USER_ID_HANDLER':
+    'rest_framework_jwt.utils.jwt_get_user_id_from_payload_handler',
+
+    'JWT_RESPONSE_PAYLOAD_HANDLER':
+    'rest_framework_jwt.utils.jwt_response_payload_handler',
+
+    'JWT_SECRET_KEY': SECRET_KEY,
+    'JWT_ALGORITHM': 'HS256',
+    'JWT_VERIFY': True,
+    'JWT_VERIFY_EXPIRATION': True,
+    'JWT_LEEWAY': 0,
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=300),
+    'JWT_AUDIENCE': None,
+    'JWT_ISSUER': None,
+
+    'JWT_ALLOW_REFRESH': False,
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
+
+    'JWT_AUTH_HEADER_PREFIX': 'JWT',
+}
 
 WSGI_APPLICATION = 'talentsoftomorrow.wsgi.application'
 
@@ -105,6 +167,14 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+SOUTH_MIGRATION_MODULES = {
+    'oauth2_provider': 'oauth2_provider.south_migrations',
+}
+
+MIGRATION_MODULES = {
+    'oauth2_provider': 'dashboard.oauth2_provider_migrations',
+}
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
 
@@ -118,8 +188,48 @@ USE_L10N = True
 
 USE_TZ = True
 
+EVENT_TRIGGER = 0.2
+
+# CELERY SETTINGS
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'UTC'
+CELERY_IMPORTS = ('dashboard.tasks',)
+CELERY_ALWAYS_EAGER = False
+
+CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+
+# Email Settings
+# Host for sending e-mail.
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'hamloversclub@googlemail.com'
+DEFAULT_FROM_EMAIL = 'hamloversclub@googlemail.com'
+SERVER_EMAIL = 'hamloversclub@googlemail.com'
+EMAIL_HOST_PASSWORD = 'Fisting Ham'
+
+"""
+# Host for sending e-mail.
+EMAIL_HOST = 'localhost'
+
+# Port for sending e-mail.
+EMAIL_PORT = 1025
+
+# Optional SMTP authentication information for EMAIL_HOST.
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+EMAIL_USE_TLS = False
+"""
+
+OPBEAT = {
+    'ORGANIZATION_ID': 'b34eb511d66346c284fab51acc672101',
+    'APP_ID': '96406efca0',
+    'SECRET_TOKEN': '5f6f7841a0d59e4a6062e1fb53ea0f446d3886aa',
+}
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.9/howto/static-files/
-
 STATIC_URL = '/static/'
+STATIC_ROOT = '/dashboard/static'
+
