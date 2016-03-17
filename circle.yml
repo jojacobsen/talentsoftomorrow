@@ -1,0 +1,12 @@
+---
+test:
+  override:
+    - coverage run -m py.test --ds=talentsoftomorrow.testing_circleci --nomigrations dashboard/
+  post:
+    - coverage html -d $CIRCLE_ARTIFACTS
+
+machine:
+  python:
+    version: 3.4.2
+  environment:
+    DJANGO_SETTINGS_MODULE: talentsoftomorrow.settings
