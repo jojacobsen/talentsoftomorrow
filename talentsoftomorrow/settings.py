@@ -121,7 +121,7 @@ JWT_AUTH = {
     'JWT_VERIFY': True,
     'JWT_VERIFY_EXPIRATION': True,
     'JWT_LEEWAY': 0,
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=300),
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=600),
     'JWT_AUDIENCE': None,
     'JWT_ISSUER': None,
 
@@ -224,9 +224,9 @@ EMAIL_USE_TLS = False
 """
 
 OPBEAT = {
-    'ORGANIZATION_ID': 'b34eb511d66346c284fab51acc672101',
-    'APP_ID': '96406efca0',
-    'SECRET_TOKEN': '5f6f7841a0d59e4a6062e1fb53ea0f446d3886aa',
+    'ORGANIZATION_ID': 'fab3fd138af14d0e8f2b4ad7efcd22ce',
+    'APP_ID': '5ea801dc6e',
+    'SECRET_TOKEN': '6799043939c43b57c3721338afd5b808fb88ec0a',
 }
 
 # Static files (CSS, JavaScript, Images)
