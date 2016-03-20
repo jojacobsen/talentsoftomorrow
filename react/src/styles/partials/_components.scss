@@ -1,0 +1,22 @@
+%btn {
+  background-color: $brand-light;
+  display: inline-block;
+  color: #fff;
+  padding: 10px 20px; 
+  font-weight: bold;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.btn-primary {
+  @extend %btn;
+
+  background-color: $brand-primary;
+  color: #000;
+}
+
+.btn-secondary {
+  @extend %btn;
+
+  background-color: $brand-secondary;
+}

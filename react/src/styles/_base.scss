@@ -10,3 +10,71 @@ For example:
 @import './variables/components';
 @import './themes/default';
 */
+
+$brand-primary: #469648; 
+$brand-secondary: #F5CB5C;
+$brand-light: #CFDBD5;
+$brand-lighter: #E8EDDF;
+$brand-darker: #242423;
+$brand-dark: #333333;
+
+$break-sm: 768px;
+$break-md: 992px;
+$break-lg: 1280px;
+
+$font-primary: "proxima-nova", sans-serif;
+
+
+// Some best-practice CSS that's useful for most apps
+// Just remove them if they're not what you want
+html {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;    
+  font-size: 1em;
+  line-height: 1;
+  font-family: $font-primary;
+}
+
+body {
+  font-family: $font-primary;
+}
+
+h1 {
+  font-weight: 100;
+  font-size: 3em;
+  text-transform: uppercase;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+} 
+
+a {
+  &,
+  &:focus,
+  &:visited {
+    color: $brand-primary;    
+    text-decoration: none;
+  }
+
+  &:hover,
+  &:active {
+    color: $brand-primary;
+    text-decoration: none;
+  }
+}
+
+.icon-fw {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+
