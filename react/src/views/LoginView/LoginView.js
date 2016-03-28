@@ -18,6 +18,7 @@ export class Login extends React.Component {
   constructor () {
     super()
     this.storeFormData = this.storeFormData.bind(this)
+    this.buttonText = this.buttonText.bind(this)
   }
 
   storeFormData (event) {
@@ -29,6 +30,14 @@ export class Login extends React.Component {
     }
 
     this.props.onClick(formData)
+  }
+
+  buttonText () {
+    if(this.props.isRequesting) {
+      return 'Loading...'
+    } else {
+      return 'Login'
+    }
   }
 
   render () {
@@ -52,9 +61,7 @@ export class Login extends React.Component {
               placeholder='password'
               className={`form-input ${classes['form-element']}`} />
 
-            <button type='submit' className={`btn-primary ${classes['form-element']}`}>
-              Submit
-            </button>
+            <FeedbackButton buttonText={this.buttonText()} />
           </form>
 
           <ul>
@@ -73,7 +80,8 @@ const mapStateToProps = (state) => {
   return {
     username: state.auth.userInfo.username,
     errors: state.auth.userInfo.errors,
-    loggedIn: state.auth.userInfo.loggedIn
+    loggedIn: state.auth.userInfo.loggedIn,
+    isRequesting: state.auth.userInfo.isRequesting
   }
 }
 

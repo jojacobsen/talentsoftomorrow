@@ -103,10 +103,6 @@ export function logout () {
   }
 }
 
-/* ================= */
-/* ===== Utils ===== */
-/* ================= */
-
 function refreshToken (formData) {
   return function (dispatch) {
     refreshTimer = setTimeout(function () {

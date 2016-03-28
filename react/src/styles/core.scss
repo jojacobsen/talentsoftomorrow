@@ -13,6 +13,7 @@ $iconic-font-path: '../static/fonts/' !default;
   @import 'vendor/open-iconic';
   @import 'vendor/helper';
   @import 'base';
+  @import 'partials/helpers';
   @import 'partials/elements';
   @import 'partials/chrome';
 }
