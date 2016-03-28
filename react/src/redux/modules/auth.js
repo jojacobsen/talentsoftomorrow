@@ -9,7 +9,7 @@ let initialState = {
   loggedIn: false,
   isRequesting: false
 }
-let tokenUpdateRate = 5000
+let tokenUpdateRate = 500000
 let refreshTimer
 
 /* ================= */
