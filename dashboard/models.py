@@ -22,6 +22,7 @@ class Coach(models.Model):
 class Player(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     club = models.ForeignKey(Club, on_delete=models.CASCADE)
+    player_id = models.CharField(max_length=100, unique=True)
     coach = models.ManyToManyField(Coach, blank=True)
     date_of_birth = models.DateField(blank=True)
     GENDER_CHOICES = (
@@ -49,4 +50,6 @@ class Performance(models.Model):
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     measurement = models.ForeignKey(Measurement, on_delete=models.CASCADE)
     value = models.DecimalField(max_digits=16, decimal_places=10)
-    date = models.DateField(auto_now_add=True)
+    date = models.DateField()
+    description = models.CharField(max_length=2000, blank=True)
+

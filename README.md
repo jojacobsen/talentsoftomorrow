@@ -101,15 +101,36 @@ $ curl -X POST -H "Content-Type: application/json" -d '{"token":"<EXISTING_TOKEN
 ## 5. Talents of Tomorrow Web Application
 
 
-### 5.1 Endpoint
+### 5.1 Endpoints
 
-__Method:__ POST
+### 5.1.1 List of players
+__Method:__ GET
 
-__URL:__ //
+__URL:__ /player/
 
 __Headers:__
-* Authorization: Token ...
+* Authorization: JWT ...
 * Content-type: application/json
+
+
+__Success response:__
+
+| Status code | Body    | Explanation |
+|:------------|:--------|:------------|
+| 201         | _JSON_ | Created     |
+
+__Error responses:__
+
+TBD
+
+| Status code | Body               | Explanation                                       |
+|:------------|:-------------------|:--------------------------------------------------|
+| 40x         | `{"error": "..."}` | Client Error - Don't repeat without modifications |
+| 50x         | `{"error": "..."}` | Server Error                                      |
+
+
+### 5.1.2 Add new player
+
 
 __Data:__
 
@@ -124,38 +145,27 @@ __Data:__
 ```
 
 
-__Success response:__
+### 5.1.3 List of performance
 
-| Status code | Body    | Explanation |
-|:------------|:--------|:------------|
-| 201         | _Empty_ | Created     |
+### 5.1.4 Add new performace
 
-__Error responses:__
-
-TBD
-
-| Status code | Body               | Explanation                                       |
-|:------------|:-------------------|:--------------------------------------------------|
-| 40x         | `{"error": "..."}` | Client Error - Don't repeat without modifications |
-| 50x         | `{"error": "..."}` | Server Error                                      |
-
-### 3.2 Data
+### 5.2 Data
 
 TBD
 
 
-### 3.3 Implementation
+### 5.3 Implementation
 
 ##### Edge cases
 
-## 3. Coach view
+## 6. Coach view
 
 TBD
 
-## 4. Club view
+## 7. Club view
 
 TBD
 
-## 5. Player view
+## 8. Player view
 
 TBD
