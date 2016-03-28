@@ -1,6 +1,6 @@
 import React from 'react'
 
-describe('(View) Talents', () => {
+describe('(View) Players', () => {
   it('should exist', () => {
 
   })

@@ -9,7 +9,8 @@ type Props = {
   onClick: Function,
   username: String,
   errors: Array,
-  loggedIn: Boolean
+  loggedIn: Boolean,
+  isRequesting: Boolean
 };
 
 export class Login extends React.Component {
@@ -33,7 +34,7 @@ export class Login extends React.Component {
   }
 
   buttonText () {
-    if(this.props.isRequesting) {
+    if (this.props.isRequesting) {
       return 'Loading...'
     } else {
       return 'Login'
@@ -76,7 +77,6 @@ export class Login extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state.auth.userInfo.errors)
   return {
     username: state.auth.userInfo.username,
     errors: state.auth.userInfo.errors,

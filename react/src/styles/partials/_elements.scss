@@ -1,3 +1,5 @@
+$list-border-width: 2px;
+
 %btn {
   background-color: $brand-light;
   display: inline-block;
@@ -38,5 +40,20 @@
 
   &:-webkit-autofill {
       -webkit-box-shadow: 0 0 0px 1000px white inset;
+  }
+}
+
+.list {
+  padding: 0;
+}
+
+.list-item {
+  list-style: none;
+  border: $list-border-width solid $brand-light;
+  border-bottom: none;
+  padding: 15px;
+
+  &:last-child {
+    border-bottom: $list-border-width solid $brand-light;
   }
 }
