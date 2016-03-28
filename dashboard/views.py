@@ -1,4 +1,5 @@
-from dashboard.serializers import PerformanceSerializer
+from dashboard.models import Performance, Player
+from dashboard.serializers import PerformanceSerializer, PlayerSerializer
 
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.renderers import JSONRenderer
@@ -23,6 +24,25 @@ class JSONResponse(HttpResponse):
         super(JSONResponse, self).__init__(content, **kwargs)
 
 
+class PlayerList(generics.ListCreateAPIView):
+    permission_classes = (IsAuthenticated,)
+
+    def list(self, request):
+        group = request.user.groups.values_list('name', flat=True)
+
+        if 'Club' in group:
+            queryset = Player.objects.filter(club__user=self.request.user)
+        elif 'Coach' in group:
+            queryset = Player.objects.filter(coach__user=self.request.user)
+        elif 'Player' in group:
+            return JSONResponse('Players can not see players list.', status=403)
+        else:
+            return JSONResponse('User group not selected.', status=400)
+
+        serializer = PlayerSerializer(queryset, many=True, context={'request': request})
+        return JSONResponse(serializer.data)
+
+
 class PerformanceList(generics.ListCreateAPIView):
     permission_classes = (IsAuthenticated,)
 
@@ -31,11 +51,26 @@ class PerformanceList(generics.ListCreateAPIView):
 
     def create(self, request, format=None):
         data = JSONParser().parse(request)
-        serializer = PerformanceSerializer(data=data, many=True)
+        serializer = PerformanceSerializer(data=data, many=True, context={'request': request})
         if not serializer.is_valid():
             # Response error message if JSON Format is incorrect
             return JSONResponse(serializer.errors, status=400)
         serializer.save()
 
         return HttpResponse(status=201)
+
+    def list(self, request):
+        group = request.user.groups.values_list('name', flat=True)
+
+        if 'Player' in group:
+            queryset = Performance.objects.filter(player__user=self.request.user)
+        elif 'Coach' in group:
+            queryset = Performance.objects.filter(player__coach__user=self.request.user)
+        elif 'Club' in group:
+            queryset = Performance.objects.filter(player__club__user=self.request.user)
+        else:
+            return JSONResponse('User group not selected.', status=400)
+
+        serializer = PerformanceSerializer(queryset, many=True)
+        return JSONResponse(serializer.data)
 
