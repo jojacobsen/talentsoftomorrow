@@ -1,18 +1,25 @@
 .content-wrapper {
-  width: 80%;  
-  margin-left: 20%;
-  padding: 0 35px;
+  padding: 0 25px;
 }
 
 .navigation {
-  top: 0;
-  width: 20%;
   position: fixed;
-  height: 100%;
   background-color: $brand-darker;
+  bottom: 0;
+  width: 100%;
+
+}
+
+.nav-logout {
+  position: absolute;
+  left: 15px;
+  top: 15px;
+  display: block;
+  cursor: pointer;
 }
 
 .nav-user {
+  display: none;
   text-align: center;
   background-color: $brand-light;
   padding: 25px 0;
@@ -24,9 +31,10 @@
   height: 200px;
   border-radius: 100px;
   overflow: hidden;
+  max-width: 100%;
 
   img {
-    width: 100%;  
+    width: 100%;
   }
 }
 
@@ -35,47 +43,88 @@
   margin-top: 15px;
   text-transform: uppercase;
   font-weight: 100;
-} 
+}
 
 .nav-item {
-  width: 100%;
-  text-align: left;
-  color: #fff;
-  padding: 25px 25px 25px 70px;
+  width: 20%;
+  text-align: center;
+  display: inline-block;
+  float: left;
+  padding: 10px;
   text-transform: uppercase;
   font-weight: 400;
-  letter-spacing: 0.05em;
-  font-size: 1em;
-  position: relative;
-  display: inline-block;
 
   &.active {
-    background-color: $brand-secondary;    
+    background-color: $brand-secondary;
     color: $brand-darker;
   }
 
   &,
   &:focus,
   &:visited {
-    color: #fff;    
+    color: #fff;
     text-decoration: none;
 
     &.active {
-      color: $brand-darker;      
-    }    
+      color: $brand-darker;
+    }
   }
 
   &:hover,
   &:active {
     color: #fff !important;
-    background-color: $brand-primary;  
+    background-color: $brand-primary;
   }
 }
 
 .nav-item-icon {
-  position: absolute;
-  margin-left: -30px;
-  margin-top: -1px;
-  font-size: 1.1em;
+  font-size: 1.5em;
+  display: block;
 }
 
+.nav-item-text {
+  font-size: 0.4em;
+  margin-top: 5px;
+  display: block;
+}
+
+
+@media (min-width: $break-md) {
+  .content-wrapper {
+    width: 80%;
+    margin-left: 20%;
+    padding: 0 35px;
+  }
+
+  .navigation {
+    top: 0;
+    width: 20%;
+    height: 100%;
+  }
+
+  .nav-user {
+    display: block;
+  }
+
+  .nav-item {
+    width: 100%;
+    text-align: left;
+    padding: 25px 25px 25px 70px;
+    letter-spacing: 0.05em;
+    font-size: 1em;
+    position: relative;
+  }
+
+  .nav-item-icon {
+    position: absolute;
+    margin-left: -30px;
+    margin-top: -1px;
+    font-size: 1.1em;
+  }
+
+  .nav-item-text {
+    font-size: 1em;
+    margin-top: 0;
+  }
+
+}

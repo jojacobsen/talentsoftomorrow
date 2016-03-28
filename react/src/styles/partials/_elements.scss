@@ -1,0 +1,42 @@
+%btn {
+  background-color: $brand-light;
+  display: inline-block;
+  color: #fff;
+  padding: 15px 25px;
+  font-weight: 300;
+  text-align: center;
+  text-transform: uppercase;
+  border: none;
+  font-size: 1.4em;
+  max-width: 100%;
+
+  &:hover {
+    background-color: $brand-dark;
+  }
+}
+
+.btn-primary {
+  @extend %btn;
+
+  background-color: $brand-primary;
+}
+
+.btn-secondary {
+  @extend %btn;
+
+  background-color: $brand-secondary;
+}
+
+.form-input {
+  border: 1px solid $gray-light;
+  padding: 10px;
+  font-size: 1.6em;
+  margin-bottom: 10px;
+  font-weight: 300;
+  background-color: #fff;
+  max-width: 100%;
+
+  &:-webkit-autofill {
+      -webkit-box-shadow: 0 0 0px 1000px white inset;
+  }
+}
