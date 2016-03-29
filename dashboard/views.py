@@ -1,13 +1,12 @@
 from dashboard.models import Performance, Player
-from dashboard.serializers import PerformanceSerializer, PlayerSerializer
+from dashboard.serializers import PerformanceSerializer, PlayersSerializer, PlayerSerializer
 
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
-from rest_framework import generics
+from rest_framework import generics, exceptions
 from django.views import generic
 from django.http import HttpResponse
-
 
 
 class IndexView(generic.TemplateView):
@@ -24,7 +23,7 @@ class JSONResponse(HttpResponse):
         super(JSONResponse, self).__init__(content, **kwargs)
 
 
-class PlayerList(generics.ListCreateAPIView):
+class PlayerListView(generics.ListCreateAPIView):
     permission_classes = (IsAuthenticated,)
 
     def list(self, request):
@@ -39,11 +38,42 @@ class PlayerList(generics.ListCreateAPIView):
         else:
             return JSONResponse('User group not selected.', status=400)
 
-        serializer = PlayerSerializer(queryset, many=True, context={'request': request})
+        serializer = PlayersSerializer(queryset, many=True, context={'request': request})
         return JSONResponse(serializer.data)
 
 
-class PerformanceList(generics.ListCreateAPIView):
+class PlayerDetailView(generics.GenericAPIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, pk=None):
+        group = request.user.groups.values_list('name', flat=True)
+
+        if 'Club' in group:
+            try:
+                queryset = Player.objects.get(pk=pk, club__user=self.request.user)
+            except Player.DoesNotExist:
+                raise exceptions.PermissionDenied('User has no permission to access user data of player.')
+
+        elif 'Coach' in group:
+            try:
+                queryset = Player.objects.get(pk=pk, coach__user=self.request.user)
+            except Player.DoesNotExist:
+                raise exceptions.PermissionDenied('User has no permission to access user data of player.')
+
+        elif 'Player' in group:
+            try:
+                queryset = Player.objects.get(pk=pk, user=self.request.user)
+            except Player.DoesNotExist:
+                raise exceptions.PermissionDenied('User has no permission to access user data of player.')
+
+        else:
+            return JSONResponse('User group not selected.', status=400)
+
+        serializer = PlayerSerializer(queryset)
+        return JSONResponse(serializer.data)
+
+
+class PerformanceListView(generics.ListCreateAPIView):
     permission_classes = (IsAuthenticated,)
 
     # Parse JSON

@@ -1,3 +1,5 @@
+[![Circle CI](https://circleci.com/gh/jojacobsen/talentsoftomorrow.svg?style=svg&circle-token=8f459840b266a7a5aa538e429c3221f2977b9b56)](https://circleci.com/gh/jojacobsen/talentsoftomorrow)
+
 # Talents of Tomorrow Web Application (Developer documentation)
 
 ## 1. Overview
@@ -106,7 +108,7 @@ $ curl -X POST -H "Content-Type: application/json" -d '{"token":"<EXISTING_TOKEN
 ### 5.1.1 List of players
 __Method:__ GET
 
-__URL:__ /player/
+__URL:__ /players/
 
 __Headers:__
 * Authorization: JWT ...
