@@ -25,12 +25,21 @@ class CoachSerializer(serializers.ModelSerializer):
         fields = ('club', 'user')
 
 
-class PlayerSerializer(serializers.ModelSerializer):
+class PlayersSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
 
     class Meta:
         model = Player
         fields = ('user', 'player_id', 'gender', 'date_of_birth')
+
+
+class PlayerSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+    coach = CoachSerializer(read_only=True, many=True)
+
+    class Meta:
+        model = Player
+        fields = ('user', 'player_id', 'gender', 'date_of_birth', 'coach')
 
 
 class PerformanceSerializer(serializers.ModelSerializer):

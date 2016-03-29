@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'djcelery',
     'opbeat.contrib.django',
     'django.contrib.humanize',
+    'corsheaders',
 ]
 
 REST_FRAMEWORK = {
@@ -70,6 +71,7 @@ REST_FRAMEWORK = {
 
 MIDDLEWARE_CLASSES = [
     'opbeat.contrib.django.middleware.OpbeatAPMMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -205,10 +207,10 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'hamloversclub@googlemail.com'
-DEFAULT_FROM_EMAIL = 'hamloversclub@googlemail.com'
-SERVER_EMAIL = 'hamloversclub@googlemail.com'
-EMAIL_HOST_PASSWORD = 'Fisting Ham'
+EMAIL_HOST_USER = 'johann@googlemail.com'
+DEFAULT_FROM_EMAIL = 'johann@googlemail.com'
+SERVER_EMAIL = 'johann@googlemail.com'
+EMAIL_HOST_PASSWORD = 'password'
 
 """
 # Host for sending e-mail.
@@ -228,6 +230,10 @@ OPBEAT = {
     'APP_ID': '5ea801dc6e',
     'SECRET_TOKEN': '6799043939c43b57c3721338afd5b808fb88ec0a',
 }
+
+CORS_ORIGIN_WHITELIST = (
+    'localhost:3000'
+)
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
