@@ -59,3 +59,4 @@ target/
 # OS
 *.DS_Store
 venv
+dashboard/migrations

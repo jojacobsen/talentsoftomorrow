@@ -19,10 +19,42 @@ let initialState = {
 /* === Actions ===== */
 /* ================= */
 
-export const loadPlayers = () => {
-  console.log('load players')
+export const playersLoaded = () => {
+  console.log('players loaded')
   return {
-    type: 'LOAD_PLAYERS'
+    type: 'PLAYERS_LOADED'
+  }
+}
+
+/* ================= */
+/* === Thunks ====== */
+/* ================= */
+
+export function loadPlayers () {
+  let authHeader = `JWT ${localStorage.getItem('user_token')}`
+  console.log(authHeader)
+
+  return function (dispatch) {
+    return fetch('http://127.0.0.1:8000/player/',
+      {
+        mode: 'cors',
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': authHeader,
+        }
+      })
+      .then((response) => {
+        if (response.status > 400) {
+          throw new Error('Bad response from server')
+        }
+
+        return response.json()
+      })
+      .then((json) => {
+        console.log(json)
+      })
+      .catch((err) => alert(err))
   }
 }
 
@@ -32,7 +64,7 @@ export const loadPlayers = () => {
 
 function players (state = initialState, action) {
   switch (action.type) {
-    case 'LOAD_PLAYERS':
+    case 'PLAYERS_LOADED':
     default:
       return state
   }
