@@ -16,13 +16,27 @@ export class Players extends React.Component {
   }
 
   render () {
-    console.log(this.props.players)
     return (
       <div>
         <h1>Talenter</h1>
+        <div className='list-header-tablet'>
+          <div className='row'>
+            <div className='col-sm-2'>
+              Username
+            </div>
+            <div className='col-sm-2'>
+              Full name
+            </div>
+          </div>
+        </div>
+        <div className='list-add-btn-wrapper'>
+          <div className='list-add-btn'>
+            <span className='oi' data-glyph='plus'></span>
+          </div>
+        </div>
         <ul className='list'>
           {this.props.players.map((player, index) =>
-            <PlayerListItem key={player.id} {...player} />
+            <PlayerListItem key={player.player_id} {...player.user} />
           )}
         </ul>
       </div>
@@ -32,7 +46,7 @@ export class Players extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    players: state.players.players
+    players: state.players
   }
 }
 

@@ -1,28 +1,13 @@
-let initialState = {
-  players: [
-    {
-      id: 1,
-      first_name: 'Tobias',
-      last_name: 'Pedersen',
-      birthday: 1464004800
-    },
-    {
-      id: 2,
-      first_name: 'Lionel',
-      last_name: 'Messi',
-      birthday: 1464004800
-    }
-  ]
-}
+import { getHeader, apiBase } from '../utils/apiRequestHelpers'
 
 /* ================= */
 /* === Actions ===== */
 /* ================= */
 
-export const playersLoaded = () => {
-  console.log('players loaded')
+export const playersLoaded = (json) => {
   return {
-    type: 'PLAYERS_LOADED'
+    type: 'PLAYERS_LOADED',
+    players: json
   }
 }
 
@@ -31,19 +16,8 @@ export const playersLoaded = () => {
 /* ================= */
 
 export function loadPlayers () {
-  let authHeader = `JWT ${localStorage.getItem('user_token')}`
-  console.log(authHeader)
-
   return function (dispatch) {
-    return fetch('http://127.0.0.1:8000/player/',
-      {
-        mode: 'cors',
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': authHeader,
-        }
-      })
+    return fetch(apiBase() + '/players/', getHeader)
       .then((response) => {
         if (response.status > 400) {
           throw new Error('Bad response from server')
@@ -52,7 +26,7 @@ export function loadPlayers () {
         return response.json()
       })
       .then((json) => {
-        console.log(json)
+        dispatch(playersLoaded(json))
       })
       .catch((err) => alert(err))
   }
@@ -62,9 +36,10 @@ export function loadPlayers () {
 /* === Reducer ===== */
 /* ================= */
 
-function players (state = initialState, action) {
+function players (state = [], action) {
   switch (action.type) {
     case 'PLAYERS_LOADED':
+      return action.players
     default:
       return state
   }

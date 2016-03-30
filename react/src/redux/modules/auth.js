@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux'
 import { push } from 'react-router-redux'
+import { apiBase } from '../utils/apiRequestHelpers'
 
 let initialState = {
   username: localStorage.getItem('username'),
@@ -60,7 +61,7 @@ export function tryLogin (formData) {
 
     dispatch(requestAccess(formData))
 
-    return fetch('http://127.0.0.1:8000/api-token-auth/',
+    return fetch(apiBase() + '/api-token-auth/',
       {
         method: 'POST',
         headers: {
