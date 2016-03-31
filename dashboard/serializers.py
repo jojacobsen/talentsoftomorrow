@@ -1,5 +1,5 @@
 from rest_framework import serializers, exceptions
-from dashboard.models import Performance, Player, Coach, Club
+from dashboard.models import Performance, Player, Coach, Club, Measurement
 from django.contrib.auth.models import User
 
 
@@ -22,7 +22,7 @@ class CoachSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Coach
-        fields = ('club', 'user')
+        fields = ('id', 'club', 'user')
 
 
 class PlayersSerializer(serializers.ModelSerializer):
@@ -30,7 +30,7 @@ class PlayersSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Player
-        fields = ('user', 'player_id', 'gender', 'date_of_birth')
+        fields = ('id', 'user', 'lab_key', 'gender', 'date_of_birth')
 
 
 class PlayerSerializer(serializers.ModelSerializer):
@@ -39,7 +39,7 @@ class PlayerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Player
-        fields = ('user', 'player_id', 'gender', 'date_of_birth', 'coach')
+        fields = ('id', 'user', 'lab_key', 'gender', 'date_of_birth', 'coach')
 
 
 class PerformanceSerializer(serializers.ModelSerializer):
@@ -71,3 +71,8 @@ class PerformanceSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         performance = Performance.objects.create(**validated_data)
         return performance
+
+
+class MeasurementSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Measurement

@@ -22,7 +22,7 @@ class Coach(models.Model):
 class Player(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     club = models.ForeignKey(Club, on_delete=models.CASCADE)
-    player_id = models.CharField(max_length=100, unique=True)
+    lab_key = models.CharField(max_length=100, unique=True)
     coach = models.ManyToManyField(Coach, blank=True)
     date_of_birth = models.DateField(blank=True)
     GENDER_CHOICES = (
