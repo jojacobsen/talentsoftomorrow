@@ -1,3 +1,4 @@
+import uuid
 from rest_framework import serializers, exceptions
 from dashboard.models import Performance, Player, Coach, Club, Measurement
 from django.contrib.auth.models import User
@@ -36,10 +37,53 @@ class PlayersSerializer(serializers.ModelSerializer):
 class PlayerSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     coach = CoachSerializer(read_only=True, many=True)
+    club = ClubSerializer(read_only=True)
 
     class Meta:
         model = Player
-        fields = ('id', 'user', 'lab_key', 'gender', 'date_of_birth', 'coach')
+        fields = ('id', 'user', 'lab_key', 'gender', 'date_of_birth', 'coach', 'club')
+
+
+class NewPlayersSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+    coach = CoachSerializer
+    club = ClubSerializer
+
+    class Meta:
+        model = Player
+        fields = ('id', 'user', 'gender', 'date_of_birth', 'coach', 'club')
+
+    def validate(self, data):
+        group = self.context['request'].user.groups.values_list('name', flat=True)
+
+        if 'Club' in group:
+            if data['club'] != self.context['request'].user.club:
+                raise exceptions.PermissionDenied('User can only create players of own club.')
+        elif 'Coach' in group:
+            if data['club'] != self.context['request'].user.coach.club:
+                raise exceptions.PermissionDenied('Coach can only create players of own club.')
+            for coach in data['coach']:
+                if coach.club != self.context['request'].user.coach.club:
+                    raise exceptions.PermissionDenied('Coach can only create players of own club.')
+
+        elif 'Player' in group:
+            raise exceptions.PermissionDenied('Players can not create new users.')
+        else:
+            raise exceptions.PermissionDenied('User group not selected.')
+
+        return data
+
+    def create(self, validated_data):
+        coach = validated_data.pop('coach', None)
+        user = validated_data.pop('user', None)
+        user = User.objects.create_user(username=user['username'],
+                                        last_name=user['last_name'],
+                                        first_name=user['first_name'])
+        validated_data['user'] = user
+        validated_data['lab_key'] = str(uuid.uuid5(uuid.NAMESPACE_X500, user.username))
+        player = Player.objects.create(**validated_data)
+        player.coach = coach
+        return player
 
 
 class PerformanceSerializer(serializers.ModelSerializer):
