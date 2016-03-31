@@ -6,7 +6,7 @@ __pycache__/
 *.so
 
 # Migrations
-dashboard/migrations/
+# dashboard/migrations/
 
 # Distribution / packaging
 .Python
@@ -63,4 +63,3 @@ target/
 # OS
 *.DS_Store
 venv
-dashboard/migrations
