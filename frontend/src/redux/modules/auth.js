@@ -2,16 +2,15 @@ import { combineReducers } from 'redux'
 import { push } from 'react-router-redux'
 import { apiBase } from '../utils/apiRequestHelpers'
 
+let refreshTimer
+let tokenUpdateRate = 500000
 let initialState = {
   username: localStorage.getItem('username'),
-  password: '',
-  token: '',
+  token: localStorage.getItem('user_token'),
   errors: [],
   loggedIn: false,
   isRequesting: false
 }
-let tokenUpdateRate = 500000
-let refreshTimer
 
 /* ================= */
 /* === Actions ===== */
@@ -46,9 +45,30 @@ export const requestAccess = (formData) => {
   }
 }
 
+export const tokenRefreshed = (json) => {
+  return {
+    type: 'TOKEN_REFRESHED',
+    token: json.token
+  }
+}
+
 /* ================= */
 /* === Thunks ====== */
 /* ================= */
+
+export function authInit () {
+  console.log('authInit')
+
+  return function (dispatch, getState) {
+    let token = getState().auth.userInfo.token
+
+    if (token) {
+      dispatch(refreshToken())
+    } else {
+      dispatch(push('/login'))
+    }
+  }
+}
 
 export function tryLogin (formData) {
   // Thunk middleware knows how to handle functions.
@@ -81,17 +101,17 @@ export function tryLogin (formData) {
       })
       .then((json) => {
         if (json.token) {
-          console.log(json.token)
+
           dispatch(loginSuccesful(formData, json))
           dispatch(push('/dashboard'))
-          dispatch(refreshToken(formData))
+          dispatch(refreshToken())
           localStorage.setItem('user_token', json.token)
           localStorage.setItem('username', formData.username)
         } else {
           dispatch(loginFailed(formData, json))
         }
       })
-      .catch((err) => alert(err))
+      .catch((err) => console.log(err))
   }
 }
 
@@ -100,17 +120,48 @@ export function logout () {
     localStorage.removeItem('user_token')
     localStorage.removeItem('username')
     dispatch(push('/login'))
-    clearTimeout(refreshTimer)
+    clearInterval(refreshTimer)
   }
 }
 
-function refreshToken (formData) {
-  return function (dispatch) {
-    refreshTimer = setTimeout(function () {
-      dispatch(tryLogin(formData))
-      console.log('refreshToken')
+function refreshToken () {
+  return function (dispatch, getState) {
+    let token = getState().auth.userInfo.token
+
+    timedRefresh(dispatch, token)
+
+    refreshTimer = setInterval(function () {
+      timedRefresh(dispatch, token)
     }, tokenUpdateRate)
   }
+}
+
+function timedRefresh (dispatch, token) {
+  return fetch(apiBase() + '/api-token-refresh/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      token: token
+    })
+  }).then((response) => {
+    if (response.status > 399) {
+      throw new Error('Bad response from server')
+    }
+
+    return response.json()
+  })
+  .then((json) => {
+    if (json.token) {
+      localStorage.setItem('user_token', json.token)
+      dispatch(tokenRefreshed(json))
+    }
+  })
+  .catch((err) => {
+    console.log('could not refresh token', err)
+    dispatch(logout())
+  })
 }
 
 /* ================= */
@@ -129,14 +180,16 @@ function userInfo (state = initialState, action) {
         username: action.username,
         errors: [],
         loggedIn: true,
-        isRequesting: false
+        isRequesting: false,
+        token: action.token
       })
 
     case 'LOGOUT_SUCCESFUL':
       return Object.assign({}, state, {
         username: '',
         password: '',
-        loggedIn: false
+        loggedIn: false,
+        token: ''
       })
 
     case 'LOGIN_FAILED':

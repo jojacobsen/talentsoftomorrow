@@ -1,11 +1,11 @@
-let authHeader = `JWT ${localStorage.getItem('user_token')}`
-
-export const getHeader = {
-  mode: 'cors',
-  method: 'GET',
-  headers: {
-    'Content-Type': 'application/json',
-    'Authorization': authHeader
+export function getHeader (token) {
+  return {
+    mode: 'cors',
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `JWT ${token}`
+    }
   }
 }
 

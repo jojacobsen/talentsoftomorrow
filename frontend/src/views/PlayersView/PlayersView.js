@@ -21,11 +21,11 @@ export class Players extends React.Component {
         <h1>Talenter</h1>
         <div className='list-header-tablet'>
           <div className='row'>
-            <div className='col-sm-2'>
-              Username
-            </div>
-            <div className='col-sm-2'>
+            <div className='col-sm-3'>
               Full name
+            </div>
+            <div className='col-sm-3'>
+              Username
             </div>
           </div>
         </div>

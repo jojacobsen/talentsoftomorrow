@@ -13,16 +13,7 @@ export class PlayerListItem extends React.Component {
     return (
       <li className='list-item'>
         <div className='row'>
-          <div className='col-sm-2'>
-            <div className='list-header-mobile'>
-              Username
-            </div>
-
-            <div className='list-item-text'>
-              {this.props.username}
-            </div>
-          </div>
-          <div className='col-sm-2'>
+          <div className='col-sm-3'>
             <div className='list-header-mobile'>
               Full name
             </div>
@@ -31,6 +22,15 @@ export class PlayerListItem extends React.Component {
               {this.props.first_name || 'Lionel'}
               {" "}
               {this.props.last_name || 'Messi'}
+            </div>
+          </div>
+          <div className='col-sm-2'>
+            <div className='list-header-mobile'>
+              Username
+            </div>
+
+            <div className='list-item-text'>
+              {this.props.username}
             </div>
           </div>
         </div>

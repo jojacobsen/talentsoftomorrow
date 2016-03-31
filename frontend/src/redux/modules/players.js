@@ -16,8 +16,10 @@ export const playersLoaded = (json) => {
 /* ================= */
 
 export function loadPlayers () {
-  return function (dispatch) {
-    return fetch(apiBase() + '/players/', getHeader)
+  return function (dispatch, getState) {
+    let token = getState().auth.userInfo.token
+
+    return fetch(apiBase() + '/players/', getHeader(token))
       .then((response) => {
         if (response.status > 400) {
           throw new Error('Bad response from server')
@@ -28,7 +30,7 @@ export function loadPlayers () {
       .then((json) => {
         dispatch(playersLoaded(json))
       })
-      .catch((err) => alert(err))
+      .catch((err) => console.log(err))
   }
 }
 

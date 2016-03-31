@@ -2,10 +2,11 @@ import React, { PropTypes } from 'react'
 import '../../styles/core.scss'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
-import { logout } from '../../redux/modules/auth'
+import { logout, authInit } from '../../redux/modules/auth'
 
 type Props = {
   logout: Function,
+  authInit: Function,
   username: String,
   children: PropTypes.element
 };
@@ -16,6 +17,10 @@ export class CoreLayout extends React.Component {
   constructor () {
     super()
     this.logout = this.logout.bind(this)
+  }
+
+  componentDidMount () {
+    this.props.authInit()
   }
 
   logout () {
@@ -82,6 +87,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     logout: () => {
       dispatch(logout())
+    },
+    authInit: () => {
+      dispatch(authInit())
     }
   }
 }
