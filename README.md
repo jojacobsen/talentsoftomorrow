@@ -217,15 +217,40 @@ __JSON Response:__
 ```
 
 ### 5.1.3 Add new player
+__Method:__ POST
 
-IN DEVELOPMENT! 
+__URL:__ /players/
+
+__Headers:__
+* Authorization: JWT ...
+* Content-type: application/json
+
+
+__Success response:__
+
+| Status code | Body    | Explanation |
+|:------------|:--------|:------------|
+| 201         | _Empty_ | Created     |
+
+__Error responses:__
+
+TBD
+
+| Status code | Body               | Explanation                                       |
+|:------------|:-------------------|:--------------------------------------------------|
+| 40x         | `{"error": "..."}` | Client Error - Don't repeat without modifications |
+| 50x         | `{"error": "..."}` | Server Error                                      |
+
 __Data:__
 
 ```javascript
 [
   {
-    'test': '9783502390848',                // String
-    'test': '73',                           // String
+    "user": {"username":"RobertoCarlos11", "last_name": "Carlos", "first_name": "Roberto"},
+    "gender": "M",
+    "date_of_birth": "2010-03-18",
+    "club": 1,
+    "coach": [1]
   },
   // ...
 ]
@@ -320,7 +345,6 @@ __JSON Response:__
 ```
 
 ### 5.1.6 Add new performances
-
 __Method:__ POST
 
 __URL:__ /performances/
@@ -348,14 +372,16 @@ TBD
 __Data:__
 
 ```javascript
-{
-  "id": 1,
-  "value": "198.0000000000",
-  "date": "2016-03-18",
-  "description": "",
-  "player": 1,
-  "measurement": 2
-}
+[
+  {
+    "value": "224.0000000000",
+    "player": 1,
+    "date": "2016-12-2",
+    "measurement": 2,
+    "description": "had too long hairs today..."
+  },
+  // ...
+]
 ```
 
 ### 5.2 Data
