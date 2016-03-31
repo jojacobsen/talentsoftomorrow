@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { loadPlayers } from '../../redux/modules/players'
 import PlayerListItem from 'components/PlayerListItem/PlayerListItem'
+import { Link } from 'react-router'
 
 type Props = {
   loadPlayers: Function,
@@ -30,9 +31,11 @@ export class Players extends React.Component {
           </div>
         </div>
         <div className='list-add-btn-wrapper'>
-          <div className='list-add-btn'>
-            <span className='oi' data-glyph='plus'></span>
-          </div>
+          <Link to='/talents/create'>
+            <div className='list-add-btn'>
+              <span className='oi' data-glyph='plus'></span>
+            </div>
+          </Link>
         </div>
         <ul className='list'>
           {this.props.players.map((player, index) =>

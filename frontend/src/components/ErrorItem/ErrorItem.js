@@ -1,5 +1,5 @@
 import React from 'react'
-import classes from './ErrorItem.scss'
+import classes from './style.scss'
 
 type Props = {
   errorItem: String

@@ -3,7 +3,7 @@ import { push } from 'react-router-redux'
 import { apiBase } from '../utils/apiRequestHelpers'
 
 let refreshTimer
-let tokenUpdateRate = 500000
+let tokenUpdateRate = 60000
 let initialState = {
   username: localStorage.getItem('username'),
   token: localStorage.getItem('user_token'),
@@ -57,8 +57,6 @@ export const tokenRefreshed = (json) => {
 /* ================= */
 
 export function authInit () {
-  console.log('authInit')
-
   return function (dispatch, getState) {
     let token = getState().auth.userInfo.token
 
@@ -101,7 +99,6 @@ export function tryLogin (formData) {
       })
       .then((json) => {
         if (json.token) {
-
           dispatch(loginSuccesful(formData, json))
           dispatch(push('/dashboard'))
           dispatch(refreshToken())
@@ -130,6 +127,7 @@ function refreshToken () {
 
     timedRefresh(dispatch, token)
 
+    clearInterval(refreshTimer)
     refreshTimer = setInterval(function () {
       timedRefresh(dispatch, token)
     }, tokenUpdateRate)
@@ -154,6 +152,7 @@ function timedRefresh (dispatch, token) {
   })
   .then((json) => {
     if (json.token) {
+      console.log('token refreshed')
       localStorage.setItem('user_token', json.token)
       dispatch(tokenRefreshed(json))
     }
@@ -197,6 +196,11 @@ function userInfo (state = initialState, action) {
         username: action.username,
         errors: action.errors.non_field_errors,
         isRequesting: false
+      })
+
+    case 'TOKEN_REFRESHED':
+      return Object.assign({}, state, {
+        token: action.token
       })
 
     default:

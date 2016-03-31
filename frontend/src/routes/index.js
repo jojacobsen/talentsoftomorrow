@@ -6,6 +6,7 @@ import CoreLayout from 'layouts/CoreLayout/CoreLayout'
 import LoginView from 'views/LoginView/LoginView'
 import Dashboard from 'views/DashboardView/DashboardView'
 import Players from 'views/PlayersView/PlayersView'
+import CreatePlayer from 'views/PlayersView/CreatePlayer'
 import Compare from 'views/CompareView/CompareView'
 import Measure from 'views/MeasureView/MeasureView'
 import Settings from 'views/SettingsView/SettingsView'
@@ -28,7 +29,10 @@ export default (store) => (
 
     <Route component={CoreLayout}>
       <Route path='dashboard' component={Dashboard} />
-      <Route path='talents' component={Players} />
+      <Route path='talents'>
+        <IndexRoute component={Players} />
+        <Route path='create' component={CreatePlayer} />
+      </Route>
       <Route path='compare' component={Compare} />
       <Route path='measure' component={Measure} />
       <Route path='settings' component={Settings} />

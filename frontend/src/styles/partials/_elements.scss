@@ -35,6 +35,17 @@ $list-border-width: 2px;
   background-color: $brand-secondary;
 }
 
+.form-group {
+  position: relative;
+}
+
+.form-label {
+  position: absolute;
+  right: 10px;
+  top: 8px;
+  font-size: 0.7em;
+}
+
 .form-input {
   border: 1px solid $gray-light;
   padding: 10px;
@@ -42,10 +53,26 @@ $list-border-width: 2px;
   margin-bottom: 10px;
   font-weight: 300;
   background-color: #fff;
-  max-width: 100%;
+  width: 100%;
 
   &:-webkit-autofill {
-      -webkit-box-shadow: 0 0 0px 1000px white inset;
+    -webkit-box-shadow: 0 0 0px 1000px white inset;
+  }
+
+  &::-webkit-input-placeholder {
+    line-height: 1.3em;
+  }
+
+  &:-moz-placeholder {
+    line-height: 1.3em;
+  }
+
+  &::-moz-placeholder {
+    line-height: 1.3em;
+  }
+
+  &:-ms-input-placeholder {
+    line-height: 1.3em;
   }
 }
 
