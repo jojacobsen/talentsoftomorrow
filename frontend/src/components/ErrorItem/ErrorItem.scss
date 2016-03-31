@@ -1,0 +1,8 @@
+@import './variables';
+
+.list-item {
+  list-style: none;
+  font-weight: 700;
+  font-size: 1.2em;
+  color: $brand-danger;
+}

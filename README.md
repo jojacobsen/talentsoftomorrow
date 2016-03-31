@@ -1,3 +1,5 @@
+[![Circle CI](https://circleci.com/gh/jojacobsen/talentsoftomorrow.svg?style=svg&circle-token=8f459840b266a7a5aa538e429c3221f2977b9b56)](https://circleci.com/gh/jojacobsen/talentsoftomorrow)
+
 # Talents of Tomorrow Web Application (Developer documentation)
 
 ## 1. Overview
@@ -101,27 +103,127 @@ $ curl -X POST -H "Content-Type: application/json" -d '{"token":"<EXISTING_TOKEN
 ## 5. Talents of Tomorrow Web Application
 
 
-### 5.1 Endpoint
+### 5.1 Endpoints
 
-__Method:__ POST
+### 5.1.1 List of players
+__Method:__ GET
 
-__URL:__ //
+__URL:__ /players/
 
 __Headers:__
-* Authorization: Token ...
+* Authorization: JWT ...
 * Content-type: application/json
 
-__Data:__
+
+__Success response:__
+
+| Status code | Body    | Explanation |
+|:------------|:--------|:------------|
+| 200         | _JSON_  | OK          |
+
+__Error responses:__
+
+TBD
+
+| Status code | Body               | Explanation                                       |
+|:------------|:-------------------|:--------------------------------------------------|
+| 40x         | `{"error": "..."}` | Client Error - Don't repeat without modifications |
+| 50x         | `{"error": "..."}` | Server Error                                      |
+
+__JSON Response:__
 
 ```javascript
 [
   {
-    'test': '9783502390848',                // String
-    'test': '73',                           // String
+    "id": 1,
+    "user": {
+      "id": 8,
+      "username": "Ibra",
+      "last_name": "",
+      "first_name": "",
+      "email": ""
+    },
+    "lab_key": "1234",
+    "gender": "M",
+    "date_of_birth": "2016-03-18"
   },
   // ...
 ]
 ```
+
+### 5.1.2 Detail view of player
+__Method:__ GET
+
+__URL:__ /player/{ player_id }
+
+__Headers:__
+* Authorization: JWT ...
+* Content-type: application/json
+
+
+__Success response:__
+
+| Status code | Body    | Explanation |
+|:------------|:--------|:------------|
+| 200         | _JSON_  | OK          |
+
+__Error responses:__
+
+TBD
+
+| Status code | Body               | Explanation                                       |
+|:------------|:-------------------|:--------------------------------------------------|
+| 40x         | `{"error": "..."}` | Client Error - Don't repeat without modifications |
+| 50x         | `{"error": "..."}` | Server Error                                      |
+
+__JSON Response:__
+
+```javascript
+{
+  "id": 1,
+  "user": {
+    "id": 8,
+    "username": "Ibra",
+    "last_name": "",
+    "first_name": "",
+    "email": ""
+  },
+  "lab_key": "1234",
+  "gender": "M",
+  "date_of_birth": "2016-03-18",
+  "coach": [
+    {
+      "id": 1,
+      "club": {
+        "id": 1,
+        "user": {
+          "id": 3,
+          "username": "Arsenal",
+          "last_name": "",
+          "first_name": "",
+          "email": ""
+        }
+      },
+      "user": {
+        "id": 5,
+        "username": "Bruno",
+        "last_name": "",
+        "first_name": "",
+        "email": ""
+      }
+    }
+  ]
+}
+```
+
+### 5.1.3 Add new player
+__Method:__ POST
+
+__URL:__ /players/
+
+__Headers:__
+* Authorization: JWT ...
+* Content-type: application/json
 
 
 __Success response:__
@@ -139,23 +241,166 @@ TBD
 | 40x         | `{"error": "..."}` | Client Error - Don't repeat without modifications |
 | 50x         | `{"error": "..."}` | Server Error                                      |
 
-### 3.2 Data
+__Data:__
+
+```javascript
+[
+  {
+    "user": {"username":"RobertoCarlos11", "last_name": "Carlos", "first_name": "Roberto"},
+    "gender": "M",
+    "date_of_birth": "2010-03-18",
+    "club": 1,
+    "coach": [1]
+  },
+  // ...
+]
+```
+
+
+### 5.1.4 List of performances
+__Method:__ GET
+
+__URL:__ /performances/
+
+__Headers:__
+* Authorization: JWT ...
+* Content-type: application/json
+
+
+__Success response:__
+
+| Status code | Body    | Explanation |
+|:------------|:--------|:------------|
+| 200         | _JSON_  | OK          |
+
+__Error responses:__
+
+TBD
+
+| Status code | Body               | Explanation                                       |
+|:------------|:-------------------|:--------------------------------------------------|
+| 40x         | `{"error": "..."}` | Client Error - Don't repeat without modifications |
+| 50x         | `{"error": "..."}` | Server Error                                      |
+
+__JSON Response:__
+
+```javascript
+[
+  {
+    "id": 1,
+    "value": "198.0000000000",
+    "date": "2016-03-18",
+    "description": "",
+    "player": 1,
+    "measurement": 2
+  },
+  {
+    "id": 2,
+    "value": "3.0000000000",
+    "date": "2016-03-18",
+    "description": "",
+    "player": 2,
+    "measurement": 1
+  },
+  // ...
+]
+```
+
+### 5.1.5 Detail view of performance
+__Method:__ GET
+
+__URL:__ /performance/{ performance_id }
+
+__Headers:__
+* Authorization: JWT ...
+* Content-type: application/json
+
+
+__Success response:__
+
+| Status code | Body    | Explanation |
+|:------------|:--------|:------------|
+| 200         | _JSON_  | OK          |
+
+__Error responses:__
+
+TBD
+
+| Status code | Body               | Explanation                                       |
+|:------------|:-------------------|:--------------------------------------------------|
+| 40x         | `{"error": "..."}` | Client Error - Don't repeat without modifications |
+| 50x         | `{"error": "..."}` | Server Error                                      |
+
+__JSON Response:__
+
+```javascript
+{
+  "id": 1,
+  "value": "198.0000000000",
+  "date": "2016-03-18",
+  "description": "",
+  "player": 1,
+  "measurement": 2
+}
+```
+
+### 5.1.6 Add new performances
+__Method:__ POST
+
+__URL:__ /performances/
+
+__Headers:__
+* Authorization: JWT ...
+* Content-type: application/json
+
+
+__Success response:__
+
+| Status code | Body    | Explanation |
+|:------------|:--------|:------------|
+| 201         | _Empty_ | Created     |
+
+__Error responses:__
+
+TBD
+
+| Status code | Body               | Explanation                                       |
+|:------------|:-------------------|:--------------------------------------------------|
+| 40x         | `{"error": "..."}` | Client Error - Don't repeat without modifications |
+| 50x         | `{"error": "..."}` | Server Error                                      |
+
+__Data:__
+
+```javascript
+[
+  {
+    "value": "224.0000000000",
+    "player": 1,
+    "date": "2016-12-2",
+    "measurement": 2,
+    "description": "had too long hairs today..."
+  },
+  // ...
+]
+```
+
+### 5.2 Data
 
 TBD
 
 
-### 3.3 Implementation
+### 5.3 Implementation
 
 ##### Edge cases
 
-## 3. Coach view
+## 6. Coach view
 
 TBD
 
-## 4. Club view
+## 7. Club view
 
 TBD
 
-## 5. Player view
+## 8. Player view
 
 TBD

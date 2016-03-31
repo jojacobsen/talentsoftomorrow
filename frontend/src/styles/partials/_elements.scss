@@ -1,0 +1,125 @@
+$list-border-width: 2px;
+
+%btn {
+  background-color: $brand-light;
+  display: inline-block;
+  color: #fff;
+  padding: 15px 25px;
+  font-weight: 300;
+  text-align: center;
+  text-transform: uppercase;
+  border: none;
+  font-size: 1.4em;
+  max-width: 100%;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $brand-dark;
+  }
+
+  &.small {
+    font-size: 1em;
+    padding: 10px 15px;
+  }
+}
+
+.btn-primary {
+  @extend %btn;
+
+  background-color: $brand-primary;
+}
+
+.btn-secondary {
+  @extend %btn;
+
+  background-color: $brand-secondary;
+}
+
+.form-input {
+  border: 1px solid $gray-light;
+  padding: 10px;
+  font-size: 1.6em;
+  margin-bottom: 10px;
+  font-weight: 300;
+  background-color: #fff;
+  max-width: 100%;
+
+  &:-webkit-autofill {
+      -webkit-box-shadow: 0 0 0px 1000px white inset;
+  }
+}
+
+.list {
+  padding: 0;
+  margin: 0;
+}
+
+.list-header-mobile {
+  font-weight: bold;
+}
+
+.list-header-tablet {
+  display: none;
+  padding: 15px;
+  font-weight: bold;
+}
+
+.list-add-btn-wrapper {
+  width: 100%;
+  position: relative;
+}
+
+.list-add-btn {
+  @extend .btn-primary, .small;
+
+  border-radius: 50px;
+  width: 35px;
+  height: 35px;
+  padding: 10px;
+  position: absolute;
+  right: 0;
+  margin-top: -55px;
+}
+
+.list-item {
+  text-align: center;
+  list-style: none;
+  border: $list-border-width solid $brand-light;
+  border-bottom: none;
+  padding: 15px;
+
+  &:last-child {
+    border-bottom: $list-border-width solid $brand-light;
+  }
+}
+
+.list-item-text {
+  margin-top: 2px;
+  margin-bottom: 15px;
+
+  &.last {
+    margin-bottom: 0;
+  }
+}
+
+@media (min-width: $break-sm) {
+  .list-header-mobile {
+    display: none;
+  }
+
+  .list-header-tablet {
+    display: block;
+  }
+
+  .list-add-btn {
+    margin-top: -40px;
+  }
+
+  .list-item {
+    text-align: left;
+  }
+
+  .list-item-text {
+    margin: 0;
+  }
+}
