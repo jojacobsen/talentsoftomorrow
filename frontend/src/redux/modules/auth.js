@@ -152,7 +152,7 @@ function timedRefresh (dispatch, token) {
   })
   .then((json) => {
     if (json.token) {
-      console.log('token refreshed')
+      console.log('token refreshed', new Date(new Date().getTime()).toLocaleTimeString())
       localStorage.setItem('user_token', json.token)
       dispatch(tokenRefreshed(json))
     }

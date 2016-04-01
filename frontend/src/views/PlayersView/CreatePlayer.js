@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { reduxForm } from 'redux-form'
 import { createPlayer } from '../../redux/modules/players'
 
-export const fields = ['first_name', 'last_name', 'birthday', 'gender']
+export const fields = ['first_name', 'last_name', 'birthday', 'gender', 'coaches']
 
 const validate = (values) => {
   const errors = {}
@@ -13,7 +13,8 @@ const validate = (values) => {
 
 type Props = {
   fields: Array,
-  handleSubmit: Function
+  handleSubmit: Function,
+  dispatch: Function
 };
 
 export class CreatePlayer extends React.Component {
@@ -26,12 +27,11 @@ export class CreatePlayer extends React.Component {
 
   handleSubmit (event) {
     event.preventDefault()
-
     this.props.dispatch(createPlayer())
   }
 
   render () {
-    const {fields: {first_name, last_name, birthday, gender}, handleSubmit} = this.props
+    const {fields: {first_name, last_name, birthday, gender, coaches}} = this.props
 
     return (
       <div>
@@ -39,20 +39,32 @@ export class CreatePlayer extends React.Component {
 
         <form onSubmit={this.handleSubmit}>
           <div className='form-group'>
-            <label className='form-label'>First Name</label>
-            <input className='form-input' type='text' placeholder='First Name' {...first_name}/>
+            <label className='form-label'>Fornavn</label>
+            <input className='form-input' type='text' placeholder='Fornavn' {...first_name}/>
           </div>
           <div className='form-group'>
-            <label className='form-label'>Last Name</label>
-            <input className='form-input' type='text' placeholder='Last Name' {...last_name}/>
+            <label className='form-label'>Efternavn</label>
+            <input className='form-input' type='text' placeholder='Efternavn' {...last_name}/>
           </div>
           <div className='form-group'>
-            <label className='form-label'>Birthday</label>
-            <input className='form-input' type='text' placeholder='Birthday' {...birthday}/>
+            <label className='form-label'>Køn</label>
+            <select value={gender.value || 'default'} className='form-select' {...gender}>
+              <option value='default' disabled>Køn</option>
+              <option value='M'>Mand</option>
+              <option value='F'>Kvinde</option>
+            </select>
           </div>
           <div className='form-group'>
-            <label className='form-label'>Gender</label>
-            <input className='form-input' type='text' placeholder='Gender' {...gender}/>
+            <label className='form-label'>Coaches</label>
+            <select value={coaches.value || 'default'} className='form-select' {...coaches}>
+              <option value='default' disabled>Spillerens træner</option>
+              <option value='1'>Pep</option>
+              <option value='1'>Ståle</option>
+            </select>
+          </div>
+          <div className='form-group'>
+            <label className='form-label'>Fødselsdag</label>
+            <input className='form-input' type='date' placeholder='Fødselsdag' {...birthday}/>
           </div>
           <button className='btn-primary' type='submit'>Save</button>
         </form>
@@ -67,4 +79,4 @@ let CreatePlayerForm = reduxForm({
   validate
 })(CreatePlayer)
 
-export default connect()(CreatePlayerForm);
+export default connect()(CreatePlayerForm)

@@ -39,7 +39,7 @@ export class Players extends React.Component {
         </div>
         <ul className='list'>
           {this.props.players.map((player, index) =>
-            <PlayerListItem key={player.player_id} {...player.user} />
+            <PlayerListItem key={player.id} {...player.user} />
           )}
         </ul>
       </div>

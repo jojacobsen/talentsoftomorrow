@@ -76,6 +76,15 @@ $list-border-width: 2px;
   }
 }
 
+.form-select {
+  @extend .form-input;
+
+  height: 55px;
+  border-radius: 0;
+  line-height: 1.4em;
+  -webkit-appearance: none;
+}
+
 .list {
   padding: 0;
   margin: 0;
