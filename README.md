@@ -145,7 +145,7 @@ __JSON Response:__
     },
     "lab_key": "1234",
     "gender": "M",
-    "date_of_birth": "2016-03-18"
+    "birthday": "2016-03-18"
   },
   // ...
 ]
@@ -190,8 +190,8 @@ __JSON Response:__
   },
   "lab_key": "1234",
   "gender": "M",
-  "date_of_birth": "2016-03-18",
-  "coach": [
+  "birthday": "2016-03-18",
+  "coaches": [
     {
       "id": 1,
       "club": {
@@ -212,7 +212,17 @@ __JSON Response:__
         "email": ""
       }
     }
-  ]
+  ],
+  "club": {
+    "id": 1,
+    "user": {
+      "id": 3,
+      "username": "Arsenal",
+      "last_name": "",
+      "first_name": "",
+      "email": ""
+    }
+  }
 }
 ```
 
@@ -246,10 +256,9 @@ __Data:__
 ```javascript
 [
   {
-    "user": {"username":"RobertoCarlos11", "last_name": "Carlos", "first_name": "Roberto"},
+    "user": {"last_name": "Carlos", "first_name": "Roberto"},
     "gender": "M",
-    "date_of_birth": "2010-03-18",
-    "club": 1,
+    "birthday": "2010-03-18",
     "coach": [1]
   },
   // ...
@@ -379,6 +388,60 @@ __Data:__
     "date": "2016-12-2",
     "measurement": 2,
     "description": "had too long hairs today..."
+  },
+  // ...
+]
+```
+
+
+### 5.1.7 List of coaches
+__Method:__ GET
+
+__URL:__ /coaches/
+
+__Headers:__
+* Authorization: JWT ...
+* Content-type: application/json
+
+
+__Success response:__
+
+| Status code | Body    | Explanation |
+|:------------|:--------|:------------|
+| 200         | _JSON_  | OK          |
+
+__Error responses:__
+
+TBD
+
+| Status code | Body               | Explanation                                       |
+|:------------|:-------------------|:--------------------------------------------------|
+| 40x         | `{"error": "..."}` | Client Error - Don't repeat without modifications |
+| 50x         | `{"error": "..."}` | Server Error                                      |
+
+__JSON Response:__
+
+```javascript
+[
+  {
+    "id": 1,
+    "club": {
+      "id": 1,
+      "user": {
+        "id": 3,
+        "username": "Arsenal",
+        "last_name": "",
+        "first_name": "",
+        "email": "admin@arsenal.cp,"
+      }
+    },
+    "user": {
+      "id": 5,
+      "username": "Bruno",
+      "last_name": "Labadia",
+      "first_name": "Bruno",
+      "email": "bruno@arsenal.com"
+    }
   },
   // ...
 ]

@@ -1,6 +1,6 @@
-from dashboard.models import Performance, Player, Measurement
+from dashboard.models import Performance, Player, Measurement, Coach
 from dashboard.serializers import PerformanceSerializer, PlayersSerializer, \
-    PlayerSerializer, MeasurementSerializer, NewPlayersSerializer
+    PlayerSerializer, MeasurementSerializer, NewPlayersSerializer, CoachSerializer
 
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.renderers import JSONRenderer
@@ -24,7 +24,7 @@ class JSONResponse(HttpResponse):
         super(JSONResponse, self).__init__(content, **kwargs)
 
 
-class PlayerListView(generics.ListCreateAPIView):
+class PlayersListView(generics.ListCreateAPIView):
     permission_classes = (IsAuthenticated,)
 
     # Parse JSON
@@ -46,7 +46,7 @@ class PlayerListView(generics.ListCreateAPIView):
         if 'Club' in group:
             queryset = Player.objects.filter(club__user=self.request.user)
         elif 'Coach' in group:
-            queryset = Player.objects.filter(coach__user=self.request.user)
+            queryset = Player.objects.filter(coaches__user=self.request.user)
         elif 'Player' in group:
             return JSONResponse('Players can not see players list.', status=403)
         else:
@@ -70,7 +70,7 @@ class PlayerDetailView(generics.GenericAPIView):
 
         elif 'Coach' in group:
             try:
-                queryset = Player.objects.get(pk=pk, coach__user=self.request.user)
+                queryset = Player.objects.get(pk=pk, coaches__user=self.request.user)
             except Player.DoesNotExist:
                 raise exceptions.PermissionDenied('User has no permission to access user data of player.')
 
@@ -109,7 +109,7 @@ class PerformancesListView(generics.ListCreateAPIView):
         if 'Player' in group:
             queryset = Performance.objects.filter(player__user=self.request.user)
         elif 'Coach' in group:
-            queryset = Performance.objects.filter(player__coach__user=self.request.user)
+            queryset = Performance.objects.filter(player__coaches__user=self.request.user)
         elif 'Club' in group:
             queryset = Performance.objects.filter(player__club__user=self.request.user)
         else:
@@ -133,7 +133,7 @@ class PerformanceDetailView(generics.GenericAPIView):
 
         elif 'Coach' in group:
             try:
-                queryset = Performance.objects.get(pk=pk, player__coach__user=self.request.user)
+                queryset = Performance.objects.get(pk=pk, player__coaches__user=self.request.user)
             except Performance.DoesNotExist:
                 raise exceptions.PermissionDenied('User has no permission to access user data of player.')
 
@@ -158,5 +158,27 @@ class MeasurementsListView(generics.ListCreateAPIView):
     def list(self, request, *args, **kwargs):
         queryset = self.get_queryset()
         serializer = MeasurementSerializer(queryset, many=True)
+        return JSONResponse(serializer.data)
+
+
+class CoachListView(generics.ListCreateAPIView):
+    permission_classes = (IsAuthenticated,)
+
+    # Parse JSON
+    parser_classes = (JSONParser,)
+
+    def list(self, request):
+        group = request.user.groups.values_list('name', flat=True)
+
+        if 'Player' in group:
+            queryset = Coach.objects.filter(club=self.request.user.player.club)
+        elif 'Coach' in group:
+            queryset = Coach.objects.filter(club=self.request.user.coach.club)
+        elif 'Club' in group:
+            queryset = Coach.objects.filter(club=self.request.user.club)
+        else:
+            return JSONResponse('User group not selected.', status=400)
+
+        serializer = CoachSerializer(queryset, many=True)
         return JSONResponse(serializer.data)
 
