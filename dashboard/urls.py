@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^performances/', views.PerformancesListView.as_view(), name='performances'),
     url(r'^performance/(?P<pk>[0-9]+)/$', views.PerformanceDetailView.as_view(), name='performance'),
     url(r'^measurements/', views.MeasurementsListView.as_view(), name='measurements'),
-    url(r'^players/', views.PlayerListView.as_view(), name='playerlist'),
+    url(r'^players/', views.PlayersListView.as_view(), name='playerlist'),
     url(r'^player/(?P<pk>[0-9]+)/$', views.PlayerDetailView.as_view(), name='playerdetail'),
+    url(r'^coaches/', views.CoachListView.as_view(), name='coachlist'),
 ]
