@@ -116,8 +116,9 @@ export function logout () {
   return function (dispatch) {
     localStorage.removeItem('user_token')
     localStorage.removeItem('username')
-    dispatch(push('/login'))
+    dispatch(push('/login')) // enable for debugging token errors
     clearInterval(refreshTimer)
+    // window.location.assign('/login') // enable for production
   }
 }
 

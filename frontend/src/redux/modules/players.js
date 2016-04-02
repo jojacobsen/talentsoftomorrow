@@ -1,6 +1,8 @@
 import { getHeader, postHeader, apiBase } from '../utils/apiRequestHelpers'
 import { reset } from 'redux-form'
 import { push } from 'react-router-redux'
+import Alert from 'react-s-alert'
+import { convertObjectToText } from '../utils/reduxHelpers'
 
 /* ================= */
 /* === Actions ===== */
@@ -13,7 +15,7 @@ export const playersLoaded = (json) => {
   }
 }
 
-export const playerAdded = (json) => {
+export const playerAdded = () => {
   return {
     type: 'PLAYER_ADDED'
   }
@@ -47,7 +49,8 @@ export function createPlayer () {
     let form = getState().form.createPlayer
     let token = getState().auth.userInfo.token
     let username = 'user' + Math.floor((Math.random() * 999999) + 1)
-    let json = [
+
+    let data = [
       {
         user: {
           username: username,
@@ -61,26 +64,25 @@ export function createPlayer () {
       }
     ]
 
-    return fetch(apiBase() + '/players/', postHeader(token, json))
+    return fetch(apiBase() + '/players/', postHeader(token, data))
       .then((response) => {
-        if (response.status > 400) {
+        let status = response.status
+
+        if (status > 400) {
           throw new Error('Bad response from server')
-        } else if (response.status === 400) {
+        } else if (status === 400) {
           response.json().then((json) => {
-            console.log('validation error', json)
-            // Handle validation errors
+            Alert.error(convertObjectToText(json))
           })
         } else {
-          response.json().then((json) => {
-            console.log('success', json)
-            dispatch(playerAdded(json))
-            dispatch(reset('createPlayer'))
-            dispatch(push('/talents'))
-          })
+          console.log('success')
+          dispatch(playerAdded(data))
+          dispatch(reset('createPlayer'))
+          dispatch(push('/talents'))
         }
       })
       .catch((err) => {
-        console.log(err)
+        Alert.error(err)
       })
   }
 }

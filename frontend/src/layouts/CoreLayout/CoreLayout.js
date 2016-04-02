@@ -3,6 +3,9 @@ import '../../styles/core.scss'
 import { Link } from 'react-router'
 import { connect } from 'react-redux'
 import { logout, authInit } from '../../redux/modules/auth'
+import Alert from 'react-s-alert'
+import 'react-s-alert/dist/s-alert-default.css'
+import 'react-s-alert/dist/s-alert-css-effects/jelly.css'
 
 type Props = {
   logout: Function,
@@ -72,6 +75,13 @@ export class CoreLayout extends React.Component {
         <div className='content-wrapper'>
           {this.props.children}
         </div>
+
+        <Alert
+          stack={{limit: 3}}
+          timeout={8000}
+          position='bottom-right'
+          effect='jelly'
+          html={false} />
       </div>
     )
   }

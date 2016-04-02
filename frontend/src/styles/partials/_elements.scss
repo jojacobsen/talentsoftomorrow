@@ -21,6 +21,10 @@ $list-border-width: 2px;
     font-size: 1em;
     padding: 10px 15px;
   }
+
+  &[disabled] {
+    background-color: $gray
+  }
 }
 
 .btn-primary {
@@ -83,6 +87,14 @@ $list-border-width: 2px;
   border-radius: 0;
   line-height: 1.4em;
   -webkit-appearance: none;
+}
+
+.form-error {
+  margin: 0 0 15px 10px;
+  font-size: 1em;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: $brand-danger;
 }
 
 .list {
