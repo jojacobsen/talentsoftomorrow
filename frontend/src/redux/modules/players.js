@@ -4,6 +4,8 @@ import { push } from 'react-router-redux'
 import Alert from 'react-s-alert'
 import { convertObjectToText } from '../utils/reduxHelpers'
 
+const initialState = []
+
 /* ================= */
 /* === Actions ===== */
 /* ================= */
@@ -40,7 +42,9 @@ export function loadPlayers () {
       .then((json) => {
         dispatch(playersLoaded(json))
       })
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        Alert.error(err)
+      })
   }
 }
 
@@ -58,8 +62,8 @@ export function createPlayer () {
           first_name: form.first_name.value
         },
         gender: form.gender.value,
-        date_of_birth: form.birthday.value,
-        coach: [parseInt(form.coaches.value)], // TODO: make array-able
+        birthday: form.birthday.value,
+        coaches: [parseInt(form.coaches.value)],
         club: 1 // TODO: remove
       }
     ]
@@ -69,7 +73,7 @@ export function createPlayer () {
         let status = response.status
 
         if (status > 400) {
-          throw new Error('Bad response from server')
+          Alert.error(status + ': Bad response from server')
         } else if (status === 400) {
           response.json().then((json) => {
             Alert.error(convertObjectToText(json))
