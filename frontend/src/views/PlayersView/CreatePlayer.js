@@ -6,6 +6,7 @@ import Datepicker from 'components/InputFields/Datepicker'
 import { connect } from 'react-redux'
 import { reduxForm } from 'redux-form'
 import { createPlayer } from '../../redux/modules/players'
+import { loadCoaches } from '../../redux/modules/coaches'
 
 export const fields = ['first_name', 'last_name', 'birthday', 'gender', 'coaches']
 
@@ -47,6 +48,11 @@ export class CreatePlayer extends React.Component {
   constructor () {
     super()
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.options = this.options.bind(this)
+  }
+
+  componentDidMount () {
+    this.props.dispatch(loadCoaches())
   }
 
   handleSubmit (event) {
@@ -57,8 +63,22 @@ export class CreatePlayer extends React.Component {
     }
   }
 
+  options () {
+    let coaches = []
+
+    for (let coach of this.props.coaches) {
+      coaches.push({
+        value: coach.id,
+        name: `${coach.user.first_name} ${coach.user.last_name}`
+      })
+    }
+
+    return coaches
+  }
+
   render () {
     const {fields: {first_name, last_name, birthday, gender, coaches}} = this.props
+
     return (
       <div>
         <SubPageHeader path='/talents' title='Add talent'/>
@@ -68,7 +88,7 @@ export class CreatePlayer extends React.Component {
           <Select label='Køn' options={[{ value: 'M', name: 'M' }, { value: 'F', name: 'K' }]} {...gender} />
           <Select
             label='Træner'
-            options={[{ value: '1', name: 'Pep Guardiola' }, { value: '2', name: 'Ståle Solbakken' }]}
+            options={this.options()}
             {...coaches} />
           <Datepicker label='Fødselsdag' {...birthday} />
           <button className='btn-primary' disabled={hasErrors(this.props.errors)} type='submit'>
@@ -81,9 +101,12 @@ export class CreatePlayer extends React.Component {
 }
 
 let CreatePlayerForm = reduxForm({
-  form: 'createPlayer',
+  form: 'CreatePlayer',
   fields,
   validate
-})(CreatePlayer)
+},
+(state) => ({ // mapStateToProps
+  coaches: state.coaches // will pull state into form's initialValues
+}))(CreatePlayer)
 
 export default connect()(CreatePlayerForm)

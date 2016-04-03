@@ -50,10 +50,9 @@ export function loadPlayers () {
 
 export function createPlayer () {
   return function (dispatch, getState) {
-    let form = getState().form.createPlayer
+    let form = getState().form.CreatePlayer
     let token = getState().auth.userInfo.token
     let username = 'user' + Math.floor((Math.random() * 999999) + 1)
-
     let data = [
       {
         user: {
@@ -79,7 +78,7 @@ export function createPlayer () {
             Alert.error(convertObjectToText(json))
           })
         } else {
-          console.log('success')
+          console.log('player created')
           dispatch(playerAdded(data))
           dispatch(reset('createPlayer'))
           dispatch(push('/talents'))
@@ -95,7 +94,7 @@ export function createPlayer () {
 /* === Reducer ===== */
 /* ================= */
 
-function players (state = [], action) {
+function players (state = initialState, action) {
   switch (action.type) {
     case 'PLAYERS_LOADED':
       return action.players
