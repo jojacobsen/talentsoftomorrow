@@ -447,6 +447,48 @@ __JSON Response:__
 ]
 ```
 
+
+### 5.1.8 List of measurements
+__Method:__ GET
+
+__URL:__ /measurements/
+
+__Headers:__
+* Authorization: JWT ...
+* Content-type: application/json
+
+
+__Success response:__
+
+| Status code | Body    | Explanation |
+|:------------|:--------|:------------|
+| 200         | _JSON_  | OK          |
+
+__Error responses:__
+
+TBD
+
+| Status code | Body               | Explanation                                       |
+|:------------|:-------------------|:--------------------------------------------------|
+| 40x         | `{"error": "..."}` | Client Error - Don't repeat without modifications |
+| 50x         | `{"error": "..."}` | Server Error                                      |
+
+__JSON Response:__
+
+```javascript
+[
+  {
+    "id": 1,
+    "name": "Sprint (30m)",
+    "unit": "s",
+    "description": "balbla",
+    "upper_limit": "20.0000000000",
+    "lower_limit": "3.0000000000"
+  },
+  // ...
+]
+```
+
 ### 5.2 Data
 
 TBD
