@@ -489,6 +489,132 @@ __JSON Response:__
 ]
 ```
 
+
+### 5.1.9 Get current user
+__Method:__ GET
+
+__URL:__ /user/
+
+__Headers:__
+* Authorization: JWT ...
+* Content-type: application/json
+
+
+__Success response:__
+
+| Status code | Body    | Explanation |
+|:------------|:--------|:------------|
+| 200         | _JSON_  | OK          |
+
+__Error responses:__
+
+TBD
+
+| Status code | Body               | Explanation                                       |
+|:------------|:-------------------|:--------------------------------------------------|
+| 40x         | `{"error": "..."}` | Client Error - Don't repeat without modifications |
+| 50x         | `{"error": "..."}` | Server Error                                      |
+
+__JSON Response:__
+
+There are 3 different response types (Club, Coach and Player). All of them have almost the same structure. 
+
+_Player_
+```javascript
+{
+  "id": 2,
+  "user": {
+    "is_superuser": false,
+    "is_staff": false,
+    "is_active": true,
+    "username": "Messi",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "groups": [
+      {
+        "id": 2,
+        "name": "Player"
+      }
+    ],
+    "date_joined": "2016-03-18T14:46:18Z",
+    "last_login": null
+  },
+  "club": {
+    "id": 2,
+    "user": {
+      "id": 2,
+      "username": "Barca",
+      "last_name": "",
+      "first_name": "",
+      "email": ""
+    },
+    "name": "FC Barcelona"
+  },
+  "gender": "M",
+  "birthday": "2016-03-18"
+}
+```
+
+_Club_
+```javascript
+{
+  "id": 1,
+  "user": {
+    "is_superuser": false,
+    "is_staff": false,
+    "is_active": true,
+    "username": "Arsenal",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "groups": [
+      {
+        "id": 3,
+        "name": "Club"
+      }
+    ],
+    "date_joined": "2016-03-18T14:27:23Z",
+    "last_login": null
+  },
+  "name": "FC Arsenal London"
+}
+```
+
+_Coach_
+```javascript
+{
+  "id": 4,
+  "club": {
+    "id": 1,
+    "user": {
+      "id": 3,
+      "username": "Arsenal",
+      "last_name": "",
+      "first_name": "",
+      "email": ""
+    },
+    "name": "FC Arsenal London"
+  },
+  "user": {
+    "is_superuser": false,
+    "is_staff": false,
+    "is_active": true,
+    "username": "Jupp",
+    "first_name": "Jupp",
+    "last_name": "Heynckes",
+    "email": "jh@fca.com",
+    "groups": [
+      {
+        "id": 4,
+        "name": "Coach"
+      }
+    ],
+    "date_joined": "2016-03-18T14:44:30Z",
+    "last_login": null
+  }
+}
+```
 ### 5.2 Data
 
 TBD

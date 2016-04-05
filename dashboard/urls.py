@@ -15,4 +15,5 @@ urlpatterns = [
     url(r'^players/', views.PlayersListView.as_view(), name='playerlist'),
     url(r'^player/(?P<pk>[0-9]+)/$', views.PlayerDetailView.as_view(), name='playerdetail'),
     url(r'^coaches/', views.CoachListView.as_view(), name='coachlist'),
+    url(r'^user/', views.UserDetailView.as_view(), name='userdetail'),
 ]
