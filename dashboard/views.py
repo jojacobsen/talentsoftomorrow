@@ -1,6 +1,7 @@
-from dashboard.models import Performance, Player, Measurement, Coach
+from dashboard.models import Performance, Player, Measurement, Coach, Club
 from dashboard.serializers import PerformanceSerializer, PlayersSerializer, \
-    PlayerSerializer, MeasurementSerializer, NewPlayersSerializer, CoachSerializer
+    PlayerSerializer, MeasurementSerializer, NewPlayersSerializer, CoachSerializer, CurrentClubSerializer, \
+    CurrentCoachSerializer, CurrentPlayerSerializer
 
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.renderers import JSONRenderer
@@ -181,4 +182,26 @@ class CoachListView(generics.ListCreateAPIView):
 
         serializer = CoachSerializer(queryset, many=True)
         return JSONResponse(serializer.data)
+
+
+class UserDetailView(generics.GenericAPIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        group = request.user.groups.values_list('name', flat=True)
+
+        if 'Player' in group:
+            queryset = Player.objects.get(user=self.request.user)
+            serializer = CurrentPlayerSerializer(queryset)
+        elif 'Coach' in group:
+            queryset = Coach.objects.get(user=self.request.user)
+            serializer = CurrentCoachSerializer(queryset)
+        elif 'Club' in group:
+            queryset = Club.objects.get(user=self.request.user)
+            serializer = CurrentClubSerializer(queryset)
+        else:
+            return JSONResponse('User group not selected.', status=400)
+
+        return JSONResponse(serializer.data)
+
 

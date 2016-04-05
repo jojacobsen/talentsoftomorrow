@@ -16,6 +16,21 @@ def create_username(last_name, first_name):
     return username
 
 
+class GroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Group
+        fields = ('id', 'name')
+
+
+class CurrentUserSerializer(serializers.ModelSerializer):
+    groups = GroupSerializer(many=True)
+
+    class Meta:
+        model = User
+        fields = ('is_superuser', 'is_staff', 'is_active', 'username', 'first_name', 'last_name',
+                  'email', 'groups', 'date_joined', 'last_login')
+
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -63,6 +78,31 @@ class PlayerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Player
         fields = ('id', 'user', 'lab_key', 'gender', 'birthday', 'coaches', 'club')
+
+
+class CurrentClubSerializer(serializers.ModelSerializer):
+    user = CurrentUserSerializer(read_only=True)
+
+    class Meta:
+        model = Club
+
+
+class CurrentCoachSerializer(serializers.ModelSerializer):
+    user = CurrentUserSerializer(read_only=True)
+    club = ClubSerializer(read_only=True)
+
+    class Meta:
+        model = Coach
+        fields = ('id', 'club', 'user')
+
+
+class CurrentPlayerSerializer(serializers.ModelSerializer):
+    user = CurrentUserSerializer(read_only=True)
+    club = ClubSerializer(read_only=True)
+
+    class Meta:
+        model = Player
+        fields = ('id', 'user', 'club', 'gender', 'birthday')
 
 
 class NewPlayersSerializer(serializers.ModelSerializer):
