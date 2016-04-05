@@ -39,7 +39,8 @@ type Props = {
   fields: Array,
   handleSubmit: Function,
   dispatch: Function,
-  errors: Object
+  errors: Object,
+  coaches: Array
 };
 
 export class CreatePlayer extends React.Component {

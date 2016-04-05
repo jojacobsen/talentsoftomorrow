@@ -124,18 +124,18 @@ export function logout () {
 
 function refreshToken () {
   return function (dispatch, getState) {
-    let token = getState().auth.userInfo.token
-
-    timedRefresh(dispatch, token)
+    timedRefresh(dispatch, getState)
 
     clearInterval(refreshTimer)
     refreshTimer = setInterval(function () {
-      timedRefresh(dispatch, token)
+      timedRefresh(dispatch, getState)
     }, tokenUpdateRate)
   }
 }
 
-function timedRefresh (dispatch, token) {
+function timedRefresh (dispatch, getState) {
+  let token = getState().auth.userInfo.token
+
   return fetch(apiBase() + '/api-token-refresh/', {
     method: 'POST',
     headers: {
