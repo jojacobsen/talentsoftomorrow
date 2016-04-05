@@ -8,7 +8,8 @@ import Dashboard from 'views/DashboardView/DashboardView'
 import Players from 'views/PlayersView/PlayersView'
 import CreatePlayer from 'views/PlayersView/CreatePlayer'
 import Compare from 'views/CompareView/CompareView'
-import Measure from 'views/MeasureView/MeasureView'
+import Measurements from 'views/MeasurementsView/MeasurementsView'
+import CreatePerformance from 'views/MeasurementsView/CreatePerformance'
 import Settings from 'views/SettingsView/SettingsView'
 
 function checkAuth (nextState, replace) {
@@ -34,7 +35,10 @@ export default (store) => (
         <Route path='create' component={CreatePlayer} />
       </Route>
       <Route path='compare' component={Compare} />
-      <Route path='measure' component={Measure} />
+      <Route path='measurements'>
+        <IndexRoute component={Measurements} />
+        <Route path='create/:measurementId' component={CreatePerformance} />
+      </Route>
       <Route path='settings' component={Settings} />
     </Route>
   </Route>

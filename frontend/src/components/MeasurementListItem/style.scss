@@ -1,0 +1,26 @@
+@import './variables';
+
+.list-item {
+  border: 2px solid $brand-light;
+  padding: 15px;
+  font-size: 1.2em;
+  text-transform: uppercase;
+  display: block;
+  color: $gray-darker;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content:: center;
+  margin-bottom: 30px;
+
+  &,
+  &:visited {
+    color: $gray-darker;
+  }
+
+
+  &:hover {
+    background-color: $brand-light;
+    color: #fff;
+  }
+}

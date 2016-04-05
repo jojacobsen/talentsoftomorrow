@@ -39,6 +39,7 @@ export function loadMeasurements () {
         return response.json()
       })
       .then((json) => {
+        console.log(json)
         dispatch(measurementsLoaded(json))
       })
       .catch((err) => {

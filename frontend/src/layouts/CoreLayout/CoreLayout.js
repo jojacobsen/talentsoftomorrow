@@ -61,7 +61,7 @@ export class CoreLayout extends React.Component {
             <span className='nav-item-text'>Sammenlign</span>
           </Link>
 
-          <Link to='/measure' className='nav-item' activeClassName='active'>
+          <Link to='/measurements' className='nav-item' activeClassName='active'>
             <span className='oi nav-item-icon' data-glyph='timer'></span>
             <span className='nav-item-text'>Tests</span>
           </Link>
