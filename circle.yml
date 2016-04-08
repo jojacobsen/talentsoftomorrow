@@ -22,6 +22,6 @@ deployment:
           s3_location:
             bucket: staging-bucket-tot-dashboard
             key_pattern: apps/dashboard-{SHORT_COMMIT}-{BUILD_NUM}
-        region: eu-west-1b
+        region: eu-west-1
         deployment_group: staging-instances
         deployment_config: CodeDeployDefault.AllAtOnce
