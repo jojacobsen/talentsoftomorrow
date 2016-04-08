@@ -20,7 +20,7 @@ deployment:
         revision_location:
           revision_type: S3
           s3_location:
-            bucket: staging-bucket
+            bucket: staging-bucket-tot-dashboard
             key_pattern: apps/my-app-{SHORT_COMMIT}-{BUILD_NUM}
         region: eu-west-1b
         deployment_group: staging-instances
