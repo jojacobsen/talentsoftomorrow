@@ -231,10 +231,6 @@ OPBEAT = {
     'SECRET_TOKEN': '6799043939c43b57c3721338afd5b808fb88ec0a',
 }
 
-CORS_ORIGIN_WHITELIST = (
-    'localhost:3000'
-)
-
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 STATIC_ROOT = '/dashboard/static'

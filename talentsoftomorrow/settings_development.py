@@ -15,3 +15,7 @@ DATABASES = {
         'PORT': '5432'
     }
 }
+
+CORS_ORIGIN_WHITELIST = (
+    'localhost:3000'
+)
