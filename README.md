@@ -61,7 +61,7 @@ $ python manage.py createsuperuser
 If the server is not running start it like so:
 
 ```
-$ python manage.py runserver
+$ python manage.py runserver --settings=talentsoftomorrow.settings_development
 ```
 
 ## 4. Authentication
