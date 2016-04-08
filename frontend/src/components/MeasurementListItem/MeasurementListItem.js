@@ -21,15 +21,17 @@ export class MeasurementListItem extends React.Component {
 
   render () {
     return (
-      <Link to={`/measurements/create/${this.props.id}`} className={classes['list-item']}>
-        <div className={classes['icon']}>
-          <div className={iconClassName(this.props.name)}></div>
-        </div>
+      <li key={this.props.id} className={`list-item ${classes['list-item']}`}>
+        <Link to={`/measurements/create/${this.props.id}`} className={classes['link']}>
+          <div className={classes['icon']}>
+            <div className={iconClassName(this.props.name)}></div>
+          </div>
 
-        <div className={classes['text']}>
-          {this.props.name}
-        </div>
-      </Link>
+          <div className={classes['text']}>
+            {this.props.name}
+          </div>
+        </Link>
+      </li>
     )
   }
 }

@@ -1,5 +1,5 @@
 .content-wrapper {
-  padding: 0 25px;
+  padding: 0 25px 50px;
 }
 
 .navigation {
@@ -7,7 +7,7 @@
   background-color: $brand-darker;
   bottom: 0;
   width: 100%;
-
+  z-index: 10;
 }
 
 .nav-logout {

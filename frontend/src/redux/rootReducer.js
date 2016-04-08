@@ -5,6 +5,7 @@ import auth from './modules/auth'
 import players from './modules/players'
 import coaches from './modules/coaches'
 import measurements from './modules/measurements'
+import performances from './modules/performances'
 
 export default combineReducers({
   router,
@@ -12,5 +13,6 @@ export default combineReducers({
   auth,
   players,
   coaches,
-  measurements
+  measurements,
+  performances
 })

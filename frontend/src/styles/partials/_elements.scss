@@ -37,6 +37,11 @@ $list-border-width: 2px;
   @extend %btn;
 
   background-color: $brand-secondary;
+  color: $gray-darker;
+
+  &:hover {
+    color: #fff;
+  }
 }
 
 .form-group {
@@ -78,6 +83,13 @@ $list-border-width: 2px;
   &:-ms-input-placeholder {
     line-height: 1.3em;
   }
+}
+
+.form-textarea {
+  @extend .form-input;
+
+  padding: 25px;
+  min-height: 250px;
 }
 
 .form-select {
