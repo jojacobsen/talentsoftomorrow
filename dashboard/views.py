@@ -12,7 +12,7 @@ from django.http import HttpResponse
 
 
 class IndexView(generic.TemplateView):
-    template_name = 'dashboard/dist/index.html'
+    template_name = 'dashboard/index.html'
 
 
 class JSONResponse(HttpResponse):
