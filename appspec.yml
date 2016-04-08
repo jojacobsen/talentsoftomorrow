@@ -5,3 +5,4 @@ os: linux
 files:
   - source: /
     destination: /home/django/envs/dashboard/talentstomorrow
+    overwrite: yes
