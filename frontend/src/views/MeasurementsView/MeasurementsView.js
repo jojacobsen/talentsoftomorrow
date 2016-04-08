@@ -19,13 +19,11 @@ export class Measurements extends React.Component {
     return (
       <div>
         <h1>Measurements</h1>
-        <div className='row'>
+        <ul className='list'>
           {this.props.measurements.map((measurement, index) =>
-            <div key={measurement.id} className='col-sm-3'>
-              <MeasurementListItem {...measurement} />
-            </div>
+            <MeasurementListItem key={measurement.id} {...measurement} />
           )}
-        </div>
+        </ul>
       </div>
     )
   }
