@@ -27,12 +27,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '!-jf7r%F!§fdsaDdA!!eâsdfW2dsadfT"$§%GEW'
+SECRET_KEY = '!-jf7r%F!§fdsaDdA!!egsdfW2dsadfT"$§%GEW'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.talentstomorrow.com']
 
 
 # Application definition
@@ -142,8 +142,8 @@ WSGI_APPLICATION = 'talentsoftomorrow.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'tot-db',
-        'USER': 'test',
+        'NAME': 'dashboard',
+        'USER': 'dashboard',
         'PASSWORD': 'test123',
         'HOST': 'localhost',
         'PORT': '5432'
