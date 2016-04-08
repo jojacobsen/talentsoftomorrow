@@ -10,3 +10,10 @@ machine:
     version: 3.5.1
   environment:
     DJANGO_SETTINGS_MODULE: talentsoftomorrow.settings
+
+deployment:
+  staging:
+    branch: master
+    codedeploy:
+      dashboard:
+        deployment_group: dashboard-demo
