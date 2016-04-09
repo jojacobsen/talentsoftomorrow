@@ -4,5 +4,9 @@ version: 0.0
 os: linux
 files:
   - source: /
-    destination: /home/django/envs/dashboard/talentstomorrow
-    overwrite: true
+    destination: /home/django/envs/dashboard/release
+hooks:
+    BeforeInstall:
+        - location: deploy_scripts/beforeInstall.bash
+    AfterInstall:
+        - location: deploy_scripts/afterInstall.bash
