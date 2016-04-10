@@ -15,6 +15,11 @@
   margin-bottom: 10px;
 }
 
+.performance-unit {
+  margin-left: 10px;
+  font-size: 0.7em;
+}
+
 .item-row {
   margin-bottom: 30px;
 }
@@ -47,7 +52,7 @@
   font-size: 20px;
 }
 
-@media (min-width: $break-md) {
+@media (min-width: $break-sm) {
   .player-name {
     margin-bottom: 0;
   }

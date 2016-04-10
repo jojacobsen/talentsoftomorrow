@@ -25,8 +25,11 @@ export class Players extends React.Component {
             <div className='col-sm-3'>
               Navn
             </div>
+            <div className='col-sm-2'>
+              Fødselsdag
+            </div>
             <div className='col-sm-3'>
-              Username
+              Laboratorie-ID
             </div>
           </div>
         </div>
@@ -39,7 +42,7 @@ export class Players extends React.Component {
         </div>
         <ul className='list'>
           {this.props.players.map((player, index) =>
-            <PlayerListItem key={player.id} {...player.user} />
+            <PlayerListItem key={player.id} {...player} />
           )}
         </ul>
       </div>

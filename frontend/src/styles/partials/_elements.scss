@@ -1,49 +1,5 @@
 $list-border-width: 2px;
 
-%btn {
-  background-color: $brand-light;
-  display: inline-block;
-  color: #fff;
-  padding: 15px 25px;
-  font-weight: 300;
-  text-align: center;
-  text-transform: uppercase;
-  border: none;
-  font-size: 1.4em;
-  max-width: 100%;
-  cursor: pointer;
-
-  &:hover {
-    background-color: $brand-dark;
-  }
-
-  &.small {
-    font-size: 1em;
-    padding: 10px 15px;
-  }
-
-  &[disabled] {
-    background-color: $gray
-  }
-}
-
-.btn-primary {
-  @extend %btn;
-
-  background-color: $brand-primary;
-}
-
-.btn-secondary {
-  @extend %btn;
-
-  background-color: $brand-secondary;
-  color: $gray-darker;
-
-  &:hover {
-    color: #fff;
-  }
-}
-
 .form-group {
   position: relative;
 }
@@ -130,15 +86,20 @@ $list-border-width: 2px;
 }
 
 .list-add-btn {
-  @extend .btn-primary, .small;
-
+  background-color: $brand-primary;
   border-radius: 50px;
   width: 35px;
   height: 35px;
-  padding: 10px;
+  padding: 10px 0 !important;
   position: absolute;
   right: 0;
   margin-top: -55px;
+  color: #fff;
+  text-align: center;
+
+  &:hover {
+    background-color: $gray-darker;
+  }
 }
 
 .list-item {

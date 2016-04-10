@@ -15,7 +15,14 @@ export class TextInput extends React.Component {
       <div className='form-group'>
         <label className='form-label'>{this.props.label}</label>
         <input className='form-input' type='text' placeholder={this.props.label} {...this.props}/>
-        {this.props.touched && this.props.error && <div className='form-error'>{this.props.error}</div>}
+        {
+          this.props.dirty &&
+          this.props.touched &&
+          this.props.error &&
+          <div className='form-error'>
+            {this.props.error}
+          </div>
+        }
       </div>
     )
   }

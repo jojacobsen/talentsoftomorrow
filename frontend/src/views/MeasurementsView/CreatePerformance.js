@@ -17,14 +17,9 @@ type Props = {
   loadMeasurements: Function,
   loadPerformances: Function,
   createPerformance: Function,
+  changePerformanceStatus: Function,
   routeParams: Object
 };
-
-const initialValues = (player) => {
-  return {
-    player: player
-  }
-}
 
 const playerName = (player) => {
   return `${player.user.first_name} ${player.user.last_name}`
@@ -40,6 +35,15 @@ export class CreatePerformance extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
     this.getFilteredComponents = this.getFilteredComponents.bind(this)
     this.handleAddClick = this.handleAddClick.bind(this)
+    this.initialValues = this.initialValues.bind(this)
+  }
+
+  initialValues (player) {
+    return {
+      player: player,
+      upper_limit: this.getMeasurement().upper_limit,
+      lower_limit: this.getMeasurement().lower_limit
+    }
   }
 
   componentDidMount () {
@@ -83,9 +87,14 @@ export class CreatePerformance extends React.Component {
 
   handleAddClick (event) {
     let data = {
-      id: event.target.dataset.performanceId,
+      id: event.currentTarget.dataset.performanceId,
       status: 'CREATE'
     }
+
+    if (!data.id) {
+      alert('Performance object not returned from database')
+    }
+
     this.props.changePerformanceStatus(data)
   }
 
@@ -94,12 +103,13 @@ export class CreatePerformance extends React.Component {
       case 'SHOW':
         return <ShowPerformance
           performance={this.getPerformance(player)}
-          handleAddClick={this.handleAddClick} />
+          handleAddClick={this.handleAddClick}
+          unit={this.getMeasurement().unit} />
       default:
         return <CreatePerformanceForm
-          label={this.getMeasurement().unit}
+          measurement={this.getMeasurement()}
           performance={this.getPerformance(player)}
-          initialValues={initialValues(player)}
+          initialValues={this.initialValues(player)}
           formKey={player.id.toString()}
           onSubmit={this.handleSubmit}/>
     }
@@ -112,13 +122,13 @@ export class CreatePerformance extends React.Component {
         <div >
           {this.props.players.map((player, index) =>
             <div className={`row ${classes['item-row']}`} key={player.id}>
-              <div className='col-md-4'>
+              <div className='col-sm-4'>
                 <div className={classes['player-name']}>
                   {playerName(player)}
                 </div>
               </div>
 
-              <div className='col-md-8'>
+              <div className='col-sm-8'>
                 {this.getFilteredComponents(player)}
               </div>
             </div>

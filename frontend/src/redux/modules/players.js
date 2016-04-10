@@ -11,8 +11,6 @@ const initialState = []
 /* ================= */
 
 export const playersLoaded = (json) => {
-  json.map((player) => player.performanceFilter = 'CREATE' )
-
   return {
     type: 'PLAYERS_LOADED',
     players: json

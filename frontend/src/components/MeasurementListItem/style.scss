@@ -10,11 +10,11 @@
 }
 
 .link {
-  color: $gray-darker;
   padding: 15px;
   display: block;
 
   &,
+  &:hover,
   &:visited {
     color: $gray-darker;
   }

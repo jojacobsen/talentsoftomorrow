@@ -3,7 +3,6 @@ import Alert from 'react-s-alert'
 import moment from 'moment'
 import { convertObjectToText } from '../utils/reduxHelpers'
 
-
 const initialState = []
 
 /* ================= */
@@ -86,7 +85,7 @@ export function createPerformance (currentData) {
           })
         } else {
           Alert.success(`${playerName}s ${tmpCurrentData.measurement.name.toLowerCase()} er gemt`)
-          dispatch(performanceCreated(data))
+          dispatch(performanceCreated(data)) // TODO: send data from reponse instead to get right performanceId
         }
       })
       .catch((err) => {
@@ -102,15 +101,15 @@ export function createPerformance (currentData) {
 function statusFilter (date) {
   let cooledDown = moment(date).isBefore(moment(), 'day')
 
-  if(cooledDown) {
-     return 'CREATE'
+  if (cooledDown) {
+    return 'CREATE'
   } else {
     return 'SHOW'
   }
 }
 
 function performance (state, action) {
- switch (action.type) {
+  switch (action.type) {
     case 'PERFORMANCES_LOADED':
       return {
         ...state,
@@ -122,7 +121,6 @@ function performance (state, action) {
         status: statusFilter(action.date)
       }
     case 'CHANGE_PERFORMANCE_STATUS':
-      console.log(state.id, action.id)
       if (state.id === parseInt(action.id)) {
         return Object.assign({}, state, {
           status: action.status
