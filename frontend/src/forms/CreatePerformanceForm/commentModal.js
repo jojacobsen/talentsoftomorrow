@@ -21,9 +21,9 @@ export class CommentModal extends React.Component {
         <div className='container'>
           <h2>Kommentar (valgfri)</h2>
           <p>
-            {`Tilføj kommentar til målingen af ${this.props.playerName}
+            {`Tilføj kommentar til målingen
               om særlige forhold, der kan have
-              haft særlig indflydelse på resultatet`}
+              haft indflydelse på resultatet`}
           </p>
 
           <div className={`oi ${classes['close-icon']}`} data-glyph='x' onClick={this.props.clickIcon}></div>

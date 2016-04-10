@@ -1,9 +1,8 @@
 import { postHeader, getHeader, apiBase } from '../utils/apiRequestHelpers'
-// import { reset } from 'redux-form'
-// import { push } from 'react-router-redux'
 import Alert from 'react-s-alert'
-// import moment from 'moment'
+import moment from 'moment'
 import { convertObjectToText } from '../utils/reduxHelpers'
+
 
 const initialState = []
 
@@ -14,7 +13,7 @@ const initialState = []
 export const performanceCreated = (json) => {
   return {
     type: 'PERFORMANCE_CREATED',
-    performances: json
+    performance: json
   }
 }
 
@@ -22,6 +21,14 @@ export const performancesLoaded = (json) => {
   return {
     type: 'PERFORMANCES_LOADED',
     performances: json
+  }
+}
+
+export const changePerformanceStatus = (data) => {
+  return {
+    type: 'CHANGE_PERFORMANCE_STATUS',
+    id: data.id,
+    status: data.status
   }
 }
 
@@ -57,12 +64,13 @@ export function createPerformance (currentData) {
     let form = getState().form.CreatePerformanceForm
     let formData = form[tmpCurrentData.player.id]
     let playerName = `${tmpCurrentData.player.user.first_name} ${tmpCurrentData.player.user.last_name}`
-
+    let playerId = tmpCurrentData.player.id
+    let measurementId = tmpCurrentData.measurement.id
     let data = {
       value: formData.score.value,
-      player: tmpCurrentData.player.id,
-      date: '2016-03-12', // TODO: use moment
-      measurement: tmpCurrentData.measurement.id,
+      player: playerId,
+      date: moment().format('YYYY-MM-DD'),
+      measurement: measurementId,
       description: formData.description.value
     }
 
@@ -78,7 +86,6 @@ export function createPerformance (currentData) {
           })
         } else {
           Alert.success(`${playerName}s ${tmpCurrentData.measurement.name.toLowerCase()} er gemt`)
-          console.log('performance created')
           dispatch(performanceCreated(data))
         }
       })
@@ -92,15 +99,53 @@ export function createPerformance (currentData) {
 /* === Reducer ===== */
 /* ================= */
 
+function statusFilter (date) {
+  let cooledDown = moment(date).isBefore(moment(), 'day')
+
+  if(cooledDown) {
+     return 'CREATE'
+  } else {
+    return 'SHOW'
+  }
+}
+
+function performance (state, action) {
+ switch (action.type) {
+    case 'PERFORMANCES_LOADED':
+      return {
+        ...state,
+        status: statusFilter(state.date)
+      }
+    case 'PERFORMANCE_CREATED':
+      return {
+        ...action.performance,
+        status: statusFilter(action.date)
+      }
+    case 'CHANGE_PERFORMANCE_STATUS':
+      console.log(state.id, action.id)
+      if (state.id === parseInt(action.id)) {
+        return Object.assign({}, state, {
+          status: action.status
+        })
+      } else {
+        return state
+      }
+    default:
+      return state
+  }
+}
+
 function performances (state = initialState, action) {
   switch (action.type) {
     case 'PERFORMANCES_LOADED':
-      return action.performances
+      return action.performances.map((p) => performance(p, action))
     case 'PERFORMANCE_CREATED':
       return [
         ...state,
-        action.performances
+        performance(undefined, action)
       ]
+    case 'CHANGE_PERFORMANCE_STATUS':
+      return state.map((p) => performance(p, action))
     default:
       return state
   }

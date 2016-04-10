@@ -1,16 +1,18 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { loadMeasurements } from '../../redux/modules/measurements'
-import { createPerformance, loadPerformances } from '../../redux/modules/performances'
+import { createPerformance, loadPerformances, changePerformanceStatus } from '../../redux/modules/performances'
 import { loadPlayers } from '../../redux/modules/players'
 import { SubPageHeader } from 'components/SubPageHeader/SubPageHeader'
-import CreatePerformanceForm from 'forms/CreatePerformanceForm/CreatePerformanceForm'
+import CreatePerformanceForm from 'forms/CreatePerformanceForm/Create'
+import ShowPerformance from 'forms/CreatePerformanceForm/Show'
 import classes from './style.scss'
 
 type Props = {
   measurements: Array,
   players: Array,
   performances: Array,
+  performanceFilters: Array,
   loadPlayers: Function,
   loadMeasurements: Function,
   loadPerformances: Function,
@@ -24,6 +26,10 @@ const initialValues = (player) => {
   }
 }
 
+const playerName = (player) => {
+  return `${player.user.first_name} ${player.user.last_name}`
+}
+
 export class CreatePerformance extends React.Component {
   props: Props;
 
@@ -32,6 +38,8 @@ export class CreatePerformance extends React.Component {
     this.getMeasurement = this.getMeasurement.bind(this)
     this.getPerformance = this.getPerformance.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.getFilteredComponents = this.getFilteredComponents.bind(this)
+    this.handleAddClick = this.handleAddClick.bind(this)
   }
 
   componentDidMount () {
@@ -57,9 +65,11 @@ export class CreatePerformance extends React.Component {
   getPerformance (player) {
     let measurementId = this.getMeasurement().id
 
-    return this.props.performances.find((item) => {
+    let matches = this.props.performances.filter((item) => {
       return (item.measurement === measurementId && item.player === player.id)
-    }) || {}
+    })
+
+    return matches[matches.length - 1] || {} // Only return latest performance
   }
 
   handleSubmit (formData) {
@@ -71,6 +81,30 @@ export class CreatePerformance extends React.Component {
     this.props.createPerformance(currentData)
   }
 
+  handleAddClick (event) {
+    let data = {
+      id: event.target.dataset.performanceId,
+      status: 'CREATE'
+    }
+    this.props.changePerformanceStatus(data)
+  }
+
+  getFilteredComponents (player) {
+    switch (this.getPerformance(player).status) {
+      case 'SHOW':
+        return <ShowPerformance
+          performance={this.getPerformance(player)}
+          handleAddClick={this.handleAddClick} />
+      default:
+        return <CreatePerformanceForm
+          label={this.getMeasurement().unit}
+          performance={this.getPerformance(player)}
+          initialValues={initialValues(player)}
+          formKey={player.id.toString()}
+          onSubmit={this.handleSubmit}/>
+    }
+  }
+
   render () {
     return (
       <div>
@@ -78,13 +112,14 @@ export class CreatePerformance extends React.Component {
         <div >
           {this.props.players.map((player, index) =>
             <div className={`row ${classes['item-row']}`} key={player.id}>
-              <div className='col-xs-12'>
-                <CreatePerformanceForm
-                  label={this.getMeasurement().unit}
-                  performance={this.getPerformance(player)}
-                  initialValues={initialValues(player)}
-                  formKey={player.id.toString()}
-                  onSubmit={this.handleSubmit}/>
+              <div className='col-md-4'>
+                <div className={classes['player-name']}>
+                  {playerName(player)}
+                </div>
+              </div>
+
+              <div className='col-md-8'>
+                {this.getFilteredComponents(player)}
               </div>
             </div>
           )}
@@ -115,6 +150,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     loadPerformances: () => {
       dispatch(loadPerformances())
+    },
+    changePerformanceStatus: (data) => {
+      dispatch(changePerformanceStatus(data))
     }
   }
 }

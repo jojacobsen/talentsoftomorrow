@@ -32,30 +32,38 @@ class CreatePerformanceForm extends React.Component {
 
   constructor () {
     super()
-    this.clickIcon = this.clickIcon.bind(this)
+    this.clickCommentBtn = this.clickCommentBtn.bind(this)
+    this.clickAddBtn = this.clickAddBtn.bind(this)
     this.checkPerformanceState = this.checkPerformanceState.bind(this)
     this.state = {
-      hideDescription: true
+      hideDescription: true,
+      hideSavedScore: true
     }
   }
 
-  clickIcon () {
+  clickCommentBtn () {
     this.setState({ hideDescription: !this.state.hideDescription })
   }
 
+  clickAddBtn () {
+    this.setState({ hideSavedScore: false })
+  }
+
   checkPerformanceState () {
-    if (this.props.performance.value) {
+    if (this.props.performance.value && this.state.hideSavedScore) {
       return true
+    } else {
+      return false
     }
   }
 
-  componentDidMount () {
-    this.checkPerformanceState()
-  }
+  // componentDidMount () {
+  //   this.checkPerformanceState()
+  // }
 
-  componentWillReceiveProps () {
-    this.checkPerformanceState()
-  }
+  // componentWillReceiveProps () {
+  //   this.checkPerformanceState()
+  // }
 
   render () {
     const { fields: { score, description, player }, handleSubmit } = this.props
@@ -68,7 +76,7 @@ class CreatePerformanceForm extends React.Component {
       'hidden': this.checkPerformanceState()
     })
 
-    let scoreSavedClass = classNames({
+    let savedScoreClass = classNames({
       'hidden': !this.checkPerformanceState()
     })
 
@@ -89,7 +97,7 @@ class CreatePerformanceForm extends React.Component {
             <div className={descriptionClass}>
               <CommentModal
                 playerName={player.value && playerName(player)}
-                clickIcon={this.clickIcon} {...description} />
+                clickIcon={this.clickCommentBtn} {...description} />
             </div>
 
             <div className='col-xs-5 col-md-2'>
@@ -99,16 +107,24 @@ class CreatePerformanceForm extends React.Component {
             </div>
 
             <div className='col-md-1'>
-              <div className={classes['comment-icon']} onClick={this.clickIcon}>
+              <div className={classes['comment-icon']} onClick={this.clickCommentBtn}>
                 <div className='oi' data-glyph='comment-square'></div>
               </div>
             </div>
           </div>
 
-          <div className={scoreSavedClass}>
+          <div className={savedScoreClass}>
             <div className='col-md-8'>
-              <div className={classes['performance-result']}>
-                {this.props.performance.value}
+              <div className='col-md-8'>
+                <div className={classes['performance-result']}>
+                  {this.props.performance.value}
+                </div>
+              </div>
+              <div className='col-md-2'>
+                Edit
+              </div>
+              <div className='col-md-2' onClick={this.clickAddBtn}>
+                Add
               </div>
             </div>
           </div>

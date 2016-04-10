@@ -10,6 +10,11 @@
   z-index: 10;
 }
 
+.navigation-inner {
+  overflow-y: scroll;
+  height: 100%;
+}
+
 .nav-logout {
   position: absolute;
   left: 15px;
