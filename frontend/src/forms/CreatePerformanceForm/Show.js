@@ -3,7 +3,8 @@ import classes from './style.scss'
 
 type Props = {
   performance: Object,
-  handleAddClick: Function
+  handleAddClick: Function,
+  unit: String
 };
 
 const formatResult = (value) => {
@@ -37,7 +38,7 @@ class ShowPerformance extends React.Component {
             className='btn-round'
             data-performance-id={this.props.performance.id}
             onClick={this.props.handleAddClick}>
-              <div className='oi' data-glyph='plus'></div>
+            <div className='oi' data-glyph='plus'></div>
           </div>
         </div>
       </div>

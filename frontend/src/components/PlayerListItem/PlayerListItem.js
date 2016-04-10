@@ -2,15 +2,16 @@ import React from 'react'
 
 type Props = {
   first_name: String,
-  last_name: String,
-  username: String
+  user: Object,
+  birthday: Date,
+  lab_key: String
+
 };
 
 export class PlayerListItem extends React.Component {
   props: Props;
 
   render () {
-
     return (
       <li className='list-item'>
         <div className='row'>

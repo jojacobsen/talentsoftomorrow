@@ -12,7 +12,7 @@ const validate = (values) => {
 
   let score = values.score || 0
 
-  if (! /^[0-9.]+$/.test(score)) { // TODO: Use regex instead
+  if (!(/^[0-9.]+$/).test(score)) {
     errors.score = 'Skal være et tal'
   }
 
@@ -39,6 +39,7 @@ type Props = {
   handleSubmit: Function,
   fields: Object,
   performance: Object,
+  measurement: Object,
   label: String
 };
 

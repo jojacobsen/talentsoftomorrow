@@ -4,6 +4,7 @@ type Props = {
   value: Object,
   label: String,
   touched: Boolean,
+  dirty: Boolean,
   error: String
 };
 
@@ -19,9 +20,9 @@ export class TextInput extends React.Component {
           this.props.dirty &&
           this.props.touched &&
           this.props.error &&
-          <div className='form-error'>
-            {this.props.error}
-          </div>
+            <div className='form-error'>
+              {this.props.error}
+            </div>
         }
       </div>
     )
