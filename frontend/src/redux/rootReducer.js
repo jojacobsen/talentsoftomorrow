@@ -6,6 +6,7 @@ import players from './modules/players'
 import coaches from './modules/coaches'
 import measurements from './modules/measurements'
 import performances from './modules/performances'
+import translations from './modules/translations'
 
 export default combineReducers({
   router,
@@ -14,5 +15,6 @@ export default combineReducers({
   players,
   coaches,
   measurements,
-  performances
+  performances,
+  translations
 })

@@ -6,6 +6,7 @@ import { logout, authInit } from '../../redux/modules/auth'
 import Alert from 'react-s-alert'
 import 'react-s-alert/dist/s-alert-default.css'
 import 'react-s-alert/dist/s-alert-css-effects/jelly.css'
+import Translation from 'containers/Translation'
 
 type Props = {
   logout: Function,
@@ -49,27 +50,37 @@ export class CoreLayout extends React.Component {
 
             <Link to='/dashboard' className='nav-item' activeClassName='active'>
               <span className='oi nav-item-icon' data-glyph='dashboard'></span>
-              <span className='nav-item-text'>Dashboard</span>
+              <span className='nav-item-text'>
+                <Translation group='navigation' handle='dashboard' />
+              </span>
             </Link>
 
             <Link to='/talents' className='nav-item' activeClassName='active'>
               <span className='oi nav-item-icon' data-glyph='people'></span>
-              <span className='nav-item-text'>Talenter</span>
+              <span className='nav-item-text'>
+                <Translation group='navigation' handle='talents' />
+              </span>
             </Link>
 
             <Link to='/compare' className='nav-item' activeClassName='active'>
               <span className='oi nav-item-icon' data-glyph='random'></span>
-              <span className='nav-item-text'>Sammenlign</span>
+              <span className='nav-item-text'>
+                <Translation group='navigation' handle='compare' />
+              </span>
             </Link>
 
             <Link to='/measurements' className='nav-item' activeClassName='active'>
               <span className='oi nav-item-icon' data-glyph='timer'></span>
-              <span className='nav-item-text'>Tests</span>
+              <span className='nav-item-text'>
+                <Translation group='navigation' handle='tests' />
+              </span>
             </Link>
 
             <Link to='/settings' className='nav-item' activeClassName='active'>
               <span className='oi nav-item-icon' data-glyph='cog'></span>
-              <span className='nav-item-text'>Indstillinger</span>
+              <span className='nav-item-text'>
+                <Translation group='navigation' handle='settings' />
+              </span>
             </Link>
           </div>
         </nav>
