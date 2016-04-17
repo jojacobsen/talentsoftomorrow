@@ -1,9 +1,6 @@
-// TODO: consider better solution as translation object
-// might be imported without ever being used
 // const defaultLanguage = require('../../locales/en')
 // const initialState = defaultLanguage.translations
 const initialState = {}
-
 
 /* ================= */
 /* === Actions ===== */
@@ -27,7 +24,6 @@ export function loadTranslations (locale) {
     let json = require('../../locales/en')
 
     dispatch(translationsLoaded(json))
-
   }
 }
 

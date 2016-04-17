@@ -1,11 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { loadTranslations} from '../redux/modules/translations'
+import { loadTranslations } from '../redux/modules/translations'
 
 type Props = {
-  translations: Object
-}
+  translations: Object,
+  loadTranslations: Function,
+  group: String,
+  handle: String
+};
 export class Translation extends React.Component {
   props: Props;
 
@@ -13,7 +15,6 @@ export class Translation extends React.Component {
     super()
     this.getTranslation = this.getTranslation.bind(this)
   }
-
 
   componentDidMount () {
     if (Object.keys(this.props.translations).length === 0) {
@@ -25,11 +26,11 @@ export class Translation extends React.Component {
     if (Object.keys(this.props.translations).length && this.props.group && this.props.handle) {
       return this.props.translations[this.props.group][this.props.handle]
     } else {
-      return 'Translation missing';
+      return 'Translation missing'
     }
   }
 
-  render() {
+  render () {
     return (
       <div>
         {this.getTranslation()}
