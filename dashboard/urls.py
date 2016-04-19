@@ -16,5 +16,4 @@ urlpatterns = [
     url(r'^player/(?P<pk>[0-9]+)/$', views.PlayerDetailView.as_view(), name='playerdetail'),
     url(r'^coaches/', views.CoachListView.as_view(), name='coachlist'),
     url(r'^user/', views.UserDetailView.as_view(), name='userdetail'),
-    url(r'^docs/', include('rest_framework_docs.urls'), name='docs'),
 ]
