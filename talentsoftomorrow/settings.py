@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'opbeat.contrib.django',
     'django.contrib.humanize',
     'corsheaders',
+    'rest_framework_docs',
 ]
 
 REST_FRAMEWORK = {
