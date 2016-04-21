@@ -30,7 +30,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '!-jf7r%F!§fdsaDdA!!egsdfW2dsadfT"$§%GEW'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['.talentstomorrow.com']
 
@@ -235,4 +235,8 @@ OPBEAT = {
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 STATIC_ROOT = '/dashboard/static'
+
+CORS_ORIGIN_WHITELIST = (
+    'testdashboard.talentstomorrow.com'
+)
 
