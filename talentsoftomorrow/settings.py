@@ -237,6 +237,6 @@ STATIC_URL = '/static/'
 STATIC_ROOT = '/dashboard/static'
 
 CORS_ORIGIN_WHITELIST = (
-    'http://testdashboard.talentstomorrow.com/'
+    'http://testdashboard.talentstomorrow.com'
 )
 
