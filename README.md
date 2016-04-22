@@ -298,6 +298,7 @@ __JSON Response:__
   {
     "id": 1,
     "value": "198.0000000000",
+    "created": "2016-04-22T08:08:11.333967Z",
     "date": "2016-03-18",
     "description": "",
     "player": 1,
@@ -306,6 +307,7 @@ __JSON Response:__
   {
     "id": 2,
     "value": "3.0000000000",
+    "created": "2016-04-22T08:08:11.333967Z",
     "date": "2016-03-18",
     "description": "",
     "player": 2,
@@ -346,6 +348,7 @@ __JSON Response:__
 {
   "id": 1,
   "value": "198.0000000000",
+  "created": "2016-04-22T08:08:11.333967Z",
   "date": "2016-03-18",
   "description": "",
   "player": 1,
@@ -401,6 +404,7 @@ __Return Object:__
   {
     "id": 33,
     "value": "224.0000000000",
+    "created": "2016-04-22T08:08:11.333967Z",
     "date": "2016-12-02",
     "description": "asdfdsafdsflkjlasdkjflkjadslkf",
     "player": 1,
