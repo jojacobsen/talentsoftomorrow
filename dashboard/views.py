@@ -102,7 +102,7 @@ class PerformancesListView(generics.ListCreateAPIView):
             return JSONResponse(serializer.errors, status=400)
         serializer.save()
 
-        return HttpResponse(status=201)
+        return JSONResponse(serializer.data)
 
     def list(self, request):
         group = request.user.groups.values_list('name', flat=True)

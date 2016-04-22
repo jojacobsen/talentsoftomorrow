@@ -367,7 +367,7 @@ __Success response:__
 
 | Status code | Body    | Explanation |
 |:------------|:--------|:------------|
-| 201         | _Empty_ | Created     |
+| 200         | _JSON_ | Created     |
 
 __Error responses:__
 
@@ -393,6 +393,22 @@ __Data:__
 ]
 ```
 
+
+__Return Object:__
+
+```javescript
+[
+  {
+    "id": 33,
+    "value": "224.0000000000",
+    "date": "2016-12-02",
+    "description": "asdfdsafdsflkjlasdkjflkjadslkf",
+    "player": 1,
+    "measurement": 2
+  },
+  //...
+]
+```
 
 ### 5.1.7 List of coaches
 __Method:__ GET
