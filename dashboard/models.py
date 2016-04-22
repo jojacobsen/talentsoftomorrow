@@ -51,6 +51,7 @@ class Performance(models.Model):
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     measurement = models.ForeignKey(Measurement, on_delete=models.CASCADE)
     value = models.DecimalField(max_digits=16, decimal_places=10)
+    created = models.DateTimeField(auto_now_add=True)
     date = models.DateField()
     description = models.CharField(max_length=2000, blank=True)
 
