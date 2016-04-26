@@ -108,7 +108,7 @@ $ curl -X POST -H "Content-Type: application/json" -d '{"token":"<EXISTING_TOKEN
 ### 5.1.1 List of players
 __Method:__ GET
 
-__URL:__ /players/
+__URL:__ players/list/
 
 __Headers:__
 * Authorization: JWT ...
@@ -154,7 +154,7 @@ __JSON Response:__
 ### 5.1.2 Detail view of player
 __Method:__ GET
 
-__URL:__ /player/{ player_id }
+__URL:__ /player/{ player_id }/
 
 __Headers:__
 * Authorization: JWT ...
@@ -229,7 +229,7 @@ __JSON Response:__
 ### 5.1.3 Add new player
 __Method:__ POST
 
-__URL:__ /players/
+__URL:__ /players/create/
 
 __Headers:__
 * Authorization: JWT ...
@@ -269,7 +269,7 @@ __Data:__
 ### 5.1.4 List of performances
 __Method:__ GET
 
-__URL:__ /performances/
+__URL:__ /performances/list/
 
 __Headers:__
 * Authorization: JWT ...
@@ -320,7 +320,7 @@ __JSON Response:__
 ### 5.1.5 Detail view of performance
 __Method:__ GET
 
-__URL:__ /performance/{ performance_id }
+__URL:__ /performance/{ performance_id }/
 
 __Headers:__
 * Authorization: JWT ...
@@ -359,7 +359,7 @@ __JSON Response:__
 ### 5.1.6 Add new performances
 __Method:__ POST
 
-__URL:__ /performances/
+__URL:__ /performances/create/
 
 __Headers:__
 * Authorization: JWT ...
@@ -414,10 +414,91 @@ __Return Object:__
 ]
 ```
 
+
+### 5.1.6 Delete performances
+__Method:__ DELETE
+
+__URL:__ /performance/{ performance_id }/delete/
+
+__Headers:__
+* Authorization: JWT ...
+* Content-type: application/json
+
+
+__Success response:__
+
+| Status code | Body    | Explanation |
+|:------------|:--------|:------------|
+| 204         | _Empty_ | No Content  |
+
+__Error responses:__
+
+TBD
+
+| Status code | Body               | Explanation                                       |
+|:------------|:-------------------|:--------------------------------------------------|
+| 40x         | `{"error": "..."}` | Client Error - Don't repeat without modifications |
+| 50x         | `{"error": "..."}` | Server Error                                      |
+
+
+### 5.1.6 Update performances
+__Method:__ PUT
+
+__URL:__ /performances/create/
+
+__Headers:__
+* Authorization: JWT ...
+* Content-type: application/json
+
+
+__Success response:__
+
+| Status code | Body    | Explanation |
+|:------------|:--------|:------------|
+| 200         | _JSON_ | Created     |
+
+__Error responses:__
+
+TBD
+
+| Status code | Body               | Explanation                                       |
+|:------------|:-------------------|:--------------------------------------------------|
+| 40x         | `{"error": "..."}` | Client Error - Don't repeat without modifications |
+| 50x         | `{"error": "..."}` | Server Error                                      |
+
+__Data:__
+
+```javascript
+{
+  "value": "167.0000000000",
+  "created": "2016-04-22T08:08:11.333967Z",
+  "date": "2016-03-18",
+  "description": "",
+  "player": 1,
+  "measurement": 2
+}
+```
+
+
+__Return Object:__
+
+```javescript
+{
+  "id": 6,
+  "value": "167.0000000000",
+  "created": "2016-04-22T08:08:11.333967Z",
+  "date": "2016-03-18",
+  "description": "",
+  "player": 1,
+  "measurement": 2
+}
+```
+
+
 ### 5.1.7 List of coaches
 __Method:__ GET
 
-__URL:__ /coaches/
+__URL:__ /coaches/list/
 
 __Headers:__
 * Authorization: JWT ...
@@ -471,7 +552,7 @@ __JSON Response:__
 ### 5.1.8 List of measurements
 __Method:__ GET
 
-__URL:__ /measurements/
+__URL:__ /measurements/list/
 
 __Headers:__
 * Authorization: JWT ...

@@ -25,7 +25,7 @@ class JSONResponse(HttpResponse):
         super(JSONResponse, self).__init__(content, **kwargs)
 
 
-class PlayersListView(generics.ListCreateAPIView):
+class PlayersCreateView(generics.CreateAPIView):
     permission_classes = (IsAuthenticated,)
 
     # Parse JSON
@@ -40,6 +40,13 @@ class PlayersListView(generics.ListCreateAPIView):
         serializer.save()
 
         return HttpResponse(status=201)
+
+
+class PlayersListView(generics.ListAPIView):
+    permission_classes = (IsAuthenticated,)
+
+    # Parse JSON
+    parser_classes = (JSONParser,)
 
     def list(self, request):
         group = request.user.groups.values_list('name', flat=True)
@@ -88,7 +95,7 @@ class PlayerDetailView(generics.GenericAPIView):
         return JSONResponse(serializer.data)
 
 
-class PerformancesListView(generics.ListCreateAPIView):
+class PerformancesCreateView(generics.CreateAPIView):
     permission_classes = (IsAuthenticated,)
 
     # Parse JSON
@@ -103,6 +110,13 @@ class PerformancesListView(generics.ListCreateAPIView):
         serializer.save()
 
         return JSONResponse(serializer.data)
+
+
+class PerformancesListView(generics.ListAPIView):
+    permission_classes = (IsAuthenticated,)
+
+    # Parse JSON
+    parser_classes = (JSONParser,)
 
     def list(self, request):
         group = request.user.groups.values_list('name', flat=True)
@@ -148,7 +162,51 @@ class PerformanceDetailView(generics.GenericAPIView):
             return JSONResponse('User group not selected.', status=400)
 
         serializer = PerformanceSerializer(queryset)
+
         return JSONResponse(serializer.data)
+
+
+class PerformanceUpdateView(generics.UpdateAPIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = PerformanceSerializer
+
+    def get_queryset(self):
+        pk = self.kwargs['pk']
+        group = self.request.user.groups.values_list('name', flat=True)
+
+        if 'Club' in group:
+            queryset = Performance.objects.filter(pk=pk, player__club__user=self.request.user)
+        elif 'Coach' in group:
+            queryset = Performance.objects.filter(pk=pk, player__coaches__user=self.request.user)
+        else:
+            raise exceptions.PermissionDenied('User has no permission to access user data of player.')
+        return queryset
+
+    def update(self, request, *args, **kwargs):
+        data = JSONParser().parse(request)
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return JSONResponse(serializer.data)
+
+
+class PerformanceDeleteView(generics.DestroyAPIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = PerformanceSerializer
+
+    def get_queryset(self):
+        pk = self.kwargs['pk']
+        group = self.request.user.groups.values_list('name', flat=True)
+
+        if 'Club' in group:
+            queryset = Performance.objects.filter(pk=pk, player__club__user=self.request.user)
+        elif 'Coach' in group:
+            queryset = Performance.objects.filter(pk=pk, player__coaches__user=self.request.user)
+        else:
+            raise exceptions.PermissionDenied('User has no permission to access user data of player.')
+        return queryset
 
 
 class MeasurementsListView(generics.ListCreateAPIView):
