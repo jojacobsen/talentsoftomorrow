@@ -39,6 +39,7 @@ class Player(models.Model):
 class Measurement(models.Model):
     name = models.CharField(max_length=300)
     unit = models.CharField(max_length=100)
+    slug_name = models.CharField(max_length=100, unique=True)
     description = models.CharField(max_length=2000)
     upper_limit = models.DecimalField(max_digits=16, decimal_places=10)
     lower_limit = models.DecimalField(max_digits=16, decimal_places=10)
