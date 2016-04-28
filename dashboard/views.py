@@ -7,6 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
 from rest_framework import generics, exceptions
+from rest_framework import filters
 from django.http import HttpResponse
 
 
@@ -110,6 +111,8 @@ class PerformancesCreateView(generics.CreateAPIView):
 class PerformancesListView(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = PerformanceSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_fields = ('player', 'measurement')
     # Parse JSON
     parser_classes = (JSONParser,)
 

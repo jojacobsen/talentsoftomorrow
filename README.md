@@ -363,6 +363,16 @@ __JSON Response:__
 ]
 ```
 
+Filtering the list is possible as follows:
+
+```
+/performances/list/?measurement={ measurement_id }
+```
+
+```
+/performances/list/?measurement={ player_id }
+```
+
 ### 5.1.5 Detail view of performance
 __Method:__ GET
 
