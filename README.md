@@ -685,11 +685,11 @@ _Player_
       }
     ],
     "date_joined": "2016-03-18T14:46:18Z",
-    "last_login": null
+    "last_login": null,
     "profilepicture": {
-      "id": 10,
-      "picture": "/media/images/profile/1c5e3c39c74f459ca7a420e8445ee56d/user_3/free_logo_20.jpg",
-      "user": 3
+      "id": 12,
+      "picture": "/media/images/profile/user_2/e04f8601ddc34710bcbdcbb239199e47/free_logo_20.jpg",
+      "user": 2
     }
   },
   "club": {
@@ -727,7 +727,12 @@ _Club_
       }
     ],
     "date_joined": "2016-03-18T14:27:23Z",
-    "last_login": null
+    "last_login": null,
+    "profilepicture": {
+      "id": 12,
+      "picture": "/media/images/profile/user_2/e04f8601ddc34710bcbdcbb239199e47/free_logo_20.jpg",
+      "user": 2
+    }
   },
   "name": "FC Arsenal London"
 }
@@ -763,7 +768,12 @@ _Coach_
       }
     ],
     "date_joined": "2016-03-18T14:44:30Z",
-    "last_login": null
+    "last_login": null,
+    "profilepicture": {
+      "id": 12,
+      "picture": "/media/images/profile/user_2/e04f8601ddc34710bcbdcbb239199e47/free_logo_20.jpg",
+      "user": 2
+    }
   }
 }
 ```

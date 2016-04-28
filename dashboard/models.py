@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 def user_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/uuid/<filename>
     u = uuid.uuid4()
-    return 'images/profile/' + '{0}/user_{1}//{2}'.format(u.hex, instance.user.id, filename)
+    return 'images/profile/' + '/user_{0}/{1}/{2}'.format(instance.user.id, u.hex, filename)
 
 
 class Club(models.Model):
