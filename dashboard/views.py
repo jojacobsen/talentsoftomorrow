@@ -7,12 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
 from rest_framework import generics, exceptions
-from django.views import generic
 from django.http import HttpResponse
-
-
-class IndexView(generic.TemplateView):
-    template_name = 'dashboard/index.html'
 
 
 class JSONResponse(HttpResponse):
@@ -27,7 +22,7 @@ class JSONResponse(HttpResponse):
 
 class PlayersCreateView(generics.CreateAPIView):
     permission_classes = (IsAuthenticated,)
-
+    serializer_class = NewPlayersSerializer
     # Parse JSON
     parser_classes = (JSONParser,)
 
@@ -114,24 +109,20 @@ class PerformancesCreateView(generics.CreateAPIView):
 
 class PerformancesListView(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
-
+    serializer_class = PerformanceSerializer
     # Parse JSON
     parser_classes = (JSONParser,)
 
-    def list(self, request):
-        group = request.user.groups.values_list('name', flat=True)
+    def get_queryset(self):
+        group = self.request.user.groups.values_list('name', flat=True)
 
-        if 'Player' in group:
-            queryset = Performance.objects.filter(player__user=self.request.user)
+        if 'Club' in group:
+            queryset = Performance.objects.filter(player__club__user=self.request.user)
         elif 'Coach' in group:
             queryset = Performance.objects.filter(player__coaches__user=self.request.user)
-        elif 'Club' in group:
-            queryset = Performance.objects.filter(player__club__user=self.request.user)
         else:
-            return JSONResponse('User group not selected.', status=400)
-
-        serializer = PerformanceSerializer(queryset, many=True)
-        return JSONResponse(serializer.data)
+            raise exceptions.PermissionDenied('User has no permission to access user data of player.')
+        return queryset
 
 
 class PerformanceDetailView(generics.GenericAPIView):
@@ -209,7 +200,7 @@ class PerformanceDeleteView(generics.DestroyAPIView):
         return queryset
 
 
-class MeasurementsListView(generics.ListCreateAPIView):
+class MeasurementsListView(generics.ListAPIView):
     queryset = Measurement.objects.all()
     serializer_class = MeasurementSerializer
     permission_classes = (IsAuthenticated,)
@@ -220,7 +211,7 @@ class MeasurementsListView(generics.ListCreateAPIView):
         return JSONResponse(serializer.data)
 
 
-class CoachListView(generics.ListCreateAPIView):
+class CoachListView(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
 
     # Parse JSON

@@ -117,17 +117,18 @@ class NewPlayersSerializer(serializers.ModelSerializer):
     def validate(self, data):
         group = self.context['request'].user.groups.values_list('name', flat=True)
 
-        if 'Coach' in group:
+        if 'Club' in group:
+            return data
+        elif 'Coach' in group:
             for coach in data['coaches']:
                 if coach.club != self.context['request'].user.coach.club:
-                    raise exceptions.PermissionDenied('Coach can only create players of own club.')
-
+                    raise exceptions.PermissionDenied('Coach can only create players for coaches of own club.')
+                else:
+                    return data
         elif 'Player' in group:
             raise exceptions.PermissionDenied('Players can not create new users.')
         else:
             raise exceptions.PermissionDenied('User group not selected.')
-
-        return data
 
     def create(self, validated_data):
         coaches = validated_data.pop('coaches', None)
@@ -149,7 +150,6 @@ class NewPlayersSerializer(serializers.ModelSerializer):
         player_group = Group.objects.get(name='Player')
         user.groups.add(player_group)
         validated_data['user'] = user
-        self.context['request'].user.coach.club
         validated_data['lab_key'] = str(uuid.uuid5(uuid.NAMESPACE_X500, user.username))
 
         # Create the player

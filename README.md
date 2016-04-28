@@ -105,6 +105,52 @@ $ curl -X POST -H "Content-Type: application/json" -d '{"token":"<EXISTING_TOKEN
 
 ### 5.1 Endpoints
 
+All list endpoints can be used with pagination, e.g.:
+
+```
+/performances/list/?limit=3&offset=1
+```
+
+Will return only 3 objects (with offset 1) in following structure:
+
+```javascript
+{
+  "count": 35,
+  "next": "http://127.0.0.1:8000/performances/list/?limit=3&offset=4",
+  "previous": "http://127.0.0.1:8000/performances/list/?limit=3",
+  "results": [
+    {
+      "id": 7,
+      "value": "130.0000000000",
+      "created": "2016-04-22T08:08:11.333967Z",
+      "date": "2016-03-19",
+      "description": "",
+      "player": 1,
+      "measurement": 2
+    },
+    {
+      "id": 8,
+      "value": "198.0000000000",
+      "created": "2016-04-22T08:08:11.333967Z",
+      "date": "2016-03-19",
+      "description": "",
+      "player": 1,
+      "measurement": 2
+    },
+    {
+      "id": 9,
+      "value": "198.0000000000",
+      "created": "2016-04-22T08:08:11.333967Z",
+      "date": "2016-03-19",
+      "description": "",
+      "player": 1,
+      "measurement": 2
+    }
+  ]
+}
+```
+
+
 ### 5.1.1 List of players
 __Method:__ GET
 
@@ -415,7 +461,7 @@ __Return Object:__
 ```
 
 
-### 5.1.6 Delete performances
+### 5.1.7 Delete performances
 __Method:__ DELETE
 
 __URL:__ /performance/{ performance_id }/delete/
@@ -444,7 +490,7 @@ TBD
 ### 5.1.6 Update performances
 __Method:__ PUT
 
-__URL:__ /performances/create/
+__URL:__ /performance/{ performance_id }/update/
 
 __Headers:__
 * Authorization: JWT ...
@@ -495,7 +541,7 @@ __Return Object:__
 ```
 
 
-### 5.1.7 List of coaches
+### 5.1.8 List of coaches
 __Method:__ GET
 
 __URL:__ /coaches/list/
@@ -549,7 +595,7 @@ __JSON Response:__
 ```
 
 
-### 5.1.8 List of measurements
+### 5.1.9 List of measurements
 __Method:__ GET
 
 __URL:__ /measurements/list/
@@ -591,7 +637,7 @@ __JSON Response:__
 ```
 
 
-### 5.1.9 Get current user
+### 5.1.10 Get current user
 __Method:__ GET
 
 __URL:__ /user/
