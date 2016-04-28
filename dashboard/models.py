@@ -1,7 +1,14 @@
 from __future__ import unicode_literals
 
+import uuid
 from django.db import models
 from django.contrib.auth.models import User
+
+
+def user_directory_path(instance, filename):
+    # file will be uploaded to MEDIA_ROOT/user_<id>/uuid/<filename>
+    u = uuid.uuid4()
+    return 'images/profile/' + '{0}/user_{1}//{2}'.format(u.hex, instance.user.id, filename)
 
 
 class Club(models.Model):
@@ -31,6 +38,14 @@ class Player(models.Model):
         ('F', 'Female'),
     )
     gender = models.CharField(max_length=10, choices=GENDER_CHOICES)
+
+    def __str__(self):
+        return self.user.username
+
+
+class ProfilePicture(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    picture = models.ImageField(upload_to=user_directory_path)
 
     def __str__(self):
         return self.user.username

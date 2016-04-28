@@ -1,7 +1,7 @@
 import uuid
 import random
 from rest_framework import serializers, exceptions
-from dashboard.models import Performance, Player, Coach, Club, Measurement
+from dashboard.models import Performance, Player, Coach, Club, Measurement, ProfilePicture
 from django.contrib.auth.models import User, Group
 
 
@@ -22,13 +22,19 @@ class GroupSerializer(serializers.ModelSerializer):
         fields = ('id', 'name')
 
 
+class ProfilePictureSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProfilePicture
+
+
 class CurrentUserSerializer(serializers.ModelSerializer):
     groups = GroupSerializer(many=True)
+    profilepicture = ProfilePictureSerializer(read_only=True)
 
     class Meta:
         model = User
         fields = ('is_superuser', 'is_staff', 'is_active', 'username', 'first_name', 'last_name',
-                  'email', 'groups', 'date_joined', 'last_login')
+                  'email', 'groups', 'date_joined', 'last_login', 'profilepicture')
 
 
 class UserSerializer(serializers.ModelSerializer):

@@ -686,6 +686,11 @@ _Player_
     ],
     "date_joined": "2016-03-18T14:46:18Z",
     "last_login": null
+    "profilepicture": {
+      "id": 10,
+      "picture": "/media/images/profile/1c5e3c39c74f459ca7a420e8445ee56d/user_3/free_logo_20.jpg",
+      "user": 3
+    }
   },
   "club": {
     "id": 2,

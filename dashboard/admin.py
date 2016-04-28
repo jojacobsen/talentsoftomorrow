@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
 
-from dashboard.models import Coach, Club, Player, Measurement, Performance
+from dashboard.models import Coach, Club, Player, Measurement, Performance, ProfilePicture
 
 
 class PerformanceAdmin(admin.ModelAdmin):
@@ -27,4 +27,5 @@ admin.site.register(Coach)
 admin.site.register(Club)
 admin.site.register(Player)
 admin.site.register(Measurement)
+admin.site.register(ProfilePicture)
 admin.site.register(Performance, PerformanceAdmin)

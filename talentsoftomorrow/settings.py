@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'corsheaders',
     'rest_framework_docs',
+    'django_cleanup',
 ]
 
 REST_FRAMEWORK = {
@@ -234,7 +235,11 @@ OPBEAT = {
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
-STATIC_ROOT = '/dashboard/static'
+STATIC_ROOT = '/dashboard/static/'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'dashboard/media/')
+
 
 CORS_ORIGIN_WHITELIST = (
     'http://testdashboard.talentstomorrow.com'
