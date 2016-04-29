@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 import uuid
 from django.db import models
 from django.contrib.auth.models import User
+from fernet_fields import EncryptedTextField
 
 
 def user_directory_path(instance, filename):
@@ -33,6 +34,8 @@ class Player(models.Model):
     lab_key = models.CharField(max_length=100, unique=True)
     coaches = models.ManyToManyField(Coach, blank=True)
     birthday = models.DateField(blank=True)
+    first_name = EncryptedTextField()
+    last_name = EncryptedTextField()
     GENDER_CHOICES = (
         ('M', 'Male'),
         ('F', 'Female'),

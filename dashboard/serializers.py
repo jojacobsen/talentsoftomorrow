@@ -33,7 +33,7 @@ class CurrentUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('is_superuser', 'is_staff', 'is_active', 'username', 'first_name', 'last_name',
+        fields = ('id', 'is_superuser', 'is_staff', 'is_active', 'username', 'first_name', 'last_name',
                   'email', 'groups', 'date_joined', 'last_login', 'profilepicture')
 
 
@@ -73,7 +73,7 @@ class PlayersSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Player
-        fields = ('id', 'user', 'lab_key', 'gender', 'birthday')
+        fields = ('id', 'user', 'lab_key', 'gender', 'birthday', 'first_name', 'last_name')
 
 
 class PlayerSerializer(serializers.ModelSerializer):
@@ -83,7 +83,7 @@ class PlayerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Player
-        fields = ('id', 'user', 'lab_key', 'gender', 'birthday', 'coaches', 'club')
+        fields = ('id', 'user', 'lab_key', 'gender', 'birthday', 'coaches', 'club', 'first_name', 'last_name')
 
 
 class CurrentClubSerializer(serializers.ModelSerializer):
@@ -108,17 +108,16 @@ class CurrentPlayerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Player
-        fields = ('id', 'user', 'club', 'gender', 'birthday')
+        fields = ('id', 'user', 'club', 'gender', 'birthday', 'first_name', 'last_name')
 
 
 class NewPlayersSerializer(serializers.ModelSerializer):
-    user = NewUserSerializer()
     coaches = CoachSerializer
     club = ClubSerializer
 
     class Meta:
         model = Player
-        fields = ('user', 'gender', 'birthday', 'coaches')
+        exclude = ('user', 'lab_key', 'club')
 
     def validate(self, data):
         group = self.context['request'].user.groups.values_list('name', flat=True)
@@ -147,11 +146,8 @@ class NewPlayersSerializer(serializers.ModelSerializer):
             validated_data['club'] = self.context['request'].user.coach.club
 
         # Create the user for the player
-        user = validated_data.pop('user', None)
-        username = create_username(last_name=user['last_name'], first_name=user['first_name'])
-        user = User.objects.create_user(username=username,
-                                        last_name=user['last_name'],
-                                        first_name=user['first_name'])
+        username = create_username(last_name=validated_data['last_name'], first_name=validated_data['first_name'])
+        user = User.objects.create_user(username=username)
         # Add the group
         player_group = Group.objects.get(name='Player')
         user.groups.add(player_group)

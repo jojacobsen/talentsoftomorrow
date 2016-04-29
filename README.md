@@ -191,7 +191,9 @@ __JSON Response:__
     },
     "lab_key": "1234",
     "gender": "M",
-    "birthday": "2016-03-18"
+    "birthday": "2016-03-18",
+    "first_name": "Carlos",
+    "last_name": "Rambo"
   },
   // ...
 ]
@@ -237,6 +239,8 @@ __JSON Response:__
   "lab_key": "1234",
   "gender": "M",
   "birthday": "2016-03-18",
+  "first_name": "Carlos",
+  "last_name": "Rambo",
   "coaches": [
     {
       "id": 1,
@@ -302,7 +306,8 @@ __Data:__
 ```javascript
 [
   {
-    "user": {"last_name": "Carlos", "first_name": "Roberto"},
+    "first_name": "Carlos",
+    "last_name": "Rambo",
     "gender": "M",
     "birthday": "2010-03-18",
     "coach": [1]
@@ -370,7 +375,7 @@ Filtering the list is possible as follows:
 ```
 
 ```
-/performances/list/?measurement={ player_id }
+/performances/list/?player={ player_id }
 ```
 
 ### 5.1.5 Detail view of performance
@@ -714,7 +719,9 @@ _Player_
     "name": "FC Barcelona"
   },
   "gender": "M",
-  "birthday": "2016-03-18"
+  "birthday": "2016-03-18",
+  "first_name": "Carlos",
+  "last_name": "Rambo"
 }
 ```
 

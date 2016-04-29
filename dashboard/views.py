@@ -35,7 +35,7 @@ class PlayersCreateView(generics.CreateAPIView):
             return JSONResponse(serializer.errors, status=400)
         serializer.save()
 
-        return HttpResponse(status=201)
+        return JSONResponse(serializer.data)
 
 
 class PlayersListView(generics.ListAPIView):
