@@ -628,7 +628,8 @@ __JSON Response:__
     "slug_name": "sprint",
     "description": "balbla",
     "upper_limit": "20.0000000000",
-    "lower_limit": "3.0000000000"
+    "lower_limit": "3.0000000000",
+    "group": "test"
   },
   // ...
 ]
