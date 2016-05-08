@@ -1,1 +1,2 @@
 -r base.txt
+cryptography==1.3.1
