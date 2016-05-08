@@ -19,7 +19,7 @@ class PerformanceAdmin(admin.ModelAdmin):
     get_user.admin_order_field = 'player'   #Allows column order sorting
 
     def get_unit(self, obj):
-        return obj.measurement.unit
+        return obj.measurement.unit.name
     get_unit.short_description = 'Unit'  #Renames column head
 
 # Re-register UserAdmin

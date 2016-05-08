@@ -29,7 +29,7 @@ class Unit(models.Model):
 class Measurement(models.Model):
     name = models.CharField(max_length=300)
     unit = models.ForeignKey(Unit, on_delete=models.CASCADE)
-    slug_name = models.CharField(max_length=100, unique=True)
+    slug_name = models.CharField(max_length=100)
     description = models.CharField(max_length=2000)
     upper_limit = models.DecimalField(max_digits=16, decimal_places=10)
     lower_limit = models.DecimalField(max_digits=16, decimal_places=10)
@@ -59,7 +59,6 @@ class Player(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     club = models.ForeignKey(Club, on_delete=models.CASCADE)
     lab_key = models.CharField(max_length=100, unique=True)
-    coaches = models.ManyToManyField(Coach, blank=True)
     birthday = models.DateField(blank=True)
     first_name = EncryptedTextField()
     last_name = EncryptedTextField()

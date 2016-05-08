@@ -78,12 +78,11 @@ class PlayersSerializer(serializers.ModelSerializer):
 
 class PlayerSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
-    coaches = CoachSerializer(read_only=True, many=True)
     club = ClubSerializer(read_only=True)
 
     class Meta:
         model = Player
-        fields = ('id', 'user', 'lab_key', 'gender', 'birthday', 'coaches', 'club', 'first_name', 'last_name')
+        fields = ('id', 'user', 'lab_key', 'gender', 'birthday', 'club', 'first_name', 'last_name')
 
 
 class CurrentClubSerializer(serializers.ModelSerializer):
@@ -112,9 +111,6 @@ class CurrentPlayerSerializer(serializers.ModelSerializer):
 
 
 class NewPlayersSerializer(serializers.ModelSerializer):
-    coaches = CoachSerializer
-    club = ClubSerializer
-
     class Meta:
         model = Player
         exclude = ('user', 'lab_key', 'club')
@@ -125,19 +121,13 @@ class NewPlayersSerializer(serializers.ModelSerializer):
         if 'Club' in group:
             return data
         elif 'Coach' in group:
-            for coach in data['coaches']:
-                if coach.club != self.context['request'].user.coach.club:
-                    raise exceptions.PermissionDenied('Coach can only create players for coaches of own club.')
-                else:
-                    return data
+            return data
         elif 'Player' in group:
             raise exceptions.PermissionDenied('Players can not create new users.')
         else:
             raise exceptions.PermissionDenied('User group not selected.')
 
     def create(self, validated_data):
-        coaches = validated_data.pop('coaches', None)
-
         # Check the group of the current user
         group = self.context['request'].user.groups.values_list('name', flat=True)
         if 'Club' in group:
@@ -156,7 +146,6 @@ class NewPlayersSerializer(serializers.ModelSerializer):
 
         # Create the player
         player = Player.objects.create(**validated_data)
-        player.coaches = coaches
         return player
 
 
@@ -168,11 +157,10 @@ class PerformanceSerializer(serializers.ModelSerializer):
         group = self.context['request'].user.groups.values_list('name', flat=True)
 
         if 'Club' in group:
-            if data['player'].club.user != self.context['request'].user:
+            if data['player'].club != self.context['request'].user.club:
                 raise exceptions.PermissionDenied('Club has no permission to access performance data of player.')
         elif 'Coach' in group:
-            coaches = data['player'].coaches.all()
-            if self.context['request'].user.coach not in coaches:
+            if data['player'].club != self.context['request'].user.coach.club:
                 raise exceptions.PermissionDenied('Coach has no permission to access performance data of player.')
         elif 'Player' in group:
             raise exceptions.PermissionDenied('Players can not post performance data.')

@@ -241,28 +241,6 @@ __JSON Response:__
   "birthday": "2016-03-18",
   "first_name": "Carlos",
   "last_name": "Rambo",
-  "coaches": [
-    {
-      "id": 1,
-      "club": {
-        "id": 1,
-        "user": {
-          "id": 3,
-          "username": "Arsenal",
-          "last_name": "",
-          "first_name": "",
-          "email": ""
-        }
-      },
-      "user": {
-        "id": 5,
-        "username": "Bruno",
-        "last_name": "",
-        "first_name": "",
-        "email": ""
-      }
-    }
-  ],
   "club": {
     "id": 1,
     "user": {
@@ -310,7 +288,6 @@ __Data:__
     "last_name": "Rambo",
     "gender": "M",
     "birthday": "2010-03-18",
-    "coach": [1]
   },
   // ...
 ]
@@ -641,8 +618,14 @@ __JSON Response:__
 [
   {
     "id": 1,
+    "unit": {
+      "id": 4,
+      "name": "Seconds",
+      "abbreviation": "s",
+      "system": "-"
+    },
     "name": "Sprint (30m)",
-    "unit": "s",
+    "slug_name": "sprint",
     "description": "balbla",
     "upper_limit": "20.0000000000",
     "lower_limit": "3.0000000000"

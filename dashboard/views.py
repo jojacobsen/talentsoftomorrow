@@ -48,9 +48,9 @@ class PlayersListView(generics.ListAPIView):
         group = request.user.groups.values_list('name', flat=True)
 
         if 'Club' in group:
-            queryset = Player.objects.filter(club__user=self.request.user)
+            queryset = Player.objects.filter(club=self.request.user.club)
         elif 'Coach' in group:
-            queryset = Player.objects.filter(coaches__user=self.request.user)
+            queryset = Player.objects.filter(club=self.request.user.coach.club)
         elif 'Player' in group:
             return JSONResponse('Players can not see players list.', status=403)
         else:
@@ -68,13 +68,13 @@ class PlayerDetailView(generics.GenericAPIView):
 
         if 'Club' in group:
             try:
-                queryset = Player.objects.get(pk=pk, club__user=self.request.user)
+                queryset = Player.objects.get(pk=pk, club=self.request.user.club)
             except Player.DoesNotExist:
                 raise exceptions.PermissionDenied('User has no permission to access user data of player.')
 
         elif 'Coach' in group:
             try:
-                queryset = Player.objects.get(pk=pk, coaches__user=self.request.user)
+                queryset = Player.objects.get(pk=pk, club=self.request.user.coach.club)
             except Player.DoesNotExist:
                 raise exceptions.PermissionDenied('User has no permission to access user data of player.')
 
@@ -120,9 +120,9 @@ class PerformancesListView(generics.ListAPIView):
         group = self.request.user.groups.values_list('name', flat=True)
 
         if 'Club' in group:
-            queryset = Performance.objects.filter(player__club__user=self.request.user)
+            queryset = Performance.objects.filter(player__club=self.request.user.club)
         elif 'Coach' in group:
-            queryset = Performance.objects.filter(player__coaches__user=self.request.user)
+            queryset = Performance.objects.filter(player__club=self.request.user.coach.club)
         else:
             raise exceptions.PermissionDenied('User has no permission to access user data of player.')
         return queryset
@@ -136,13 +136,13 @@ class PerformanceDetailView(generics.GenericAPIView):
 
         if 'Club' in group:
             try:
-                queryset = Performance.objects.get(pk=pk, player__club__user=self.request.user)
+                queryset = Performance.objects.get(pk=pk, player__club=self.request.user.club)
             except Performance.DoesNotExist:
                 raise exceptions.PermissionDenied('User has no permission to access user data of player.')
 
         elif 'Coach' in group:
             try:
-                queryset = Performance.objects.get(pk=pk, player__coaches__user=self.request.user)
+                queryset = Performance.objects.get(pk=pk, player__club=self.request.user.coach.club)
             except Performance.DoesNotExist:
                 raise exceptions.PermissionDenied('User has no permission to access user data of player.')
 
@@ -169,9 +169,9 @@ class PerformanceUpdateView(generics.UpdateAPIView):
         group = self.request.user.groups.values_list('name', flat=True)
 
         if 'Club' in group:
-            queryset = Performance.objects.filter(pk=pk, player__club__user=self.request.user)
+            queryset = Performance.objects.filter(pk=pk, player__club=self.request.user.club)
         elif 'Coach' in group:
-            queryset = Performance.objects.filter(pk=pk, player__coaches__user=self.request.user)
+            queryset = Performance.objects.filter(pk=pk, player__club=self.request.user.coach.club)
         else:
             raise exceptions.PermissionDenied('User has no permission to access user data of player.')
         return queryset
@@ -195,18 +195,31 @@ class PerformanceDeleteView(generics.DestroyAPIView):
         group = self.request.user.groups.values_list('name', flat=True)
 
         if 'Club' in group:
-            queryset = Performance.objects.filter(pk=pk, player__club__user=self.request.user)
+            queryset = Performance.objects.filter(pk=pk, player__club=self.request.user.club)
         elif 'Coach' in group:
-            queryset = Performance.objects.filter(pk=pk, player__coaches__user=self.request.user)
+            queryset = Performance.objects.filter(pk=pk, player__club=self.request.user.coach.club)
         else:
             raise exceptions.PermissionDenied('User has no permission to access user data of player.')
         return queryset
 
 
 class MeasurementsListView(generics.ListAPIView):
-    queryset = Measurement.objects.all()
     serializer_class = MeasurementSerializer
     permission_classes = (IsAuthenticated,)
+
+    def get_queryset(self):
+        group = self.request.user.groups.values_list('name', flat=True)
+
+        if 'Club' in group:
+            queryset = self.request.user.club.measurements.filter()
+        elif 'Coach' in group:
+            queryset = self.request.user.coach.club.measurements.filter()
+        elif 'Player' in group:
+            queryset = self.request.user.player.club.measurements.filter()
+        else:
+            raise exceptions.PermissionDenied('User has no permission to access user data of player.')
+
+        return queryset
 
     def list(self, request, *args, **kwargs):
         queryset = self.get_queryset()
