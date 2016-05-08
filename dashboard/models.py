@@ -33,6 +33,12 @@ class Measurement(models.Model):
     description = models.CharField(max_length=2000)
     upper_limit = models.DecimalField(max_digits=16, decimal_places=10)
     lower_limit = models.DecimalField(max_digits=16, decimal_places=10)
+    GROUP_CHOICES = (
+        ('test', 'test'),
+        ('anthro', 'anthropometric'),
+        ('quali', 'qualitative'),
+    )
+    group = models.CharField(max_length=10, choices=GROUP_CHOICES)
 
     def __str__(self):
         return self.name + ' in ' + self.unit.name
