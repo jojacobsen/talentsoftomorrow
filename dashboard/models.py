@@ -12,9 +12,36 @@ def user_directory_path(instance, filename):
     return 'images/profile/' + '/user_{0}/{1}/{2}'.format(instance.user.id, u.hex, filename)
 
 
+class Unit(models.Model):
+    name = models.CharField(max_length=100)
+    abbreviation = models.CharField(max_length=50)
+    SYSTEM_CHOICES = (
+        ('SI', 'Metric'),
+        ('Imp', 'Imperial'),
+        ('-', 'None'),
+    )
+    system = models.CharField(max_length=10, choices=SYSTEM_CHOICES)
+
+    def __str__(self):
+        return self.name
+
+
+class Measurement(models.Model):
+    name = models.CharField(max_length=300)
+    unit = models.ForeignKey(Unit, on_delete=models.CASCADE)
+    slug_name = models.CharField(max_length=100, unique=True)
+    description = models.CharField(max_length=2000)
+    upper_limit = models.DecimalField(max_digits=16, decimal_places=10)
+    lower_limit = models.DecimalField(max_digits=16, decimal_places=10)
+
+    def __str__(self):
+        return self.name + ' in ' + self.unit.name
+
+
 class Club(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100, null=True)
+    measurements = models.ManyToManyField(Measurement, blank=True)
 
     def __str__(self):
         return self.user.username
@@ -52,18 +79,6 @@ class ProfilePicture(models.Model):
 
     def __str__(self):
         return self.user.username
-
-
-class Measurement(models.Model):
-    name = models.CharField(max_length=300)
-    unit = models.CharField(max_length=100)
-    slug_name = models.CharField(max_length=100, unique=True)
-    description = models.CharField(max_length=2000)
-    upper_limit = models.DecimalField(max_digits=16, decimal_places=10)
-    lower_limit = models.DecimalField(max_digits=16, decimal_places=10)
-
-    def __str__(self):
-        return self.name
 
 
 class Performance(models.Model):

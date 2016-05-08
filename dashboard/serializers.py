@@ -1,7 +1,7 @@
 import uuid
 import random
 from rest_framework import serializers, exceptions
-from dashboard.models import Performance, Player, Coach, Club, Measurement, ProfilePicture
+from dashboard.models import Performance, Player, Coach, Club, Measurement, ProfilePicture, Unit
 from django.contrib.auth.models import User, Group
 
 
@@ -191,7 +191,14 @@ class PerformanceSerializer(serializers.ModelSerializer):
         return performance
 
 
+class UnitSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Unit
+
+
 class MeasurementSerializer(serializers.ModelSerializer):
+    unit = UnitSerializer(read_only=True)
+
     class Meta:
         model = Measurement
 

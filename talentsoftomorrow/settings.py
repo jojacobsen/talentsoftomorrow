@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework_docs',
     'django_cleanup',
+    'modeltranslation',
 ]
 
 REST_FRAMEWORK = {
@@ -195,6 +196,12 @@ USE_L10N = True
 
 USE_TZ = True
 
+LANGUAGES = (
+    ('en', 'English'),
+    ('da', 'Danish'),
+    ('de', 'German'),
+)
+
 EVENT_TRIGGER = 0.2
 
 # CELERY SETTINGS
@@ -245,6 +252,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'dashboard/media/')
 
 
 CORS_ORIGIN_WHITELIST = (
-    'http://testdashboard.talentstomorrow.com'
+    'http://testdashboard.talentstomorrow.com',
+    'http://demo.talentstomorrow.com',
 )
 
