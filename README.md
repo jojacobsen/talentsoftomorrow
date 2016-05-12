@@ -255,7 +255,7 @@ __JSON Response:__
 ```
 
 ### 5.1.3 Update player
-__Method:__ GET
+__Method:__ PUT
 
 __URL:__ /player/{ player_id }/update
 
