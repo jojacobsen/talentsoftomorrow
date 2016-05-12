@@ -687,7 +687,7 @@ _Player_
     "last_login": null,
     "profilepicture": {
       "id": 12,
-      "picture": "/media/images/profile/user_2/e04f8601ddc34710bcbdcbb239199e47/free_logo_20.jpg",
+      "url": "/media/images/profile/user_2/e04f8601ddc34710bcbdcbb239199e47/free_logo_20.jpg",
       "user": 2
     }
   },
@@ -731,7 +731,7 @@ _Club_
     "last_login": null,
     "profilepicture": {
       "id": 12,
-      "picture": "/media/images/profile/user_2/e04f8601ddc34710bcbdcbb239199e47/free_logo_20.jpg",
+      "url": "/media/images/profile/user_2/e04f8601ddc34710bcbdcbb239199e47/free_logo_20.jpg",
       "user": 2
     }
   },
@@ -772,7 +772,7 @@ _Coach_
     "last_login": null,
     "profilepicture": {
       "id": 12,
-      "picture": "/media/images/profile/user_2/e04f8601ddc34710bcbdcbb239199e47/free_logo_20.jpg",
+      "url": "/media/images/profile/user_2/e04f8601ddc34710bcbdcbb239199e47/free_logo_20.jpg",
       "user": 2
     }
   }

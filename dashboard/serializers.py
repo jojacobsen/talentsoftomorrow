@@ -29,12 +29,12 @@ class ProfilePictureSerializer(serializers.ModelSerializer):
 
 class CurrentUserSerializer(serializers.ModelSerializer):
     groups = GroupSerializer(many=True)
-    profilepicture = ProfilePictureSerializer(read_only=True)
+    url = ProfilePictureSerializer(read_only=True)
 
     class Meta:
         model = User
         fields = ('id', 'is_superuser', 'is_staff', 'is_active', 'username', 'first_name', 'last_name',
-                  'email', 'groups', 'date_joined', 'last_login', 'profilepicture')
+                  'email', 'groups', 'date_joined', 'last_login', 'url')
 
 
 class UserSerializer(serializers.ModelSerializer):

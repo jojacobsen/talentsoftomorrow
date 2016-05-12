@@ -80,7 +80,7 @@ class Player(models.Model):
 
 class ProfilePicture(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    picture = models.ImageField(upload_to=user_directory_path)
+    url = models.ImageField(upload_to=user_directory_path)
 
     def __str__(self):
         return self.user.username
