@@ -68,6 +68,8 @@ class Player(models.Model):
     birthday = models.DateField(blank=True)
     first_name = EncryptedTextField()
     last_name = EncryptedTextField()
+    active = models.BooleanField(default=True)
+    archived = models.BooleanField(default=False)
     GENDER_CHOICES = (
         ('M', 'Male'),
         ('F', 'Female'),

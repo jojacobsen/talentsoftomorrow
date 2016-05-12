@@ -22,6 +22,7 @@ urlpatterns = [
     url(r'^players/list/', views.PlayersListView.as_view(), name='players-list'),
     url(r'^players/create/', views.PlayersCreateView.as_view(), name='players-list'),
     url(r'^player/(?P<pk>[0-9]+)/$', views.PlayerDetailView.as_view(), name='player-detail'),
+    url(r'^player/(?P<pk>[0-9]+)/update/', views.PlayerUpdateView.as_view(), name='player-update'),
     url(r'^coaches/list/', views.CoachListView.as_view(), name='coaches-list'),
     url(r'^user/', views.UserDetailView.as_view(), name='user-detail'),
     url(r'^docs/', include('rest_framework_docs.urls')),

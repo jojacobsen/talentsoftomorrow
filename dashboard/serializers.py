@@ -73,7 +73,7 @@ class PlayersSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Player
-        fields = ('id', 'user', 'lab_key', 'gender', 'birthday', 'first_name', 'last_name')
+        fields = ('id', 'user', 'lab_key', 'gender', 'birthday', 'first_name', 'last_name', 'active', 'archived')
 
 
 class PlayerSerializer(serializers.ModelSerializer):
@@ -82,7 +82,7 @@ class PlayerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Player
-        fields = ('id', 'user', 'lab_key', 'gender', 'birthday', 'club', 'first_name', 'last_name')
+        fields = ('id', 'user', 'lab_key', 'gender', 'birthday', 'club', 'first_name', 'last_name', 'active', 'archived')
 
 
 class CurrentClubSerializer(serializers.ModelSerializer):

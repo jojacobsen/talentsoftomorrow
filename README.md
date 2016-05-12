@@ -254,7 +254,83 @@ __JSON Response:__
 }
 ```
 
-### 5.1.3 Add new player
+### 5.1.3 Update player
+__Method:__ GET
+
+__URL:__ /player/{ player_id }/update
+
+__Headers:__
+* Authorization: JWT ...
+* Content-type: application/json
+
+
+__Success response:__
+
+| Status code | Body    | Explanation |
+|:------------|:--------|:------------|
+| 200         | _JSON_  | OK          |
+
+__Error responses:__
+
+TBD
+
+| Status code | Body               | Explanation                                       |
+|:------------|:-------------------|:--------------------------------------------------|
+| 40x         | `{"error": "..."}` | Client Error - Don't repeat without modifications |
+| 50x         | `{"error": "..."}` | Server Error                                      |
+
+__Data:__
+
+```javascript
+{
+    "birthday": "2011-03-18",
+    "first_name": "Messi",
+    "last_name": "Jacob",
+    "active": true,
+    "gender": "M",
+    "lab_key": "333331234",
+    "archived": true
+  }
+```
+
+__JSON Response:__
+
+```javascript
+{
+  "id": 45,
+  "user": {
+    "id": 55,
+    "username": "lmeo38670",
+    "last_name": "",
+    "first_name": "",
+    "email": ""
+  },
+  "lab_key": "333331234",
+  "gender": "M",
+  "birthday": "2011-03-18",
+  "club": {
+    "id": 1,
+    "user": {
+      "id": 3,
+      "username": "Arsenal",
+      "last_name": "",
+      "first_name": "",
+      "email": ""
+    },
+    "name": "FC Arsenal London",
+    "measurements": [
+      1,
+      3
+    ]
+  },
+  "first_name": "Messi",
+  "last_name": "Jacob",
+  "active": true,
+  "archived": true
+}
+```
+
+### 5.1.4 Add new player
 __Method:__ POST
 
 __URL:__ /players/create/
@@ -294,7 +370,7 @@ __Data:__
 ```
 
 
-### 5.1.4 List of performances
+### 5.1.5 List of performances
 __Method:__ GET
 
 __URL:__ /performances/list/
@@ -355,7 +431,7 @@ Filtering the list is possible as follows:
 /performances/list/?player={ player_id }
 ```
 
-### 5.1.5 Detail view of performance
+### 5.1.6 Detail view of performance
 __Method:__ GET
 
 __URL:__ /performance/{ performance_id }/
@@ -394,7 +470,7 @@ __JSON Response:__
 }
 ```
 
-### 5.1.6 Add new performances
+### 5.1.7 Add new performances
 __Method:__ POST
 
 __URL:__ /performances/create/
@@ -453,7 +529,7 @@ __Return Object:__
 ```
 
 
-### 5.1.7 Delete performances
+### 5.1.8 Delete performances
 __Method:__ DELETE
 
 __URL:__ /performance/{ performance_id }/delete/
@@ -533,7 +609,7 @@ __Return Object:__
 ```
 
 
-### 5.1.8 List of coaches
+### 5.1.9 List of coaches
 __Method:__ GET
 
 __URL:__ /coaches/list/
@@ -587,7 +663,7 @@ __JSON Response:__
 ```
 
 
-### 5.1.9 List of measurements
+### 5.1.10 List of measurements
 __Method:__ GET
 
 __URL:__ /measurements/list/
@@ -636,7 +712,7 @@ __JSON Response:__
 ```
 
 
-### 5.1.10 Get current user
+### 5.1.11 Get current user
 __Method:__ GET
 
 __URL:__ /user/
