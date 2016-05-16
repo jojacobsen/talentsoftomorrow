@@ -2,7 +2,8 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import User
 
-from dashboard.models import Coach, Club, Player, Measurement, Performance, ProfilePicture, Unit
+from dashboard.models import Coach, Club, Player, Measurement, Performance, ProfilePicture, Unit, \
+    DnaMeasurement, DnaResult
 
 
 class PerformanceAdmin(admin.ModelAdmin):
@@ -29,4 +30,6 @@ admin.site.register(Player)
 admin.site.register(Measurement)
 admin.site.register(ProfilePicture)
 admin.site.register(Unit)
+admin.site.register(DnaMeasurement)
+admin.site.register(DnaResult)
 admin.site.register(Performance, PerformanceAdmin)

@@ -4,6 +4,7 @@ import uuid
 from django.db import models
 from django.contrib.auth.models import User
 from fernet_fields import EncryptedTextField
+from django.contrib.postgres.fields import JSONField, ArrayField
 
 
 def user_directory_path(instance, filename):
@@ -26,6 +27,18 @@ class Unit(models.Model):
         return self.name
 
 
+class DnaMeasurement(models.Model):
+    name = models.CharField(max_length=300)
+    unit = models.ForeignKey(Unit, on_delete=models.CASCADE)
+    slug_name = models.CharField(max_length=100, unique=True)
+    description = models.CharField(max_length=2000)
+    upper_limit = models.DecimalField(max_digits=16, decimal_places=10)
+    lower_limit = models.DecimalField(max_digits=16, decimal_places=10)
+
+    def __str__(self):
+        return self.name + ' in ' + self.unit.name
+
+
 class Measurement(models.Model):
     name = models.CharField(max_length=300)
     unit = models.ForeignKey(Unit, on_delete=models.CASCADE)
@@ -39,6 +52,8 @@ class Measurement(models.Model):
         ('quali', 'qualitative'),
     )
     group = models.CharField(max_length=10, choices=GROUP_CHOICES)
+    related_dna_measurement = models.ForeignKey(DnaMeasurement, on_delete=models.CASCADE, null=True)
+    factor_to_dna_measurement = models.FloatField(default=1, blank=True)
 
     def __str__(self):
         return self.name + ' in ' + self.unit.name
@@ -91,8 +106,17 @@ class ProfilePicture(models.Model):
 class Performance(models.Model):
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     measurement = models.ForeignKey(Measurement, on_delete=models.CASCADE)
-    value = models.DecimalField(max_digits=16, decimal_places=10)
+    value = models.DecimalField(max_digits=20, decimal_places=10)
     created = models.DateTimeField(auto_now_add=True)
     date = models.DateField()
     description = models.CharField(max_length=2000, blank=True)
 
+
+class DnaResult(models.Model):
+    player = models.ForeignKey(Player, on_delete=models.CASCADE)
+    dna_measurement = models.ForeignKey(DnaMeasurement, on_delete=models.CASCADE)
+    value = models.DecimalField(max_digits=20, decimal_places=10)
+    created = models.DateTimeField(auto_now_add=True)
+    date = models.DateTimeField()
+    original_filename = models.CharField(max_length=2000)
+    meta = JSONField(default=dict())

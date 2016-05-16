@@ -854,6 +854,112 @@ _Coach_
   }
 }
 ```
+
+
+### 5.1.12 List of DNA results
+__Method:__ GET
+
+__URL:__ /dna-results/list/
+
+__Headers:__
+* Authorization: JWT ...
+* Content-type: application/json
+
+
+__Success response:__
+
+| Status code | Body    | Explanation |
+|:------------|:--------|:------------|
+| 200         | _JSON_  | OK          |
+
+__Error responses:__
+
+TBD
+
+| Status code | Body               | Explanation                                       |
+|:------------|:-------------------|:--------------------------------------------------|
+| 40x         | `{"error": "..."}` | Client Error - Don't repeat without modifications |
+| 50x         | `{"error": "..."}` | Server Error                                      |
+
+__JSON Response:__
+
+```javascript
+[
+  {
+    "id": 9,
+    "value": "1.8314832000",
+    "created": "2016-05-16T14:41:09.913398Z",
+    "date": "2015-11-22T21:43:00Z",
+    "original_filename": "genome_Full_20151120044531.zip",
+    "meta": {
+      "snp": [
+        {
+          "rsp": "T/C"
+        }
+      ]
+    },
+    "player": 1,
+    "dna_measurement": 1
+  },
+  // ...
+]
+```
+
+Filtering the list is possible as follows:
+
+```
+/dna-results/list/?measurement={ dna_measurement_id }
+```
+
+
+### 5.1.13 List of DNA measurements
+__Method:__ GET
+
+__URL:__ /dna-measurements/list/
+
+__Headers:__
+* Authorization: JWT ...
+* Content-type: application/json
+
+
+__Success response:__
+
+| Status code | Body    | Explanation |
+|:------------|:--------|:------------|
+| 200         | _JSON_  | OK          |
+
+__Error responses:__
+
+TBD
+
+| Status code | Body               | Explanation                                       |
+|:------------|:-------------------|:--------------------------------------------------|
+| 40x         | `{"error": "..."}` | Client Error - Don't repeat without modifications |
+| 50x         | `{"error": "..."}` | Server Error                                      |
+
+__JSON Response:__
+
+```javascript
+[
+  {
+    "id": 1,
+    "unit": {
+      "id": 6,
+      "name": "Meter",
+      "abbreviation": "m",
+      "system": "SI"
+    },
+    "name": "Height",
+    "slug_name": "gheight_m_estimate",
+    "description": "Estimated height.",
+    "upper_limit": "1.0000000000",
+    "lower_limit": "2.5000000000"
+  }
+  // ...
+]
+```
+
+
 ### 5.2 Data
 
 TBD

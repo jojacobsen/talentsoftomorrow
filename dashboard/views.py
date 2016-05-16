@@ -1,9 +1,10 @@
-from dashboard.models import Performance, Player, Measurement, Coach, Club
+from dashboard.models import Performance, Player, DnaMeasurement, Coach, Club, DnaResult
 from dashboard.serializers import PerformanceSerializer, PlayersSerializer, \
     PlayerSerializer, MeasurementSerializer, NewPlayersSerializer, CoachSerializer, CurrentClubSerializer, \
-    CurrentCoachSerializer, CurrentPlayerSerializer
+    CurrentCoachSerializer, CurrentPlayerSerializer, DnaResultSerializer, DnaMeasurementSerializer
 
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
 from rest_framework import generics, exceptions
@@ -296,3 +297,56 @@ class UserDetailView(generics.GenericAPIView):
         return JSONResponse(serializer.data)
 
 
+class DnaResultCreateView(generics.CreateAPIView):
+    """
+    Creates DNA Result.
+    Raturn status code.
+    * Requires token authentication from admin account.
+    """
+    authentication_classes = (TokenAuthentication,)
+
+    permission_classes = (IsAdminUser,)
+    serializer_class = DnaResultSerializer
+    # Parse JSON
+    parser_classes = (JSONParser,)
+
+    def create(self, request, format=None):
+        data = JSONParser().parse(request)
+        serializer = DnaResultSerializer(data=data, context={'request': request})
+        if not serializer.is_valid():
+            # Response error message if JSON Format is incorrect
+            return JSONResponse(serializer.errors, status=400)
+        serializer.save()
+
+        return JSONResponse('DNA result saved in app.', status=201)
+
+
+class DnaResultsListView(generics.ListAPIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = DnaResultSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_fields = ('player', 'dna_measurement')
+    # Parse JSON
+    parser_classes = (JSONParser,)
+
+    def get_queryset(self):
+        group = self.request.user.groups.values_list('name', flat=True)
+
+        if 'Club' in group:
+            queryset = DnaResult.objects.filter(player__club=self.request.user.club)
+        elif 'Coach' in group:
+            queryset = DnaResult.objects.filter(player__club=self.request.user.coach.club)
+        else:
+            raise exceptions.PermissionDenied('User has no permission to access user data of player.')
+        return queryset
+
+
+class DnaMeasurementsListView(generics.ListAPIView):
+    serializer_class = DnaMeasurementSerializer
+    permission_classes = (IsAuthenticated,)
+    queryset = DnaMeasurement.objects.all()
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = DnaMeasurementSerializer(queryset, many=True)
+        return JSONResponse(serializer.data)

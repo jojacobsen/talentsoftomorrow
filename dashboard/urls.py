@@ -24,6 +24,9 @@ urlpatterns = [
     url(r'^player/(?P<pk>[0-9]+)/$', views.PlayerDetailView.as_view(), name='player-detail'),
     url(r'^player/(?P<pk>[0-9]+)/update/', views.PlayerUpdateView.as_view(), name='player-update'),
     url(r'^coaches/list/', views.CoachListView.as_view(), name='coaches-list'),
+    url(r'^dna-result/create/', views.DnaResultCreateView.as_view(), name='dna-result-create'),
+    url(r'^dna-results/list/', views.DnaResultsListView.as_view(), name='dna-results-list'),
+    url(r'^dna-measurements/list/', views.DnaMeasurementsListView.as_view(), name='measurements-list'),
     url(r'^user/', views.UserDetailView.as_view(), name='user-detail'),
     url(r'^docs/', include('rest_framework_docs.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
