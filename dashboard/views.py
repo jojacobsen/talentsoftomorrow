@@ -1,7 +1,8 @@
 from dashboard.models import Performance, Player, DnaMeasurement, Coach, Club, DnaResult
 from dashboard.serializers import PerformanceSerializer, PlayersSerializer, \
     PlayerSerializer, MeasurementSerializer, NewPlayersSerializer, CoachSerializer, CurrentClubSerializer, \
-    CurrentCoachSerializer, CurrentPlayerSerializer, DnaResultSerializer, DnaMeasurementSerializer
+    CurrentCoachSerializer, CurrentPlayerSerializer, DnaResultSerializer, DnaMeasurementSerializer, \
+    CreateDnaResultSerializer
 
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
@@ -306,13 +307,13 @@ class DnaResultCreateView(generics.CreateAPIView):
     authentication_classes = (TokenAuthentication,)
 
     permission_classes = (IsAdminUser,)
-    serializer_class = DnaResultSerializer
+    serializer_class = CreateDnaResultSerializer
     # Parse JSON
     parser_classes = (JSONParser,)
 
     def create(self, request, format=None):
         data = JSONParser().parse(request)
-        serializer = DnaResultSerializer(data=data, context={'request': request})
+        serializer = CreateDnaResultSerializer(data=data, context={'request': request})
         if not serializer.is_valid():
             # Response error message if JSON Format is incorrect
             return JSONResponse(serializer.errors, status=400)
