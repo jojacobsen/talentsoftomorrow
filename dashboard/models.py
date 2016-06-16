@@ -52,7 +52,7 @@ class Measurement(models.Model):
         ('quali', 'qualitative'),
     )
     group = models.CharField(max_length=10, choices=GROUP_CHOICES)
-    related_dna_measurement = models.ForeignKey(DnaMeasurement, on_delete=models.CASCADE, null=True)
+    related_dna_measurement = models.ForeignKey(DnaMeasurement, on_delete=models.CASCADE, blank=True)
     factor_to_dna_measurement = models.FloatField(default=1, blank=True)
 
     def __str__(self):
