@@ -52,8 +52,8 @@ class Measurement(models.Model):
         ('quali', 'qualitative'),
     )
     group = models.CharField(max_length=10, choices=GROUP_CHOICES)
-    related_dna_measurement = models.ForeignKey(DnaMeasurement, on_delete=models.CASCADE, blank=True)
-    factor_to_dna_measurement = models.FloatField(default=1, blank=True)
+    related_dna_measurement = models.ForeignKey(DnaMeasurement, on_delete=models.CASCADE, blank=True, null=True)
+    factor_to_dna_measurement = models.FloatField(default=1, blank=True, null=True)
 
     def __str__(self):
         return self.name + ' in ' + self.unit.name
@@ -80,7 +80,7 @@ class Player(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     club = models.ForeignKey(Club, on_delete=models.CASCADE)
     lab_key = models.CharField(max_length=100, unique=True)
-    birthday = models.DateField(blank=True)
+    birthday = models.DateField()
     first_name = EncryptedTextField()
     last_name = EncryptedTextField()
     active = models.BooleanField(default=True)
