@@ -4,6 +4,7 @@ from django.views.generic import TemplateView
 
 from django.conf import settings
 from django.conf.urls.static import static
+from rest_framework.urlpatterns import format_suffix_patterns
 
 from . import views
 
@@ -20,7 +21,8 @@ urlpatterns = [
     url(r'^performance/(?P<pk>[0-9]+)/delete/$', views.PerformanceDeleteView.as_view(), name='performance-delete'),
     url(r'^measurements/list/', views.MeasurementsListView.as_view(), name='measurements-list'),
     url(r'^players/list/', views.PlayersListView.as_view(), name='players-list'),
-    url(r'^players/create/', views.PlayersCreateView.as_view(), name='players-list'),
+    url(r'^players/create/', views.PlayersCreateView.as_view(), name='players-create'),
+    url(r'^players/import/$', views.PlayerImportView.as_view(), name='players-import'),
     url(r'^player/(?P<pk>[0-9]+)/$', views.PlayerDetailView.as_view(), name='player-detail'),
     url(r'^player/(?P<pk>[0-9]+)/update/', views.PlayerUpdateView.as_view(), name='player-update'),
     url(r'^coaches/list/', views.CoachListView.as_view(), name='coaches-list'),
