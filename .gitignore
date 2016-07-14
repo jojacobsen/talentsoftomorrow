@@ -67,3 +67,4 @@ target/
 *.DS_Store
 venv
 dashboard/media
+.Rproj.user
