@@ -2,18 +2,16 @@ from dashboard.models import Performance, Player, DnaMeasurement, Coach, Club, D
 from dashboard.serializers import PerformanceSerializer, PlayersSerializer, \
     PlayerSerializer, MeasurementSerializer, NewPlayersSerializer, CoachSerializer, CurrentClubSerializer, \
     CurrentCoachSerializer, CurrentPlayerSerializer, DnaResultSerializer, DnaMeasurementSerializer, \
-    CreateDnaResultSerializer
+    CreateDnaResultSerializer, PerformanceAnalyse, PerformanceAnalyseSerializer
 
-from rest_framework.views import APIView
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.renderers import JSONRenderer
-from rest_framework.parsers import JSONParser, FileUploadParser
+from rest_framework.parsers import JSONParser
 from rest_framework import generics, exceptions
 from rest_framework import filters
 from django.http import HttpResponse
-import csv
-from io import TextIOWrapper
+
 
 class JSONResponse(HttpResponse):
     """
@@ -39,30 +37,6 @@ class PlayersCreateView(generics.CreateAPIView):
             return JSONResponse(serializer.errors, status=400)
         serializer.save()
 
-        return JSONResponse(serializer.data)
-
-
-class PlayerImportView(APIView):
-    permission_classes = (IsAdminUser,)
-    serializer_class = NewPlayersSerializer
-    # Parse JSON
-    parser_classes = (FileUploadParser,)
-
-    def put(self, request, format=None):
-        f = TextIOWrapper(request.FILES['file'].file, encoding=request.encoding)
-        reader = csv.DictReader(f, delimiter=';')
-        num_imports = 0
-
-        for row in reader:
-            test = row
-            num_imports += 1
-
-        serializer = NewPlayersSerializer(data=reader, many=True, context={'request': request})
-        if not serializer.is_valid():
-            # Response error message if JSON Format is incorrect
-            return JSONResponse(serializer.errors, status=400)
-
-        serializer.save()
         return JSONResponse(serializer.data)
 
 
@@ -376,4 +350,25 @@ class DnaMeasurementsListView(generics.ListAPIView):
     def list(self, request, *args, **kwargs):
         queryset = self.get_queryset()
         serializer = DnaMeasurementSerializer(queryset, many=True)
+        return JSONResponse(serializer.data)
+
+
+class PerformanceAnaylseListView(generics.ListAPIView):
+    permission_classes = (IsAuthenticated,)
+
+    # Parse JSON
+    parser_classes = (JSONParser,)
+
+    def list(self, request):
+        group = request.user.groups.values_list('name', flat=True)
+
+        if 'Club' in group:
+            queryset = Performance.objects.filter(player__club=self.request.user.club)
+        elif 'Coach' in group:
+            queryset = PerformanceAnalyse.objects.filter(player__club=self.request.user.coach.club)
+        elif 'Player' in group:
+            return JSONResponse('Players can not see players list.', status=403)
+        else:
+            return JSONResponse('User group not selected.', status=400)
+        serializer = PerformanceAnalyseSerializer(queryset, many=True, context={'request': request})
         return JSONResponse(serializer.data)

@@ -1,9 +1,12 @@
 import uuid
 import random
+import json
+import decimal
 from rest_framework import serializers, exceptions
 from dashboard.models import Performance, Player, Coach, Club, Measurement, ProfilePicture, Unit, \
-    DnaResult, DnaMeasurement
+    DnaResult, DnaMeasurement, PerformanceAnalyse
 from django.contrib.auth.models import User, Group
+from dashboard.utils import RscriptAnalysis
 
 
 def create_username(last_name, first_name):
@@ -176,6 +179,21 @@ class PerformanceSerializer(serializers.ModelSerializer):
         return data
 
     def create(self, validated_data):
+        if validated_data['measurement'].slug_name == 'height':
+            if DnaResult.objects.filter(dna_measurement=validated_data['measurement'].related_dna_measurement):
+                predicted_height = DnaResult.objects.filter(
+                    dna_measurement=validated_data['measurement'].related_dna_measurement).order_by('-date').first()
+                current_height = validated_data['value'] * \
+                                 decimal.Decimal(validated_data['measurement'].factor_to_dna_measurement)
+
+                r_scripts = RscriptAnalysis()
+                bio_age, slope = r_scripts.get_bio_age(predicted_height.value, current_height)
+                if bio_age and slope:
+                    PerformanceAnalyse.objects.update_or_create(player=validated_data['player'],
+                                                                defaults={
+                                                                    'bio_age': bio_age,
+                                                                    'slope_to_bio_age': json.dumps(slope)
+                                                                })
         performance = Performance.objects.create(**validated_data)
         return performance
 
@@ -228,3 +246,10 @@ class CreateDnaResultSerializer(serializers.ModelSerializer):
         return data
 
 
+class PerformanceAnalyseSerializer(serializers.BaseSerializer):
+    def to_representation(self, obj):
+        return {
+            'data': obj.slope_to_bio_age,
+            'player': obj.player.id,
+            'type': 'spline'
+        }

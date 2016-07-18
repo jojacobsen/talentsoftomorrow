@@ -1,4 +1,4 @@
-#!/usr/bin/Rscript
+#!/usr/local/bin/Rscript
 args<-commandArgs()
 
 #Args for testing stuff (not run)
@@ -66,7 +66,7 @@ y_slope<- c(current_height, y_slope)
 
 
 #output
-cat("genetic age\n")
+cat("genetic_age\n")
 cat(genetic_age)
 cat("\nx_slope\n")
 cat(x_slope)

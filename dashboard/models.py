@@ -112,6 +112,12 @@ class Performance(models.Model):
     description = models.CharField(max_length=2000, blank=True)
 
 
+class PerformanceAnalyse(models.Model):
+    player = models.ForeignKey(Player, on_delete=models.CASCADE)
+    bio_age = models.DecimalField(max_digits=20, decimal_places=10)
+    slope_to_bio_age = JSONField(default=list())
+
+
 class DnaResult(models.Model):
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     dna_measurement = models.ForeignKey(DnaMeasurement, on_delete=models.CASCADE)
