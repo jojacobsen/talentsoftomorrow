@@ -1,4 +1,5 @@
 import uuid
+from dateutil.relativedelta import relativedelta
 import random
 import json
 import decimal
@@ -253,3 +254,23 @@ class PerformanceAnalyseSerializer(serializers.BaseSerializer):
             'player': obj.player.id,
             'type': 'spline'
         }
+
+
+class PerformancesHistoricSerializer(serializers.BaseSerializer):
+    def to_representation(self, obj):
+        results = list()
+        for p in obj:
+            if any(p.player.id == r['player'] for r in results):
+                for r in results:
+                    if p.player.id == r['player']:
+                        rel = relativedelta(p.date, p.player.birthday)
+                        r['data'].append((rel.years + rel.months / 12 + rel.days / 365.25, p.value))
+            else:
+                result = dict()
+                rel = relativedelta(p.date, p.player.birthday)
+                result['data'] = [(rel.years + rel.months / 12 + rel.days / 365.25, p.value)]
+                result['player'] = p.player.id
+                result['type'] = 'spline'
+                results.append(result)
+
+        return results

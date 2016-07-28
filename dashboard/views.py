@@ -2,7 +2,7 @@ from dashboard.models import Performance, Player, DnaMeasurement, Coach, Club, D
 from dashboard.serializers import PerformanceSerializer, PlayersSerializer, \
     PlayerSerializer, MeasurementSerializer, NewPlayersSerializer, CoachSerializer, CurrentClubSerializer, \
     CurrentCoachSerializer, CurrentPlayerSerializer, DnaResultSerializer, DnaMeasurementSerializer, \
-    CreateDnaResultSerializer, PerformanceAnalyse, PerformanceAnalyseSerializer
+    CreateDnaResultSerializer, PerformanceAnalyse, PerformanceAnalyseSerializer, PerformancesHistoricSerializer
 
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
@@ -371,4 +371,28 @@ class PerformanceAnaylseListView(generics.ListAPIView):
         else:
             return JSONResponse('User group not selected.', status=400)
         serializer = PerformanceAnalyseSerializer(queryset, many=True, context={'request': request})
+        return JSONResponse(serializer.data)
+
+
+class PerformancesHistoricListView(generics.ListAPIView):
+    permission_classes = (IsAuthenticated,)
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_fields = ('player', 'measurement')
+    # Parse JSON
+    parser_classes = (JSONParser,)
+
+    def get_queryset(self, pk):
+        group = self.request.user.groups.values_list('name', flat=True)
+
+        if 'Club' in group:
+            queryset = Performance.objects.filter(measurement__id=pk, player__club=self.request.user.club)
+        elif 'Coach' in group:
+            queryset = Performance.objects.filter(measurement__id=pk, player__club=self.request.user.coach.club)
+        else:
+            raise exceptions.PermissionDenied('User has no permission to access user data of player.')
+        return queryset
+
+    def list(self, request, pk):
+        queryset = self.get_queryset(pk=pk)
+        serializer = PerformancesHistoricSerializer(queryset)
         return JSONResponse(serializer.data)

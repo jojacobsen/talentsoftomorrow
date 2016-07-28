@@ -29,6 +29,7 @@ urlpatterns = [
     url(r'^dna-results/list/', views.DnaResultsListView.as_view(), name='dna-results-list'),
     url(r'^dna-measurements/list/', views.DnaMeasurementsListView.as_view(), name='measurements-list'),
     url(r'^graphs/genetic_estimation/', views.PerformanceAnaylseListView.as_view(), name='analyse-list'),
+    url(r'^graphs/performance_historic/(?P<pk>[0-9]+)/$', views.PerformancesHistoricListView.as_view(), name='historic-list'),
     url(r'^user/', views.UserDetailView.as_view(), name='user-detail'),
     url(r'^docs/', include('rest_framework_docs.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
