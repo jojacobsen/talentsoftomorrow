@@ -13,7 +13,7 @@ class RscriptAnalysis(object):
         if country == 'uk':
             average_height_data = self.r_folder + '/bio_age/2016-07-06_Heigh_prediction_data_google_doc_extract.xlsx'
 
-        bashCommand = " ".join([self.height_prediction_command, str(predicted_height * 100), str(current_height), average_height_data])
+        bashCommand = " ".join([self.height_prediction_command, str(predicted_height), str(current_height), average_height_data])
         process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE)
         output = str(process.communicate()[0])
         results = output.split('\\n')
