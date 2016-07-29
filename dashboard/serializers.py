@@ -181,9 +181,13 @@ class PerformanceSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         if validated_data['measurement'].slug_name == 'height':
-            if DnaResult.objects.filter(dna_measurement=validated_data['measurement'].related_dna_measurement):
+            if DnaResult.objects.filter(dna_measurement=validated_data['measurement'].related_dna_measurement,
+                                        player=validated_data['player']):
                 predicted_height = DnaResult.objects.filter(
-                    dna_measurement=validated_data['measurement'].related_dna_measurement).order_by('-date').first()
+                    dna_measurement=validated_data['measurement'].related_dna_measurement,
+                    player=validated_data['player']
+                ).order_by('-date').first()
+
                 current_height = validated_data['value'] * \
                                  decimal.Decimal(validated_data['measurement'].factor_to_dna_measurement)
 

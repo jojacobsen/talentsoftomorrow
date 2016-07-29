@@ -1,4 +1,4 @@
-#!/usr/local/bin/Rscript
+#!/usr/lib/R/bin/Rscript
 args<-commandArgs()
 
 #Args for testing stuff (not run)
@@ -8,7 +8,7 @@ args<-commandArgs()
 
 #static coded input and data-loading
 library(openxlsx)
-pNames<-c('0.4th','2nd','9th','25th','50th','75th','91st','92nd','99.6th')
+pNames<-c('0.4th','2nd','9th','25th','50th','75th','91st','98th','99.6th')
 
 #Cheking input argument count
 if(length(args)!=8)stop("Must give 3 arguments exactly (genetic_height_estimate, current_height, and ageData_path)")

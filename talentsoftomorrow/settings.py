@@ -252,7 +252,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'dashboard/media/')
 
 
 CORS_ORIGIN_WHITELIST = (
-    'http://testdashboard.talentstomorrow.com',
-    'http://demo.talentstomorrow.com',
+    'https://testdashboard.talentstomorrow.com'
 )
 

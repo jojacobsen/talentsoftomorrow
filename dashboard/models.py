@@ -4,7 +4,7 @@ import uuid
 from django.db import models
 from django.contrib.auth.models import User
 from fernet_fields import EncryptedTextField
-from django.contrib.postgres.fields import JSONField, ArrayField
+from django.contrib.postgres.fields import JSONField
 
 
 def user_directory_path(instance, filename):
@@ -111,11 +111,17 @@ class Performance(models.Model):
     date = models.DateField()
     description = models.CharField(max_length=2000, blank=True)
 
+    def __str__(self):
+        return self.player.user.username
+
 
 class PerformanceAnalyse(models.Model):
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     bio_age = models.DecimalField(max_digits=20, decimal_places=10)
     slope_to_bio_age = JSONField(default=list())
+
+    def __str__(self):
+        return self.player.user.username
 
 
 class DnaResult(models.Model):
@@ -126,3 +132,6 @@ class DnaResult(models.Model):
     date = models.DateTimeField()
     original_filename = models.CharField(max_length=2000)
     meta = JSONField(default=dict())
+
+    def __str__(self):
+        return self.player.user.username
