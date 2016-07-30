@@ -363,7 +363,7 @@ class PerformanceAnaylseListView(generics.ListAPIView):
         group = request.user.groups.values_list('name', flat=True)
 
         if 'Club' in group:
-            queryset = Performance.objects.filter(player__club=self.request.user.club)
+            queryset = PerformanceAnalyse.objects.filter(player__club=self.request.user.club)
         elif 'Coach' in group:
             queryset = PerformanceAnalyse.objects.filter(player__club=self.request.user.coach.club)
         elif 'Player' in group:
