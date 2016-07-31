@@ -197,7 +197,7 @@ class PerformanceSerializer(serializers.ModelSerializer):
                     PerformanceAnalyse.objects.update_or_create(player=validated_data['player'],
                                                                 defaults={
                                                                     'bio_age': bio_age,
-                                                                    'slope_to_bio_age': json.dumps(slope)
+                                                                    'slope_to_bio_age': slope
                                                                 })
         performance = Performance.objects.create(**validated_data)
         return performance
