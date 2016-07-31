@@ -1,4 +1,4 @@
-#!/usr/lib/R/bin/Rscript
+#!/usr/local/bin/Rscript
 args<-commandArgs()
 
 #Args for testing stuff (not run)
