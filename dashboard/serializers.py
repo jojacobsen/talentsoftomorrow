@@ -269,6 +269,7 @@ class PerformancesHistoricSerializer(serializers.BaseSerializer):
                     if p.player.id == r['player']:
                         rel = relativedelta(p.date, p.player.birthday)
                         r['data'].append((rel.years + rel.months / 12 + rel.days / 365.25, p.value))
+                        r['data'].sort()
             else:
                 result = dict()
                 rel = relativedelta(p.date, p.player.birthday)
