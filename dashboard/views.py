@@ -2,7 +2,8 @@ from dashboard.models import Performance, Player, DnaMeasurement, Coach, Club, D
 from dashboard.serializers import PerformanceSerializer, PlayersSerializer, \
     PlayerSerializer, MeasurementSerializer, NewPlayersSerializer, CoachSerializer, CurrentClubSerializer, \
     CurrentCoachSerializer, CurrentPlayerSerializer, DnaResultSerializer, DnaMeasurementSerializer, \
-    CreateDnaResultSerializer, PerformanceAnalyse, PerformanceAnalyseSerializer, PerformancesHistoricSerializer
+    CreateDnaResultSerializer, PerformanceAnalyse, PerformanceAnalyseSerializer, PerformancesHistoricSerializer, \
+    PerformancesToBioAgeSerializer
 from dashboard.filters import PlayerFilter, PerformanceFilter, PerformanceAnalyseFilter
 
 from rest_framework.authentication import TokenAuthentication
@@ -399,7 +400,7 @@ class PerformancesHistoricListView(generics.ListAPIView):
 class PerformancesToBioAgeListView(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
 
-    serializer_class = PerformancesHistoricSerializer
+    serializer_class = PerformancesToBioAgeSerializer
     filter_backends = (filters.DjangoFilterBackend,)
     filter_class = PlayerFilter
     # Parse JSON
@@ -407,15 +408,10 @@ class PerformancesToBioAgeListView(generics.ListAPIView):
 
     def get_queryset(self):
         group = self.request.user.groups.values_list('name', flat=True)
-        if not self.kwargs['pk']:
-            raise exceptions.PermissionDenied('Measurement id required.')
-        else:
-            pk_measurement = self.kwargs['pk']
-
         if 'Club' in group:
-            queryset = Performance.objects.filter(measurement__id=pk_measurement, player__club=self.request.user.club)
+            queryset = Player.objects.filter(club=self.request.user.club)
         elif 'Coach' in group:
-            queryset = Performance.objects.filter(measurement__id=pk_measurement, player__club=self.request.user.coach.club)
+            queryset = Player.objects.filter(club=self.request.user.coach.club)
         else:
             raise exceptions.PermissionDenied('User has no permission to access user data of player.')
         return queryset

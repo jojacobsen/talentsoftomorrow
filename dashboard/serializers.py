@@ -280,3 +280,33 @@ class PerformancesHistoricSerializer(serializers.BaseSerializer):
             'name': obj.first_name + ' ' + obj.last_name,
             'type': 'spline'
         }
+
+
+class PerformancesToBioAgeSerializer(serializers.BaseSerializer):
+    def to_representation(self, obj):
+        pk = self.context['view'].kwargs['pk']
+        p = obj.performance_set.filter(measurement__id=pk).order_by('-date')[0]
+        dna = obj.performanceanalyse_set.filter()[0]
+        rel = relativedelta(p.date, obj.birthday)
+
+        data = list()
+        data.append({
+            'x': rel.years + rel.months / 12 + rel.days / 365.25,
+            'y': p.value,
+            'bio_age': 'false',
+        }
+        )
+
+        data.append({
+            'x': dna.bio_age,
+            'y': p.value,
+            'bio_age': 'true',
+        }
+        )
+
+        return {
+            'data': data,
+            'player': obj.id,
+            'name': obj.first_name + ' ' + obj.last_name,
+            'type': 'line'
+        }
