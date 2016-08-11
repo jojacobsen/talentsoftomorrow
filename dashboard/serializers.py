@@ -257,6 +257,7 @@ class PerformanceAnalyseSerializer(serializers.BaseSerializer):
         return {
             'data': obj.slope_to_bio_age,
             'player': obj.player.id,
+            'name': obj.player.first_name + ' ' + obj.player.last_name,
             'type': 'spline'
         }
 
