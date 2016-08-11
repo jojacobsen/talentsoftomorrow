@@ -253,6 +253,7 @@ class CreateDnaResultSerializer(serializers.ModelSerializer):
 
 class PerformanceAnalyseSerializer(serializers.BaseSerializer):
     def to_representation(self, obj):
+        obj.slope_to_bio_age.sort()
         return {
             'data': obj.slope_to_bio_age,
             'player': obj.player.id,
@@ -275,6 +276,7 @@ class PerformancesHistoricSerializer(serializers.BaseSerializer):
                 rel = relativedelta(p.date, p.player.birthday)
                 result['data'] = [(rel.years + rel.months / 12 + rel.days / 365.25, p.value)]
                 result['player'] = p.player.id
+                result['name'] = p.player.first_name + ' ' + p.player.last_name
                 result['type'] = 'spline'
                 results.append(result)
 
