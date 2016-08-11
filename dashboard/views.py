@@ -381,7 +381,27 @@ class PerformancesHistoricListView(generics.ListAPIView):
 
     serializer_class = PerformancesHistoricSerializer
     filter_backends = (filters.DjangoFilterBackend,)
-    filter_class = PerformanceFilter
+    filter_class = PlayerFilter
+    # Parse JSON
+    parser_classes = (JSONParser,)
+
+    def get_queryset(self):
+        group = self.request.user.groups.values_list('name', flat=True)
+        if 'Club' in group:
+            queryset = Player.objects.filter(club=self.request.user.club)
+        elif 'Coach' in group:
+            queryset = Player.objects.filter(club=self.request.user.coach.club)
+        else:
+            raise exceptions.PermissionDenied('User has no permission to access user data of player.')
+        return queryset
+
+
+class PerformancesToBioAgeListView(generics.ListAPIView):
+    permission_classes = (IsAuthenticated,)
+
+    serializer_class = PerformancesHistoricSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_class = PlayerFilter
     # Parse JSON
     parser_classes = (JSONParser,)
 
@@ -399,14 +419,3 @@ class PerformancesHistoricListView(generics.ListAPIView):
         else:
             raise exceptions.PermissionDenied('User has no permission to access user data of player.')
         return queryset
-
-    def list(self, request, *args, **kwargs):
-        queryset = self.filter_queryset(self.get_queryset())
-
-        page = self.paginate_queryset(queryset)
-        if page is not None:
-            serializer = self.get_serializer(page)
-            return self.get_paginated_response(serializer.data)
-
-        serializer = self.get_serializer(queryset)
-        return JSONResponse(serializer.data)

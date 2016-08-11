@@ -264,21 +264,19 @@ class PerformanceAnalyseSerializer(serializers.BaseSerializer):
 
 class PerformancesHistoricSerializer(serializers.BaseSerializer):
     def to_representation(self, obj):
-        results = list()
-        for p in obj:
-            if any(p.player.id == r['player'] for r in results):
-                for r in results:
-                    if p.player.id == r['player']:
-                        rel = relativedelta(p.date, p.player.birthday)
-                        r['data'].append((rel.years + rel.months / 12 + rel.days / 365.25, p.value))
-                        r['data'].sort()
-            else:
-                result = dict()
-                rel = relativedelta(p.date, p.player.birthday)
-                result['data'] = [(rel.years + rel.months / 12 + rel.days / 365.25, p.value)]
-                result['player'] = p.player.id
-                result['name'] = p.player.first_name + ' ' + p.player.last_name
-                result['type'] = 'spline'
-                results.append(result)
+        pk = self.context['view'].kwargs['pk']
+        performances = obj.performance_set.filter(measurement__id=pk)
 
-        return results
+        data = list()
+        for p in performances:
+            rel = relativedelta(p.date, obj.birthday)
+            data.append([rel.years + rel.months / 12 + rel.days / 365.25, p.value])
+
+        data.sort()
+
+        return {
+            'data': data,
+            'player': obj.id,
+            'name': obj.first_name + ' ' + obj.last_name,
+            'type': 'spline'
+        }
