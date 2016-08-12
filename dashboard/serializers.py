@@ -1,7 +1,6 @@
 import uuid
 from dateutil.relativedelta import relativedelta
 import random
-import json
 import decimal
 from rest_framework import serializers, exceptions
 from dashboard.models import Performance, Player, Coach, Club, Measurement, ProfilePicture, Unit, \
@@ -87,7 +86,8 @@ class PlayerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Player
-        fields = ('id', 'user', 'lab_key', 'gender', 'birthday', 'club', 'first_name', 'last_name', 'active', 'archived')
+        fields = ('id', 'user', 'lab_key', 'gender', 'birthday', 'club', 'first_name', 'last_name', 'active',
+                  'archived')
 
 
 class CurrentClubSerializer(serializers.ModelSerializer):
@@ -174,9 +174,9 @@ class PerformanceSerializer(serializers.ModelSerializer):
 
         if not (data['measurement'].lower_limit <= data['value'] <= data['measurement'].upper_limit):
             raise serializers.ValidationError('%s is not between %s...%s %s' % (data['value'],
-                                                                             data['measurement'].lower_limit,
-                                                                             data['measurement'].upper_limit,
-                                                                             data['measurement'].unit))
+                                                                                data['measurement'].lower_limit,
+                                                                                data['measurement'].upper_limit,
+                                                                                data['measurement'].unit))
         return data
 
     def create(self, validated_data):
@@ -189,16 +189,15 @@ class PerformanceSerializer(serializers.ModelSerializer):
                 ).order_by('-date').first()
 
                 current_height = validated_data['value'] * \
-                                 decimal.Decimal(validated_data['measurement'].factor_to_dna_measurement)
+                    decimal.Decimal(validated_data['measurement'].factor_to_dna_measurement)
 
                 r_scripts = RscriptAnalysis()
                 bio_age, slope = r_scripts.get_bio_age(predicted_height.value, current_height)
                 if bio_age and slope:
-                    PerformanceAnalyse.objects.update_or_create(player=validated_data['player'],
-                                                                defaults={
-                                                                    'bio_age': bio_age,
-                                                                    'slope_to_bio_age': slope
-                                                                })
+                    PerformanceAnalyse.objects.create(player=validated_data['player'],
+                                                      bio_age=bio_age,
+                                                      slope_to_bio_age=slope
+                                                      )
         performance = Performance.objects.create(**validated_data)
         return performance
 
@@ -286,7 +285,7 @@ class PerformancesToBioAgeSerializer(serializers.BaseSerializer):
     def to_representation(self, obj):
         pk = self.context['view'].kwargs['pk']
         p = obj.performance_set.filter(measurement__id=pk).order_by('-date')[0]
-        dna = obj.performanceanalyse_set.filter()[0]
+        dna = obj.performanceanalyse_set.filter().order_by('-created')[0]
         rel = relativedelta(p.date, obj.birthday)
 
         data = list()

@@ -1,6 +1,4 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from django.contrib.auth.models import User
 
 from dashboard.models import Coach, Club, Player, Measurement, Performance, ProfilePicture, Unit, \
     DnaMeasurement, DnaResult, PerformanceAnalyse
