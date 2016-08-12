@@ -151,9 +151,9 @@ class PerformancesListView(generics.ListAPIView):
         group = self.request.user.groups.values_list('name', flat=True)
 
         if 'Club' in group:
-            queryset = Performance.objects.filter(player__club=self.request.user.club)
+            queryset = Performance.objects.filter(player__club=self.request.user.club).order_by('-created')
         elif 'Coach' in group:
-            queryset = Performance.objects.filter(player__club=self.request.user.coach.club)
+            queryset = Performance.objects.filter(player__club=self.request.user.coach.club).order_by('-created')
         else:
             raise exceptions.PermissionDenied('User has no permission to access user data of player.')
         return queryset
