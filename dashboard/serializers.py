@@ -249,6 +249,30 @@ class CreateDnaResultSerializer(serializers.ModelSerializer):
         data['dna_measurement'] = dna_measurement
         return data
 
+    def create(self, validated_data):
+        if validated_data['dna_measurement'].slug_name == 'gheight_m_estimate':
+            if Performance.objects.filter(measurement__related_dna_measurement=validated_data['dna_measurement'],
+                                          player=validated_data['player']):
+                current_height = Performance.objects.filter(
+                    measurement__related_dna_measurement=validated_data['dna_measurement'],
+                    player=validated_data['player']
+                ).order_by('-date').first()
+
+                current_height = current_height.value * \
+                    decimal.Decimal(current_height.measurement.factor_to_dna_measurement)
+
+                predicted_height = validated_data['value']
+
+                r_scripts = RscriptAnalysis()
+                bio_age, slope = r_scripts.get_bio_age(predicted_height, current_height)
+                if bio_age and slope:
+                    PerformanceAnalyse.objects.create(player=validated_data['player'],
+                                                      bio_age=bio_age,
+                                                      slope_to_bio_age=slope
+                                                      )
+        dna_result = DnaResult.objects.create(**validated_data)
+        return dna_result
+
 
 class PerformanceAnalyseSerializer(serializers.BaseSerializer):
     def to_representation(self, obj):
@@ -292,14 +316,14 @@ class PerformancesToBioAgeSerializer(serializers.BaseSerializer):
         data.append({
             'x': rel.years + rel.months / 12 + rel.days / 365.25,
             'y': p.value,
-            'bio_age': 'false',
+            'bio_age': False,
         }
         )
 
         data.append({
             'x': dna.bio_age,
             'y': p.value,
-            'bio_age': 'true',
+            'bio_age': True,
         }
         )
 
@@ -322,14 +346,14 @@ class HeightEstimationSerializer(serializers.BaseSerializer):
         data.append({
             'x': rel.years + rel.months / 12 + rel.days / 365.25,
             'y': p.value,
-            'predicted_height': 'false',
+            'predicted_height': False,
         }
         )
 
         data.append({
             'x': 17.5,
             'y': dna.value,
-            'predicted_height': 'true',
+            'predicted_height': True,
         }
         )
 
