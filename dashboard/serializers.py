@@ -310,3 +310,33 @@ class PerformancesToBioAgeSerializer(serializers.BaseSerializer):
             'name': obj.first_name + ' ' + obj.last_name,
             'type': 'line'
         }
+
+
+class HeightEstimationSerializer(serializers.BaseSerializer):
+    def to_representation(self, obj):
+        m = obj.club.measurements.filter(slug_name='height')[0]
+        p = obj.performance_set.filter(measurement__id=m.pk).order_by('-date')[0]
+        dna = obj.dnaresult_set.filter().order_by('-date')[0]
+        rel = relativedelta(p.date, obj.birthday)
+
+        data = list()
+        data.append({
+            'x': rel.years + rel.months / 12 + rel.days / 365.25,
+            'y': p.value,
+            'predicted_height': 'false',
+        }
+        )
+
+        data.append({
+            'x': 17.5,
+            'y': dna.value,
+            'predicted_height': 'true',
+        }
+        )
+
+        return {
+            'data': data,
+            'player': obj.id,
+            'name': obj.first_name + ' ' + obj.last_name,
+            'type': 'line'
+        }

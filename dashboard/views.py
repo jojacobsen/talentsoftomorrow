@@ -3,7 +3,7 @@ from dashboard.serializers import PerformanceSerializer, PlayersSerializer, \
     PlayerSerializer, MeasurementSerializer, NewPlayersSerializer, CoachSerializer, CurrentClubSerializer, \
     CurrentCoachSerializer, CurrentPlayerSerializer, DnaResultSerializer, DnaMeasurementSerializer, \
     CreateDnaResultSerializer, PerformanceAnalyse, PerformanceAnalyseSerializer, PerformancesHistoricSerializer, \
-    PerformancesToBioAgeSerializer
+    PerformancesToBioAgeSerializer, HeightEstimationSerializer
 from dashboard.filters import PlayerFilter, PerformanceFilter, PerformanceAnalyseFilter
 
 from rest_framework.authentication import TokenAuthentication
@@ -415,3 +415,24 @@ class PerformancesToBioAgeListView(generics.ListAPIView):
         else:
             raise exceptions.PermissionDenied('User has no permission to access user data of player.')
         return queryset
+
+
+class HeightEstimationListView(generics.ListAPIView):
+    permission_classes = (IsAuthenticated,)
+
+    serializer_class = HeightEstimationSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_class = PlayerFilter
+    # Parse JSON
+    parser_classes = (JSONParser,)
+
+    def get_queryset(self):
+        group = self.request.user.groups.values_list('name', flat=True)
+        if 'Club' in group:
+            queryset = Player.objects.filter(club=self.request.user.club)
+        elif 'Coach' in group:
+            queryset = Player.objects.filter(club=self.request.user.coach.club)
+        else:
+            raise exceptions.PermissionDenied('User has no permission to access user data of player.')
+        return queryset
+
