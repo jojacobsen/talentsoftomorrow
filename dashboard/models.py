@@ -4,7 +4,7 @@ import uuid
 from django.db import models
 from django.contrib.auth.models import User
 from fernet_fields import EncryptedTextField
-from django.contrib.postgres.fields import JSONField
+from django.contrib.postgres.fields import JSONField, ArrayField
 
 
 def user_directory_path(instance, filename):
@@ -46,10 +46,12 @@ class Measurement(models.Model):
     description = models.CharField(max_length=2000)
     upper_limit = models.DecimalField(max_digits=16, decimal_places=10)
     lower_limit = models.DecimalField(max_digits=16, decimal_places=10)
+    statistic_array = ArrayField(ArrayField(models.FloatField()))
     GROUP_CHOICES = (
         ('test', 'test'),
         ('anthro', 'anthropometric'),
-        ('quali', 'qualitative'),
+        ('ment', 'mentality'),
+        ('skill', 'skill'),
     )
     group = models.CharField(max_length=10, choices=GROUP_CHOICES)
     related_dna_measurement = models.ForeignKey(DnaMeasurement, on_delete=models.CASCADE, blank=True, null=True)
@@ -106,7 +108,7 @@ class ProfilePicture(models.Model):
 class Performance(models.Model):
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     measurement = models.ForeignKey(Measurement, on_delete=models.CASCADE)
-    value = models.DecimalField(max_digits=20, decimal_places=10)
+    value = models.DecimalField(max_digits=20, decimal_places=2)
     created = models.DateTimeField(auto_now_add=True)
     date = models.DateField()
     description = models.CharField(max_length=2000, blank=True)
@@ -117,7 +119,7 @@ class Performance(models.Model):
 
 class PerformanceAnalyse(models.Model):
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
-    bio_age = models.DecimalField(max_digits=20, decimal_places=10)
+    bio_age = models.DecimalField(max_digits=20, decimal_places=2)
     slope_to_bio_age = JSONField(default=list())
     created = models.DateTimeField(auto_now_add=True)
 
@@ -128,7 +130,7 @@ class PerformanceAnalyse(models.Model):
 class DnaResult(models.Model):
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     dna_measurement = models.ForeignKey(DnaMeasurement, on_delete=models.CASCADE)
-    value = models.DecimalField(max_digits=20, decimal_places=10)
+    value = models.DecimalField(max_digits=20, decimal_places=2)
     created = models.DateTimeField(auto_now_add=True)
     date = models.DateTimeField()
     original_filename = models.CharField(max_length=2000)
@@ -136,3 +138,14 @@ class DnaResult(models.Model):
 
     def __str__(self):
         return self.player.user.username
+
+
+class PerformanceBenchmark(models.Model):
+    benchmark = models.DecimalField(max_digits=6, decimal_places=3)  # Benchmark compared to real Age
+    benchmark_bio = models.DecimalField(max_digits=6,
+                                        decimal_places=3, blank=True, null=True)  # Benchmark compared to Bio Age
+    performance = models.ForeignKey(Performance, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.performance.player.user.username

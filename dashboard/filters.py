@@ -19,12 +19,3 @@ class PerformanceFilter(filters.FilterSet):
     class Meta:
         model = Performance
         fields = ['player', 'measurement', 'min_birthday', 'max_birthday']
-
-
-class PerformanceAnalyseFilter(filters.FilterSet):
-    min_birthday = django_filters.DateFilter(name='player__birthday', lookup_expr='gte')
-    max_birthday = django_filters.DateFilter(name='player__birthday', lookup_expr='lte')
-
-    class Meta:
-        model = PerformanceAnalyse
-        fields = ['player', 'min_birthday', 'max_birthday']

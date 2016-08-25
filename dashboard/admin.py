@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from dashboard.models import Coach, Club, Player, Measurement, Performance, ProfilePicture, Unit, \
-    DnaMeasurement, DnaResult, PerformanceAnalyse
+    DnaMeasurement, DnaResult, PerformanceAnalyse, PerformanceBenchmark
 
 
 class PerformanceAdmin(admin.ModelAdmin):
@@ -31,4 +31,5 @@ admin.site.register(Unit)
 admin.site.register(DnaMeasurement)
 admin.site.register(DnaResult)
 admin.site.register(PerformanceAnalyse)
+admin.site.register(PerformanceBenchmark)
 admin.site.register(Performance, PerformanceAdmin)

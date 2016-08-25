@@ -1,12 +1,10 @@
 import uuid
 from dateutil.relativedelta import relativedelta
 import random
-import decimal
 from rest_framework import serializers, exceptions
 from dashboard.models import Performance, Player, Coach, Club, Measurement, ProfilePicture, Unit, \
-    DnaResult, DnaMeasurement, PerformanceAnalyse
+    DnaResult, DnaMeasurement, PerformanceBenchmark
 from django.contrib.auth.models import User, Group
-from dashboard.utils import RscriptAnalysis
 
 
 def create_username(last_name, first_name):
@@ -180,24 +178,6 @@ class PerformanceSerializer(serializers.ModelSerializer):
         return data
 
     def create(self, validated_data):
-        if validated_data['measurement'].slug_name == 'height':
-            if DnaResult.objects.filter(dna_measurement=validated_data['measurement'].related_dna_measurement,
-                                        player=validated_data['player']):
-                predicted_height = DnaResult.objects.filter(
-                    dna_measurement=validated_data['measurement'].related_dna_measurement,
-                    player=validated_data['player']
-                ).order_by('-date').first()
-
-                current_height = validated_data['value'] * \
-                    decimal.Decimal(validated_data['measurement'].factor_to_dna_measurement)
-
-                r_scripts = RscriptAnalysis()
-                bio_age, slope = r_scripts.get_bio_age(predicted_height.value, current_height)
-                if bio_age and slope:
-                    PerformanceAnalyse.objects.create(player=validated_data['player'],
-                                                      bio_age=bio_age,
-                                                      slope_to_bio_age=slope
-                                                      )
         performance = Performance.objects.create(**validated_data)
         return performance
 
@@ -250,37 +230,18 @@ class CreateDnaResultSerializer(serializers.ModelSerializer):
         return data
 
     def create(self, validated_data):
-        if validated_data['dna_measurement'].slug_name == 'gheight_m_estimate':
-            if Performance.objects.filter(measurement__related_dna_measurement=validated_data['dna_measurement'],
-                                          player=validated_data['player']):
-                current_height = Performance.objects.filter(
-                    measurement__related_dna_measurement=validated_data['dna_measurement'],
-                    player=validated_data['player']
-                ).order_by('-date').first()
-
-                current_height = current_height.value * \
-                    decimal.Decimal(current_height.measurement.factor_to_dna_measurement)
-
-                predicted_height = validated_data['value']
-
-                r_scripts = RscriptAnalysis()
-                bio_age, slope = r_scripts.get_bio_age(predicted_height, current_height)
-                if bio_age and slope:
-                    PerformanceAnalyse.objects.create(player=validated_data['player'],
-                                                      bio_age=bio_age,
-                                                      slope_to_bio_age=slope
-                                                      )
         dna_result = DnaResult.objects.create(**validated_data)
         return dna_result
 
 
 class PerformanceAnalyseSerializer(serializers.BaseSerializer):
     def to_representation(self, obj):
-        obj.slope_to_bio_age.sort()
+        dna = obj.performanceanalyse_set.filter().order_by('-created')[0]
+        dna.slope_to_bio_age.sort()
         return {
-            'data': obj.slope_to_bio_age,
-            'player': obj.player.id,
-            'name': obj.player.first_name + ' ' + obj.player.last_name,
+            'data': dna.slope_to_bio_age,
+            'player': obj.id,
+            'name': obj.first_name + ' ' + obj.last_name,
             'type': 'spline'
         }
 
@@ -362,4 +323,40 @@ class HeightEstimationSerializer(serializers.BaseSerializer):
             'player': obj.id,
             'name': obj.first_name + ' ' + obj.last_name,
             'type': 'line'
+        }
+
+
+class PlayerProfilePerformanceSerializer(serializers.BaseSerializer):
+    def to_representation(self, obj):
+        p = obj.performance_set.filter().order_by('-date')
+        tests = list()
+        for performance in p:
+            if any((test.measurement==performance.measurement) for test in tests):
+                continue
+            tests.append(performance)
+
+        p = dict()
+        for test in tests:
+            try:
+                b = test.performancebenchmark_set.get()
+                benchmark = {
+                    'real_age': b.benchmark,
+                    'bio_age': b.benchmark_bio
+                }
+            except PerformanceBenchmark.DoesNotExist:
+                benchmark = None
+
+            t = {
+              'value': test.value,
+              'measurement': test.measurement.id,
+              'slug': test.measurement.slug_name,
+              'unit': test.measurement.unit.abbreviation,
+              'benchmark': benchmark
+            }
+
+            p.setdefault(test.measurement.group, []).append(t)
+
+        return {
+            'data': p,
+            'player': obj.id,
         }
