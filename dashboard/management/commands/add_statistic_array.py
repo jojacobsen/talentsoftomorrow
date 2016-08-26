@@ -8,7 +8,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         import csv
-        with open('R_scripts/bio_age/2016-08-25_means.csv', 'r') as csvfile:
+        with open('R_scripts/bio_age/2016-08-26_2_means.csv', 'r') as csvfile:
             reader = csv.reader(csvfile, delimiter=';')
             header = next(reader)
             m = dict()

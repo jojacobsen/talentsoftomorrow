@@ -108,7 +108,7 @@ class ProfilePicture(models.Model):
 class Performance(models.Model):
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     measurement = models.ForeignKey(Measurement, on_delete=models.CASCADE)
-    value = models.DecimalField(max_digits=20, decimal_places=2)
+    value = models.DecimalField(max_digits=20, decimal_places=10)
     created = models.DateTimeField(auto_now_add=True)
     date = models.DateField()
     description = models.CharField(max_length=2000, blank=True)
@@ -119,7 +119,7 @@ class Performance(models.Model):
 
 class PerformanceAnalyse(models.Model):
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
-    bio_age = models.DecimalField(max_digits=20, decimal_places=2)
+    bio_age = models.DecimalField(max_digits=20, decimal_places=10)
     slope_to_bio_age = JSONField(default=list())
     created = models.DateTimeField(auto_now_add=True)
 
@@ -130,7 +130,7 @@ class PerformanceAnalyse(models.Model):
 class DnaResult(models.Model):
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     dna_measurement = models.ForeignKey(DnaMeasurement, on_delete=models.CASCADE)
-    value = models.DecimalField(max_digits=20, decimal_places=2)
+    value = models.DecimalField(max_digits=20, decimal_places=10)
     created = models.DateTimeField(auto_now_add=True)
     date = models.DateTimeField()
     original_filename = models.CharField(max_length=2000)
