@@ -326,7 +326,7 @@ class HeightEstimationSerializer(serializers.BaseSerializer):
         }
 
 
-class PlayerProfilePerformanceSerializer(serializers.BaseSerializer):
+class PlayerProfileSerializer(serializers.BaseSerializer):
     def to_representation(self, obj):
         p = obj.performance_set.filter().order_by('-date')
         tests = list()
@@ -356,7 +356,22 @@ class PlayerProfilePerformanceSerializer(serializers.BaseSerializer):
 
             p.setdefault(test.measurement.group, []).append(t)
 
+        m = obj.club.measurements.filter(slug_name='height')[0]
+
+        current_height = obj.performance_set.filter(measurement__id=m.pk).order_by('-date')[0]
+        dna_height = obj.dnaresult_set.filter().order_by('-date')[0]
+        b = obj.performanceanalyse_set.filter().order_by('-created')[0]
+        rel = relativedelta(current_height.date, obj.birthday)
+
+        player = {
+            'player_id': obj.id,
+            'current_height': current_height.value,
+            'predicted_height': dna_height.value,
+            'height_unit': current_height.measurement.unit.abbreviation,
+            'bio_age': b.bio_age,
+            'real_age': rel.years + rel.months / 12 + rel.days / 365.25
+        }
         return {
             'data': p,
-            'player': obj.id,
+            'player': player,
         }

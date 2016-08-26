@@ -33,7 +33,7 @@ urlpatterns = [
         name='historic-list'),
     url(r'^graphs/performance_to_bio_age/(?P<pk>[0-9]+)/$', views.PerformancesToBioAgeListView.as_view(),
         name='performances-to-bio-age-list'),
-    url(r'^player/profile/performance/(?P<pk>[0-9]+)/$', views.PlayerProfilePerformanceView.as_view(),
+    url(r'^player/profile/(?P<pk>[0-9]+)/$', views.PlayerProfileView.as_view(),
         name='player-performance-list'),
     url(r'^user/', views.UserDetailView.as_view(), name='user-detail'),
     url(r'^docs/', include('rest_framework_docs.urls')),

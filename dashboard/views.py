@@ -3,7 +3,7 @@ from dashboard.serializers import PerformanceSerializer, PlayersSerializer, \
     PlayerSerializer, MeasurementSerializer, NewPlayersSerializer, CoachSerializer, CurrentClubSerializer, \
     CurrentCoachSerializer, CurrentPlayerSerializer, DnaResultSerializer, DnaMeasurementSerializer, \
     CreateDnaResultSerializer, PerformanceAnalyseSerializer, PerformancesHistoricSerializer, \
-    PerformancesToBioAgeSerializer, HeightEstimationSerializer, PlayerProfilePerformanceSerializer
+    PerformancesToBioAgeSerializer, HeightEstimationSerializer, PlayerProfileSerializer
 from dashboard.filters import PlayerFilter, PerformanceFilter
 
 from rest_framework.authentication import TokenAuthentication
@@ -437,10 +437,10 @@ class HeightEstimationListView(generics.ListAPIView):
         return queryset
 
 
-class PlayerProfilePerformanceView(generics.GenericAPIView):
+class PlayerProfileView(generics.GenericAPIView):
     permission_classes = (IsAuthenticated,)
 
-    serializer_class = PlayerProfilePerformanceSerializer
+    serializer_class = PlayerProfileSerializer
     # Parse JSON
     parser_classes = (JSONParser,)
 
@@ -453,5 +453,5 @@ class PlayerProfilePerformanceView(generics.GenericAPIView):
         else:
             raise exceptions.PermissionDenied('User has no permission to access user data of player.')
 
-        serializer = PlayerProfilePerformanceSerializer(queryset)
+        serializer = PlayerProfileSerializer(queryset)
         return JSONResponse(serializer.data)
