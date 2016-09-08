@@ -328,16 +328,11 @@ class HeightEstimationSerializer(serializers.BaseSerializer):
 
 class PlayerProfileSerializer(serializers.BaseSerializer):
     def to_representation(self, obj):
-        p = obj.performance_set.filter().order_by('-date')
-        tests = list()
-        for performance in p:
-            # TODO: there is a fast way to do it
-            if any((test.measurement==performance.measurement) for test in tests):
-                continue
-            tests.append(performance)
-
         p = dict()
-        for test in tests:
+        for m in obj.club.measurements.filter():
+            t = obj.performance_set.filter(measurement=m).order_by('-date')
+            if t:
+                test = t[0]
             try:
                 b = test.performancebenchmark_set.get()
                 benchmark = {
@@ -346,12 +341,12 @@ class PlayerProfileSerializer(serializers.BaseSerializer):
                 }
             except PerformanceBenchmark.DoesNotExist:
                 benchmark = None
-            previous = obj.performance_set.filter(measurement=test.measurement.id).order_by('-date')
-            if len(previous) > 1:
+
+            if len(t) > 1:
                 # TODO: what if smaller is better?
-                if previous[0].value > previous[1].value:
+                if t[0].value > t[1].value:
                     progress = 'up'
-                elif previous[0].value < previous[1].value:
+                elif t[0].value < t[1].value:
                     progress = 'down'
                 else:
                     progress = 'constant'
