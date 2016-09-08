@@ -349,12 +349,14 @@ class PlayerProfileSerializer(serializers.BaseSerializer):
             previous = obj.performance_set.filter(measurement=test.measurement.id).order_by('-date')
             if len(previous) > 1:
                 # TODO: what if smaller is better?
-                if previous[0].value >= previous[1].value:
+                if previous[0].value > previous[1].value:
                     progress = 'up'
-                else:
+                elif previous[0].value < previous[1].value:
                     progress = 'down'
+                else:
+                    progress = 'constant'
             else:
-                progress = None
+                progress = 'constant'
 
             t = {
                 'value': test.value,
