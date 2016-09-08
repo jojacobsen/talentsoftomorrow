@@ -331,6 +331,7 @@ class PlayerProfileSerializer(serializers.BaseSerializer):
         p = obj.performance_set.filter().order_by('-date')
         tests = list()
         for performance in p:
+            # TODO: there is a fast way to do it
             if any((test.measurement==performance.measurement) for test in tests):
                 continue
             tests.append(performance)
@@ -345,13 +346,24 @@ class PlayerProfileSerializer(serializers.BaseSerializer):
                 }
             except PerformanceBenchmark.DoesNotExist:
                 benchmark = None
+            previous = obj.performance_set.filter(measurement=test.measurement.id).order_by('-date')
+            if len(previous) > 1:
+                # TODO: what if smaller is better?
+                if previous[0].value >= previous[1].value:
+                    progress = 'up'
+                else:
+                    progress = 'down'
+            else:
+                progress = None
 
             t = {
-              'value': test.value,
-              'measurement': test.measurement.id,
-              'slug': test.measurement.slug_name,
-              'unit': test.measurement.unit.abbreviation,
-              'benchmark': benchmark
+                'value': test.value,
+                'measurement': test.measurement.id,
+                'name': test.measurement.name,
+                'slug': test.measurement.slug_name,
+                'unit': test.measurement.unit.abbreviation,
+                'benchmark': benchmark,
+                'progress': progress
             }
 
             p.setdefault(test.measurement.group, []).append(t)
@@ -365,6 +377,10 @@ class PlayerProfileSerializer(serializers.BaseSerializer):
 
         player = {
             'player_id': obj.id,
+            'player_name': obj.first_name + ' ' + obj.last_name,
+            'lab_key': obj.lab_key,
+            'gender': obj.gender,
+            'birthday': obj.birthday,
             'current_height': current_height.value,
             'predicted_height': dna_height.value,
             'height_unit': current_height.measurement.unit.abbreviation,
