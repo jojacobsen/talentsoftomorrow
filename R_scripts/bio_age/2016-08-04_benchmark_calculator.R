@@ -11,7 +11,7 @@ args<-commandArgs()
 #static coded input and data-loading
 value<-as.numeric(args[6])
 population_mean<-as.numeric(args[7])
-population_sd<-as.numeric(args[7])
+population_sd<-as.numeric(args[8])
 
 
 #Cheking input argument count
