@@ -10,7 +10,7 @@ w1<-which(!1:ncol(means_data)%in%grep("\\.5$",colnames(means_data)))
 colnames(means_data)[w1]<-paste0(colnames(means_data)[w1],".0")
 
 
-nmax<-100
+nmax<-3000
 set.seed(42)
 
 #get names source and percentile names
@@ -55,7 +55,7 @@ for(n in 1:nmax){
     
     current_state<- signif(rnorm(1,mean=mean,sd=sd),3)
     
-    rooster[n,y_lab_selection] <- current_state
+    rooster[n,sub("population_mean_","",y_lab_selection)] <- current_state
     
     #get historical data
     t1<-which(colnames(means_data)%in%current_age_character)
@@ -67,7 +67,7 @@ for(n in 1:nmax){
       that_age_mean<-means_data[y_lab_selection,t1-i]
       that_age_sd<-means_data[sub("_mean_","_sd_",y_lab_selection),t1-i]
       
-      above_level<- (current_state-mean)*(that_age_sd /sd)
+      above_level<- (current_state-mean)*(that_age_sd /sd) + rnorm(1,mean=0,that_age_sd*0.1)
       
       
       historic_state <- signif(above_level+that_age_mean,4)
@@ -75,16 +75,20 @@ for(n in 1:nmax){
       history<-c(history,paste(historic_age,historic_state,sep="/"))
     }
     
-    rooster[n,paste0("historic_",y_lab_selection)]<-paste(rev(history),collapse=" // ")
+    rooster[n,paste0("historic_",sub("population_mean_","",y_lab_selection))]<-paste(rev(history),collapse=" // ")
   }
   
   
   #get predicted genetic height
-  # closest_percentile_i<-which.min(abs(t(means_data[current_age_character,pNames])[,1] - rooster[n,"height"]))
-  # closest_percentile<-names(closest_percentile_i)
-  # final_height_just_by_percentile<-ageData["17.5",closest_percentile]
-  # genetic_height_estimate<-signif(rnorm(mean=final_height_just_by_percentile, sd=5,1),4)
-  # rooster[n,"genetic_height_estimate"] <- genetic_height_estimate
+  current_height<-rooster[n ,"height_cm"]
+  mean<-means_data["population_mean_height_cm" ,current_age_character]
+  sd<-means_data["population_sd_height_cm",current_age_character]
+  current_percentile<-pnorm(current_height,mean=mean,sd=sd)
+  mean_final<-means_data["population_mean_height_cm" ,"17.5"]
+  sd_final<-means_data["population_sd_height_cm","17.5"]
+  final_height_just_by_percentile<-qnorm(current_percentile, mean=mean_final,sd=sd_final)
+  genetic_height_estimate<-signif(final_height_just_by_percentile+abs(rnorm(mean=0, sd=2,1)),4)
+  rooster[n,"genetic_height_estimate"] <- genetic_height_estimate
   
   
   #get SNPs
