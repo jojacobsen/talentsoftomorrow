@@ -10,7 +10,7 @@ w1<-which(!1:ncol(means_data)%in%grep("\\.5$",colnames(means_data)))
 colnames(means_data)[w1]<-paste0(colnames(means_data)[w1],".0")
 
 
-nmax<-1000
+nmax<-100
 set.seed(42)
 
 #get names source and percentile names
@@ -100,7 +100,7 @@ for(n in 1:nmax){
 
 
 
-write.xlsx(rooster,file="bio_age/2016-09-27_simulated_data.xlsx") #n = 10000
+write.xlsx(rooster,file="R_scripts/bio_age/2016-09-27_simulated_data.xlsx") #n = 10000
 
 
 
