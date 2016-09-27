@@ -25,11 +25,11 @@ for(entry in entries){
   lines(d1[,"age"],d1[,"mean"]+d1[,"sd"]*2,lwd=1,col="grey70")
   lines(d1[,"age"],d1[,"mean"]-d1[,"sd"]*1,lwd=1,col="grey50")
   lines(d1[,"age"],d1[,"mean"]-d1[,"sd"]*2,lwd=1,col="grey70")
-  text("Mean",x=xlim[2],y=d1[nrow(d1),"mean"]+d1[nrow(d1),"sd"]*0,cex=0.7)
-  text("+1SD",x=xlim[2],y=d1[nrow(d1),"mean"]+d1[nrow(d1),"sd"]*1,cex=0.7)
-  text("+2SD",x=xlim[2],y=d1[nrow(d1),"mean"]+d1[nrow(d1),"sd"]*2,cex=0.7)
-  text("-1SD",x=xlim[2],y=d1[nrow(d1),"mean"]-d1[nrow(d1),"sd"]*1,cex=0.7)
-  text("-2SD",x=xlim[2],y=d1[nrow(d1),"mean"]-d1[nrow(d1),"sd"]*2,cex=0.7)
+  text("Mean",x=xlim[2],y=d1[nrow(d1),"mean"]+d1[nrow(d1),"sd"]*0,cex=0.7,adj=1)
+  text("+1SD",x=xlim[2],y=d1[nrow(d1),"mean"]+d1[nrow(d1),"sd"]*1,cex=0.7,adj=1)
+  text("+2SD",x=xlim[2],y=d1[nrow(d1),"mean"]+d1[nrow(d1),"sd"]*2,cex=0.7,adj=1)
+  text("-1SD",x=xlim[2],y=d1[nrow(d1),"mean"]-d1[nrow(d1),"sd"]*1,cex=0.7,adj=1)
+  text("-2SD",x=xlim[2],y=d1[nrow(d1),"mean"]-d1[nrow(d1),"sd"]*2,cex=0.7,adj=1)
 }
 
 
