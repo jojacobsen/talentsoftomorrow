@@ -19,6 +19,8 @@ pNames<-c('0.4th','2nd','9th','25th','50th','75th','91st','92nd','99.6th')
 
 data_types<-grep("_mean_",rownames(means_data),value=T)
 
+score_0_5<-c("population_mean_ball_control","population_mean_finishing","population_mean_aerial","population_mean_tackling","population_mean_passing","population_mean_creativity","population_mean_motivation","population_mean_composure","population_mean_game_intelligence","population_mean_confidence")
+
 
 rooster <- data.frame(row.names=as.character(1:nmax))
 
@@ -55,6 +57,15 @@ for(n in 1:nmax){
     
     current_state<- signif(rnorm(1,mean=mean,sd=sd),3)
     
+    if(y_lab_selection%in%score_0_5 & current_state>5){
+      current_state<-5
+    }
+
+    if(y_lab_selection%in%score_0_5 & current_state<0){
+      current_state<-0
+    }
+    
+        
     rooster[n,sub("population_mean_","",y_lab_selection)] <- current_state
     
     #get historical data
@@ -72,6 +83,15 @@ for(n in 1:nmax){
       
       historic_state <- signif(above_level+that_age_mean,4)
       if(is.na(historic_state))break
+      
+      if(y_lab_selection%in%score_0_5 & historic_state>5){
+        historic_state<-5
+      }
+      
+      if(y_lab_selection%in%score_0_5 & historic_state<0){
+        historic_state<-0
+      }
+      
       history<-c(history,paste(historic_age,historic_state,sep="/"))
     }
     
