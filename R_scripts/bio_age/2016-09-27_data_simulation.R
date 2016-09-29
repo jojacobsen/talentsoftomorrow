@@ -3,7 +3,7 @@ rm(list=)
 
 library(openxlsx)
 getwd()
-means_data<-read.table(file="R_scripts/bio_age/2016-09-08_means.txt",sep="\t",stringsAsFactors=F,row.names=1,header=T)
+means_data<-read.table(file="R_scripts/bio_age/2016-09-29_means.txt",sep="\t",stringsAsFactors=F,row.names=1,header=T)
 
 colnames(means_data)<-sub("^X","",colnames(means_data))
 w1<-which(!1:ncol(means_data)%in%grep("\\.5$",colnames(means_data)))
