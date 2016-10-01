@@ -343,13 +343,20 @@ class PlayerProfileSerializer(serializers.BaseSerializer):
                 benchmark = None
 
             if len(t) > 1:
-                # TODO: what if smaller is better?
-                if t[0].value > t[1].value:
-                    progress = 'up'
-                elif t[0].value < t[1].value:
-                    progress = 'down'
+                if m.smaller_is_better:
+                    if t[0].value < t[1].value:
+                        progress = 'up'
+                    elif t[0].value > t[1].value:
+                        progress = 'down'
+                    else:
+                        progress = 'constant'
                 else:
-                    progress = 'constant'
+                    if t[0].value > t[1].value:
+                        progress = 'up'
+                    elif t[0].value < t[1].value:
+                        progress = 'down'
+                    else:
+                        progress = 'constant'
             else:
                 progress = 'constant'
 
