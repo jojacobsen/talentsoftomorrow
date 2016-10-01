@@ -66,7 +66,7 @@ class RscriptAnalysis(object):
         population_mean = i[age]
         i = Interpolate(statistic_array[0], statistic_array[2])
         population_sd = i[age]
-
+        # TODO: what if smaller is better?
         bash_command = " ".join([self.benchmark_command, str(value), str(population_mean),
                                 str(population_sd)])
         process = subprocess.Popen(bash_command.split(), stdout=subprocess.PIPE)

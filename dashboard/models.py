@@ -56,7 +56,7 @@ class Measurement(models.Model):
     group = models.CharField(max_length=10, choices=GROUP_CHOICES)
     related_dna_measurement = models.ForeignKey(DnaMeasurement, on_delete=models.CASCADE, blank=True, null=True)
     factor_to_dna_measurement = models.FloatField(default=1, blank=True, null=True)
-    # TODO: what if smaller is better?
+    smaller_is_better = models.BooleanField(default=False)
     # TODO: get_value with limited decimal places
 
     def __str__(self):
