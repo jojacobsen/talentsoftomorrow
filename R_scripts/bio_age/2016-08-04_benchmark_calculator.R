@@ -2,10 +2,10 @@
 args<-commandArgs()
 
 #Args for testing stuff (not run)
-value <- 50.1
-population_mean <- 50
-population_sd <- 5
-direction <- "downBetter"
+# value <- 50.1
+# population_mean <- 50
+# population_sd <- 5
+# direction <- "downBetter"
 
 
 
