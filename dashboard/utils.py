@@ -61,14 +61,18 @@ class RscriptAnalysis(object):
 
         return bio_age, slope
 
-    def get_benchmark(self, value, age, statistic_array):
+    def get_benchmark(self, value, age, statistic_array, smaller_is_better):
         i = Interpolate(statistic_array[0], statistic_array[1])
         population_mean = i[age]
         i = Interpolate(statistic_array[0], statistic_array[2])
         population_sd = i[age]
-        # TODO: what if smaller is better?
+
+        if smaller_is_better:
+            direction = 'downBetter'
+        else:
+            direction = 'upBetter'
         bash_command = " ".join([self.benchmark_command, str(value), str(population_mean),
-                                str(population_sd)])
+                                str(population_sd), direction])
         process = subprocess.Popen(bash_command.split(), stdout=subprocess.PIPE)
         output = str(process.communicate()[0])
         results = output.split('\\n')

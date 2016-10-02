@@ -32,13 +32,15 @@ def post_performance_result_handler(sender, instance=None, created=False, **kwar
     age = rel.years + rel.months / 12 + rel.days / 365.25
     benchmark = r_scripts.get_benchmark(instance.value,
                                         age,
-                                        instance.measurement.statistic_array)
+                                        instance.measurement.statistic_array,
+                                        instance.measurement.smaller_is_better)
 
     if instance.player.performanceanalyse_set.filter().order_by('-created')[0]:
         performance_analyse = instance.player.performanceanalyse_set.filter().order_by('-created')[0]
         benchmark_bio = r_scripts.get_benchmark(instance.value,
                                                 float(performance_analyse.bio_age),
-                                                instance.measurement.statistic_array)
+                                                instance.measurement.statistic_array,
+                                                instance.measurement.smaller_is_better)
     else:
         benchmark_bio = None
 
