@@ -19,7 +19,7 @@ direction<-as.character(args[9])
 #Cheking input argument count
 if(length(args)!=9)stop("Must give 4 arguments exactly (value, population_mean, population_sd, direction)")
 
-if(any(is.na(value,population_mean,population_sd)))stop("value, population_mean, and population_sd must be given as numbers")
+if(any(is.na(c(value,population_mean,population_sd))))stop("value, population_mean, and population_sd must be given as numbers")
 
 if(!direction %in% c("upBetter","downBetter")){
   stop("direction argument must be either upBetter or downBetter")
