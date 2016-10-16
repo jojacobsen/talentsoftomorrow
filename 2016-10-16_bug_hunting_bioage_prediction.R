@@ -23,3 +23,12 @@ for(player in playersI){
   print(paste(name,"had age",current_age,"and bio-age",result[2]))
 }
 
+#ok so that's odd
+
+
+
+#measure 1 - test that genetic_heigh_estimates are in fact centered around 17.5 age mean
+mean(sim[,"genetic_height_estimate"])
+
+#178.9629
+#that's odd
