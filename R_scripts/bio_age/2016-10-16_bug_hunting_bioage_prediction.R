@@ -3,7 +3,8 @@
 
 library(openxlsx)
 
-sim_file<-"R_scripts/bio_age/2016-09-27_simulated_data.xlsx"
+# sim_file<-"R_scripts/bio_age/2016-09-27_simulated_data.xlsx"
+sim_file<-"R_scripts/bio_age/2016-10-17_simulated_data.xlsx"
 sim<-read.xlsx(sim_file)
 
 
@@ -32,3 +33,9 @@ mean(sim[,"genetic_height_estimate"])
 
 #178.9629
 #that's odd
+
+
+
+
+
+

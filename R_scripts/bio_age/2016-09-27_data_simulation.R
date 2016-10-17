@@ -107,7 +107,7 @@ for(n in 1:nmax){
   mean_final<-means_data["population_mean_height_cm" ,"17.5"]
   sd_final<-means_data["population_sd_height_cm","17.5"]
   final_height_just_by_percentile<-qnorm(current_percentile, mean=mean_final,sd=sd_final)
-  genetic_height_estimate<-signif(final_height_just_by_percentile+abs(rnorm(mean=0, sd=2,1)),4)
+  genetic_height_estimate<-signif(final_height_just_by_percentile+rnorm(mean=0, sd=2,1),4)
   rooster[n,"genetic_height_estimate"] <- genetic_height_estimate
   
   
@@ -124,7 +124,7 @@ for(n in 1:nmax){
 
 
 
-write.xlsx(rooster,file="R_scripts/bio_age/2016-09-27_simulated_data.xlsx") 
+write.xlsx(rooster,file="R_scripts/bio_age/2016-10-17_simulated_data.xlsx") 
 
 
 
