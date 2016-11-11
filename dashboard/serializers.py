@@ -394,7 +394,10 @@ class PlayerProfileSerializer(serializers.BaseSerializer):
             dna_height = None
         b = obj.performanceanalyse_set.filter().order_by('-created')
         if b:
-            bio_age = b.bio_age
+            if hasattr(b, 'bio_age'):
+                bio_age = b.bio_age
+            else:
+                bio_age = None
         else:
             bio_age = None
 
