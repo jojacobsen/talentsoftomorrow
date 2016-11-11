@@ -381,8 +381,8 @@ class PlayerProfileSerializer(serializers.BaseSerializer):
         current_height = obj.performance_set.filter(measurement__id=m.pk).order_by('-date')
         if current_height:
             rel = relativedelta(current_height[0].date, obj.birthday)
-            current_height = current_height[0].value
             height_unit = current_height[0].measurement.unit.abbreviation
+            current_height = current_height[0].value
         else:
             current_height = None
             rel = relativedelta(datetime.date.today(), obj.birthday)
