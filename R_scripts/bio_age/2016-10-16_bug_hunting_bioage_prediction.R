@@ -14,7 +14,7 @@ age_data_file<-"R_scripts/bio_age/2016-07-06_Heigh_prediction_data_google_doc_ex
 
 
 set.seed(42)
-playersI<-sample(1:nrow(sim),10)
+playersI<-1:150
 for(player in playersI){
   current_age<-sim[player,"current_age"]
   name<-sim[player,"name"]
@@ -31,11 +31,13 @@ for(player in playersI){
 #measure 1 - test that genetic_heigh_estimates are in fact centered around 17.5 age mean
 mean(sim[,"genetic_height_estimate"])
 
+
+
 #178.9629
 #that's odd
 
-
-
+colnames(sim)
+which(sim[,"name"]%in%"Patrice Casillas")
 
 
 
