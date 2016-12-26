@@ -3,6 +3,7 @@ import decimal
 import logging
 from django.conf import settings
 from bisect import bisect_left
+from measurement.measures import Distance
 
 logger = logging.getLogger(__name__)
 
@@ -23,13 +24,23 @@ class Interpolate(object):
 
 class RscriptAnalysis(object):
     def __init__(self):
-        self.r_folder = settings.BASE_DIR + "/R_scripts"
+        self.r_folder = settings.PROJECT_ROOT + "/R_scripts"
 
         self.height_prediction_command = self.r_folder + "/bio_age/2016-07-14_bioage_calculator.R"
         self.benchmark_command = self.r_folder + "/bio_age/2016-08-04_benchmark_calculator.R"
         self.khamis_roche_command = self.r_folder + "/khamis_roche/2016-08-20_khamis_roche.R"
+        self.coefficients_file_khr = self.r_folder + "/khamis_roche/2016-05-22_khamis_roche_coefficents.txt"
 
     def get_bio_age(self, predicted_height, current_height, country='uk'):
+        """
+        Calculates biological age based on predicted height and current height. Is country specific (currently only UK
+        supported).
+        :param predicted_height:
+        :param current_height:
+        :param country:
+        :return bio_age:
+        :return slope:
+        """
         if country == 'uk':
             average_height_data = self.r_folder + '/bio_age/2016-07-06_Heigh_prediction_data_google_doc_extract.xlsx'
 
@@ -63,6 +74,14 @@ class RscriptAnalysis(object):
         return bio_age, slope
 
     def get_benchmark(self, value, age, statistic_array, smaller_is_better):
+        """
+        Calculates benchmark based on age.
+        :param value:
+        :param age:
+        :param statistic_array:
+        :param smaller_is_better:
+        :return benchmark:
+        """
         i = Interpolate(statistic_array[0], statistic_array[1])
         population_mean = i[age]
         i = Interpolate(statistic_array[0], statistic_array[2])
@@ -79,8 +98,33 @@ class RscriptAnalysis(object):
         results = output.split('\\n')
         return decimal.Decimal(results[1][:-1])
 
-    def get_khamis_roche(self, age, statistic_array, smaller_is_better):
-        bash_command = " ".join([self.khamis_roche_command, str(age), str(population_mean),
-                                 str(population_sd)])
+    def get_khamis_roche(self, current_height, current_age, current_weight, fathers_height, mothers_height, gender):
+        """
+        Calculates adults height based on Khamis Roche method.
+        :param current_height:
+        :param current_age:
+        :param current_weight:
+        :param fathers_height:
+        :param mothers_height:
+        :param gender:
+        :return predicted_height:
+        :return mean_absolute_deviation_50:
+        :return mean_absolute_deviation_90:
+        """
+        bash_command = " ".join([self.khamis_roche_command, str(current_height), str(current_age), str(current_weight),
+                                 str(mothers_height), str(fathers_height), gender, self.coefficients_file_khr])
+        process = subprocess.Popen(bash_command.split(), stdout=subprocess.PIPE)
+        output = str(process.communicate()[0])
+        results = output.split('\\n')
+        try:
+            predicted_height = Distance(cm=float(results[1]))
+            mean_absolute_deviation_50 = results[3]
+            mean_absolute_deviation_90 = results[5]
+        except IndexError:
+            logger.warning('Could not calculate bio age for %s (predicted height) and %s (current height)!'
+                           % (str(predicted_height), str(current_height)))
+            bio_age = None
+            slope = None
+            return bio_age, slope
 
-
+        return predicted_height, mean_absolute_deviation_50, mean_absolute_deviation_90

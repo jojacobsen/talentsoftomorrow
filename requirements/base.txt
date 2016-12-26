@@ -1,5 +1,4 @@
 amqp==1.4.9
-ansible==2.0.0.2
 anyjson==0.3.3
 billiard==3.3.0.23
 celery==3.1.20
@@ -12,6 +11,7 @@ django-crispy-forms==1.6.0
 django-extensions==1.6.1
 django-fernet-fields==0.4
 django-filter==0.13.0
+django-measurement==2.4.0
 django-modeltranslation==0.11
 djangorestframework==3.3.2
 djangorestframework-jwt==1.7.2
