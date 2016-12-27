@@ -59,7 +59,7 @@ if(current_height<70 | current_height>240)stop("(1) current_height must be given
 
 current_age<-as.numeric(args[7])
 if(is.na(current_age))stop("(2) current_age must be given as a number (year)")
-if(current_age<5 | current_age>40)stop("(2) current_age must be given as a number between 4 and 40")
+if(current_age<4 | current_age>17.5)stop("(2) current_age must be given as a number between 4 and 17.5")
 if(!current_age%in%seq(4,17.5,by=0.5))stop("Age must be either 12, 12.5, 13, 13.5... etc")
 current_age_c<-as.character(current_age)
 
