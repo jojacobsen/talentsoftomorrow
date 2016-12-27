@@ -53,8 +53,8 @@ class RscriptAnalysis(object):
             try:
                 bio_age = decimal.Decimal(results[1])
             except IndexError:
-                logger.warning('Could not calculate bio age for %s (predicted height) and %s (current height)!'
-                               % (str(predicted_height), str(current_height)))
+                logger.error('Could not calculate bio age for %s (predicted height) and %s (current height)!'
+                             % (str(predicted_height), str(current_height)))
                 bio_age = None
                 slope = None
                 return bio_age, slope
@@ -96,7 +96,17 @@ class RscriptAnalysis(object):
         process = subprocess.Popen(bash_command.split(), stdout=subprocess.PIPE)
         output = str(process.communicate()[0])
         results = output.split('\\n')
-        return decimal.Decimal(results[1][:-1])
+        try:
+            benchmark = decimal.Decimal(results[1][:-1])
+        except IndexError:
+            logger.error('Could not benchmark for values:'
+                         ' %s (value),'
+                         ' %s (age),'
+                         ' %s (statistic_array),'
+                         ' %s (smaller_is_better).'
+                         % (str(value), str(age), str(statistic_array), str(smaller_is_better)))
+            benchmark = None
+        return benchmark
 
     def get_khamis_roche(self, current_height, current_age, current_weight, fathers_height, mothers_height, gender):
         """
@@ -121,10 +131,16 @@ class RscriptAnalysis(object):
             mean_absolute_deviation_50 = results[3]
             mean_absolute_deviation_90 = results[5]
         except IndexError:
-            logger.warning('Could not calculate bio age for %s (predicted height) and %s (current height)!'
-                           % (str(predicted_height), str(current_height)))
-            bio_age = None
-            slope = None
-            return bio_age, slope
+            logger.error('Could not calculate khr with following values: '
+                         '%s (current_height), '
+                         '%s (current_age),'
+                         '%s (current_weight),'
+                         '%s (mothers_height),'
+                         '%s (fathers_height).'
+                         % (str(current_height), str(current_age), str(current_weight),
+                            str(mothers_height), str(fathers_height)))
+            predicted_height = None
+            mean_absolute_deviation_50 = None
+            mean_absolute_deviation_90 = None
 
         return predicted_height, mean_absolute_deviation_50, mean_absolute_deviation_90
