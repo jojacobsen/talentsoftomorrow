@@ -72,6 +72,22 @@ m1<-m1[!is.na(m1[,"Chromosome"]),]
 #remove the ones with no rs-id
 m1<-m1[!m1[,"dbSNP_RS_ID"]%in%"",]
 
+
+
+
+
+
+#check genotypes
+allowed_types<-rbind(
+  t(combn(c("A","C","T","G"),2)),
+  t(combn(rev(c("A","C","T","G")),2)),
+  c("A","A"),c("C","C"),c("T","T"),c("G","G"))
+allowed_types<-unique(apply(allowed_types,1,paste,collapse=""))
+
+
+
+
+
 # Format like this
 # #Genetic data is provided below as five TAB delimited columns.  Each line
 # #corresponds to a SNP.  Column one provides the SNP identifier (rsID where
@@ -97,6 +113,7 @@ m1<-m1[!m1[,"dbSNP_RS_ID"]%in%"",]
 template<-data.frame("#rsid"=m1[,"dbSNP_RS_ID"], chromosome=m1[,"Chromosome"], position=m1[,"Physical.Position"],genotype=NA,check.names=F)
 
 for(sample in sampleNames){
+  Sys.sleep(0.5)
   print(sample)
   #prepare folder
   folder_out<-sub("SAMPLENAME",sample,output_folder)
@@ -104,6 +121,9 @@ for(sample in sampleNames){
   #prepare data file  
   d1<-template
   d1[,"genotype"]<-m1[,sample]
+  d1[,"genotype"]<-as.character(factor(d1[,"genotype"],levels=allowed_types))
+  d1[is.na(d1[,"genotype"]),"genotype"]<-"--"
+  
   filename_out<-paste0(sample,"_raw_data.txt")
   dir.create(folder_out)
   write.table(d1,file=paste0(folder_out,filename_out),sep="\t",row.names=F,col.names=T,quote=F)
