@@ -5,4 +5,4 @@ class GeneticsConfig(AppConfig):
     name = 'genetics'
 
     def ready(self):
-        from .signals import handlers
+        import apps.genetics.signals.handlers

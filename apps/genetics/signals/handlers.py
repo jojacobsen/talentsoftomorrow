@@ -1,32 +1,24 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-import decimal
-from performance.models import Performance
-from .models import DnaResult
-from analytics.models import BioAge, Benchmark
-from dashboard.utils import RscriptAnalysis
+from genetics.models import DnaHeight
+from profile.models import PredictedHeight
 
 
-@receiver(post_save, sender=DnaResult)
-def post_dna_result_handler(sender, instance=None, created=False, **kwargs):
-    if instance.dna_measurement.slug_name == 'gheight_m_estimate':
-        if Performance.objects.filter(measurement__related_dna_measurement=instance.dna_measurement,
-                                      player=instance.player):
-            current_height = Performance.objects.filter(
-                measurement__related_dna_measurement=instance.dna_measurement,
-                player=instance.player
-            ).order_by('-date').first()
-
-            current_height = current_height.value * \
-                             decimal.Decimal(current_height.measurement.factor_to_dna_measurement)
-
-            predicted_height = instance.value
-
-            r_scripts = RscriptAnalysis()
-            bio_age, slope = r_scripts.get_bio_age(predicted_height, current_height)
-            if bio_age and slope:
-                BioAge.objects.create(
-                    player=instance.player,
-                    bio_age=bio_age,
-                    slope_to_bio_age=slope
-                )
+@receiver(post_save, sender=DnaHeight)
+def post_dna_height_handler(sender, instance=None, created=False, **kwargs):
+    if created:
+        # Creates Height Prediction in Profile App
+        PredictedHeight.objects.create(player=instance.player,
+                                       date=instance.date,
+                                       predicted_height=instance.predicted_height,
+                                       method='dna',
+                                       khamis_roche=None,
+                                       dna_height=instance)
+    else:
+        # Updates Height Prediction in Profile App
+        instance.player.predictedheight_set(
+            dna_height=instance
+        ).update(
+            date=instance.date,
+            predicted_height=instance.predicted_height
+        )

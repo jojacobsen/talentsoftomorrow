@@ -24,6 +24,7 @@ class Interpolate(object):
 
 class RscriptAnalysis(object):
     def __init__(self):
+        # Where to look for R scripts
         self.r_folder = settings.PROJECT_ROOT + "/R_scripts"
 
         self.height_prediction_command = self.r_folder + "/bio_age/2016-07-14_bioage_calculator.R"
@@ -43,8 +44,14 @@ class RscriptAnalysis(object):
         """
         if country == 'uk':
             average_height_data = self.r_folder + '/bio_age/2016-07-06_Heigh_prediction_data_google_doc_extract.xlsx'
+        else:
+            logger.error('Other countries than UK not implemented yet!')
+            bio_age = None
+            slope = None
+            return bio_age, slope
 
         if current_height < predicted_height:
+            # Swoop....prediction should be higher than current height
             bash_command = " ".join([self.height_prediction_command, str(predicted_height), str(current_height),
                                     average_height_data])
             process = subprocess.Popen(bash_command.split(), stdout=subprocess.PIPE)
@@ -68,6 +75,7 @@ class RscriptAnalysis(object):
                 slope.append([x_slope[i], y_slope[i]])
 
         else:
+            # Otherwise just take current height as predicted height, because we are always right!
             bio_age = 18
             slope = [[18, float(current_height)]]
 

@@ -18,7 +18,7 @@ def create_khamis_roche(sender, instance, created):
         try:
             current_height = instance.player.height_set.filter().latest('date')
         except Height.DoesNotExist:
-            return
+            return False
 
     if sender == Weight:
         # Use current instance
@@ -28,7 +28,7 @@ def create_khamis_roche(sender, instance, created):
         try:
             current_weight = instance.player.weight_set.filter().latest('date')
         except Weight.DoesNotExist:
-            return
+            return False
 
     if sender == ParentsHeight:
         # Use current instance
@@ -38,10 +38,12 @@ def create_khamis_roche(sender, instance, created):
         try:
             parents_height = instance.player.parentsheight_set.filter().latest('created')
         except Weight.DoesNotExist:
-            return
+            return False
 
     # Current age based on date of height measurement (rounded to x.5)
     current_age = round(((current_height.date.date() - instance.player.birthday).days / 365) * 2) / 2
+    # Median Date between weight and height record
+    date = current_height.date + (current_weight.date - current_height.date)/2
 
     r = RscriptAnalysis()
     # Get predicted height from R script
@@ -50,18 +52,23 @@ def create_khamis_roche(sender, instance, created):
                                                 instance.player.get_gender_display())
     if not predicted_height:
         # Something went wrong
-        return
+        return False
 
     if created:
         # Creates KHR Object
         KhamisRoche.objects.create(player=instance.player, predicted_height=predicted_height,
                                    current_height=current_height, current_weight=current_weight,
-                                   parents_height=parents_height, meta=meta)
+                                   parents_height=parents_height, meta=meta, date=date)
+        return True
     else:
         # Updates predicted height
-        khr = instance.player.khamisroche_set.filter(
+        instance.player.khamisroche_set.filter(
             current_height=current_height,
             current_weight=current_weight,
             parents_height=parents_height
-        )[0]
-        khr.update(predicted_height=parents_height, meta=meta)
+        )[0].update(
+            predicted_height=parents_height,
+            meta=meta,
+            date=date
+        )
+        return True
