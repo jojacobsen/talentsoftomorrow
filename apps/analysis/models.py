@@ -11,4 +11,7 @@ class KhamisRoche(models.Model):
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
     predicted_height = MeasurementField(measurement=Distance, unit_choices=[("cm", "cm")])
-    data = JSONField(default=dict())
+    current_height = models.ForeignKey('profile.Height', on_delete=models.CASCADE)
+    current_weight = models.ForeignKey('profile.Weight', on_delete=models.CASCADE)
+    parents_height = models.ForeignKey('profile.ParentsHeight', on_delete=models.CASCADE)
+    meta = JSONField(default=dict())

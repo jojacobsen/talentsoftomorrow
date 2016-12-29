@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
-from genetics.models import DnaMeasurement
 from accounts.models import Player
 from profile.models import BioAge
 
@@ -27,8 +26,6 @@ class Measurement(models.Model):
     upper_limit = models.DecimalField(max_digits=16, decimal_places=10)
     lower_limit = models.DecimalField(max_digits=16, decimal_places=10)
     statistic_array = ArrayField(ArrayField(models.FloatField()))  # TODO: Fix this weird thing (Json field?)
-    related_dna_measurement = models.ForeignKey(DnaMeasurement, on_delete=models.CASCADE, blank=True, null=True)
-    factor_to_dna_measurement = models.FloatField(default=1, blank=True, null=True)
     smaller_is_better = models.BooleanField(default=False)
     # TODO: get_value with limited decimal places
 

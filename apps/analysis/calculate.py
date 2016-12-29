@@ -128,8 +128,10 @@ class RscriptAnalysis(object):
         results = output.split('\\n')
         try:
             predicted_height = Distance(cm=float(results[1]))
-            mean_absolute_deviation_50 = results[3]
-            mean_absolute_deviation_90 = results[5]
+            meta = {
+                'mean_absolute_deviation_50': results[3],
+                'mean_absolute_deviation_90': results[5]
+            }
         except IndexError:
             logger.error('Could not calculate khr with following values: '
                          '%s (current_height), '
@@ -140,7 +142,6 @@ class RscriptAnalysis(object):
                          % (str(current_height), str(current_age), str(current_weight),
                             str(mothers_height), str(fathers_height)))
             predicted_height = None
-            mean_absolute_deviation_50 = None
-            mean_absolute_deviation_90 = None
+            meta = {}
 
-        return predicted_height, mean_absolute_deviation_50, mean_absolute_deviation_90
+        return predicted_height, meta

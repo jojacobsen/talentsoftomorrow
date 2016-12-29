@@ -1,5 +1,4 @@
 from django.contrib import admin
-from .models import DnaMeasurement, DnaResult
+from .models import DnaHeight
 
-admin.site.register(DnaMeasurement)
-admin.site.register(DnaResult)
+admin.site.register(DnaHeight)
