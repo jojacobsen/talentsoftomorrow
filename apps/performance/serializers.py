@@ -1,5 +1,5 @@
 from rest_framework import serializers, exceptions
-from .models import Performance, Measurement, Unit
+from .models import Performance, Measurement, Unit, Benchmark
 
 
 class PerformanceSerializer(serializers.ModelSerializer):
@@ -42,3 +42,54 @@ class MeasurementSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Measurement
+
+
+class PerformancePlayerSerializer(serializers.BaseSerializer):
+    def to_representation(self, obj):
+        p = dict()
+        # Loop trough the club's measurements
+        for m in obj.club.measurements.filter():
+            # Get the two latest performance results
+            t = obj.performance_set.filter(measurement=m).order_by('-date')[:2]
+            if t:
+                test = t[0]
+                try:
+                    # Check if performance is benchmarked
+                    b = test.benchmark_set.get()
+                    benchmark = {
+                        'real_age': b.benchmark,
+                        'bio_age': b.benchmark_bio
+                    }
+                except Benchmark.DoesNotExist:
+                    benchmark = None
+
+                if len(t) > 1:
+                    if m.smaller_is_better:
+                        if t[0].value < t[1].value:
+                            progress = 'up'
+                        elif t[0].value > t[1].value:
+                            progress = 'down'
+                        else:
+                            progress = 'constant'
+                    else:
+                        if t[0].value > t[1].value:
+                            progress = 'up'
+                        elif t[0].value < t[1].value:
+                            progress = 'down'
+                        else:
+                            progress = 'constant'
+                else:
+                    progress = 'constant'
+
+                t = {
+                    'value': test.value,
+                    'measurement': test.measurement.id,
+                    'name': test.measurement.name,
+                    'slug': test.measurement.slug_name,
+                    'unit': test.measurement.unit.abbreviation,
+                    'benchmark': benchmark,
+                    'progress': progress
+                }
+
+                p.setdefault(test.measurement.category, []).append(t)
+        return p

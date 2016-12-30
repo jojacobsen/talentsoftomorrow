@@ -1,72 +1,38 @@
 import datetime
-from dateutil.relativedelta import relativedelta
 from rest_framework import serializers
-from profile.models import Height, PredictedHeight, BioAge
-from performance.models import Benchmark
+from profile.models import Height, Weight, PredictedHeight, BioAge
 
 
 class PlayerProfileSerializer(serializers.BaseSerializer):
     def to_representation(self, obj):
-        p = dict()
-        # Loop trough the club's measurements
-        for m in obj.club.measurements.filter():
-            # Get the two latest performance results
-            t = obj.performance_set.filter(measurement=m).order_by('-date')[:2]
-            if t:
-                test = t[0]
-                try:
-                    # Check if performance is benchmarked
-                    b = test.benchmark_set.get()
-                    benchmark = {
-                        'real_age': b.benchmark,
-                        'bio_age': b.benchmark_bio
-                    }
-                except Benchmark.DoesNotExist:
-                    benchmark = None
-
-                if len(t) > 1:
-                    if m.smaller_is_better:
-                        if t[0].value < t[1].value:
-                            progress = 'up'
-                        elif t[0].value > t[1].value:
-                            progress = 'down'
-                        else:
-                            progress = 'constant'
-                    else:
-                        if t[0].value > t[1].value:
-                            progress = 'up'
-                        elif t[0].value < t[1].value:
-                            progress = 'down'
-                        else:
-                            progress = 'constant'
-                else:
-                    progress = 'constant'
-
-                t = {
-                    'value': test.value,
-                    'measurement': test.measurement.id,
-                    'name': test.measurement.name,
-                    'slug': test.measurement.slug_name,
-                    'unit': test.measurement.unit.abbreviation,
-                    'benchmark': benchmark,
-                    'progress': progress
-                }
-
-                p.setdefault(test.measurement.category, []).append(t)
-
+        measurement_system = obj.club.measurement_system
         try:
             current_height, height_date = obj.height_set.values_list('height', 'date').latest('date')
             # Uses the date when height was recorded
             current_age = round((height_date - obj.birthday).days / 365.25, 1)
-            if obj.club.measurement_system == 'SI':
+            if measurement_system == 'SI':
                 current_height = current_height.cm
                 height_unit = 'cm'
-            elif obj.club.measurement_system == 'Imp':
+            elif measurement_system == 'Imp':
                 current_height = current_height.inch
                 height_unit = 'inch'
         except Height.DoesNotExist:
             current_height = None
             current_age = round((datetime.date.today() - obj.birthday).days / 365.25, 1)
+
+        # Get latest weight record
+        try:
+            current_weight = obj.weight_set.values_list('weight').latest('date')
+            if measurement_system == 'SI':
+                current_weight = current_weight.kg
+                weight_unit = 'kg'
+            elif measurement_system == 'Imp':
+                current_weight = current_weight.lb
+                weight_unit = 'lb'
+
+        except Weight.DoesNotExist:
+            current_weight = None
+            weight_unit = None
 
         try:
             # DNA result always highest prio
@@ -96,7 +62,7 @@ class PlayerProfileSerializer(serializers.BaseSerializer):
         except BioAge.DoesNotExist:
             bio_age = None
 
-        player = {
+        return {
             'player_id': obj.id,
             'player_name': obj.first_name + ' ' + obj.last_name,
             'lab_key': obj.lab_key,
@@ -107,10 +73,8 @@ class PlayerProfileSerializer(serializers.BaseSerializer):
             'prediction_method': prediction_method,
             'height_unit': height_unit,
             'height_date': height_date,
+            'current_weight': current_weight,
+            'weight_unit': weight_unit,
             'bio_age': bio_age,
             'real_age': current_age
-        }
-        return {
-            'data': p,
-            'player': player,
         }

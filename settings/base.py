@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'django_cleanup',
     'modeltranslation',
     'django_measurement',
+    'memcache_status',
 
     # Apps
     'accounts',

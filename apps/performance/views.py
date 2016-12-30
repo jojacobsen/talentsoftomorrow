@@ -1,6 +1,7 @@
-from .serializers import PerformanceSerializer, MeasurementSerializer
+from .serializers import PerformanceSerializer, MeasurementSerializer, PerformancePlayerSerializer
 from .models import Performance
 from .filters import PerformanceFilter
+from accounts.models import Player
 
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.renderers import JSONRenderer
@@ -174,3 +175,21 @@ class MeasurementListView(generics.ListAPIView):
         return JSONResponse(serializer.data)
 
 
+class PerformancePlayerView(generics.GenericAPIView):
+    permission_classes = (IsAuthenticated,)
+
+    serializer_class = PerformancePlayerSerializer
+    # Parse JSON
+    parser_classes = (JSONParser,)
+
+    def get(self, request, pk=None):
+        group = self.request.user.groups.values_list('name', flat=True)
+        if 'Club' in group:
+            queryset = Player.objects.get(pk=pk, club=self.request.user.club, archived=False)
+        elif 'Coach' in group:
+            queryset = Player.objects.get(pk=pk, club=self.request.user.coach.club, archived=False)
+        else:
+            raise exceptions.PermissionDenied('User has no permission to access user data of player.')
+
+        serializer = PerformancePlayerSerializer(queryset)
+        return JSONResponse(serializer.data)
