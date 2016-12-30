@@ -25,10 +25,12 @@ def post_khamis_roche_handler(sender, instance=None, created=False, **kwargs):
                                        dna_height=None)
     else:
         # Updates Height Prediction in Profile App
-        instance.player.predictedheight_set.filter(
+        # (Does not use update() method because of signals)
+        prediction = instance.player.predictedheight_set.filter(
             khamis_roche=instance
-        )[0].update(
-            date=instance.date,
-            predicted_height=instance.predicted_height
-        )
+        )[0]
+        prediction.date = instance.date
+        prediction.predicted_height = instance.predicted_height
+        prediction.save()
+
 

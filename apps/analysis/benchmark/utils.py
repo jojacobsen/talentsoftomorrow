@@ -55,7 +55,7 @@ def create_benchmark(sender, instance, created):
                                  bio_age=bio_age)
         return True
     else:
-        # Updates the currently used bio age
+        # Updates the currently used bio age (.update does not trigger signals!)
         instance.benchmark_set.update(
             benchmark=benchmark,
             benchmark_bio=benchmark_bio

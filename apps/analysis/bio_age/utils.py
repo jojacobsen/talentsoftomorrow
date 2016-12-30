@@ -43,11 +43,11 @@ def create_bio_age(sender, instance, created):
                               slope_to_bio_age=slope)
         return True
     else:
-        # Updates the currently used bio age
+        # Updates the currently used bio age (.update does not trigger signals!)
         instance.player.bioage_set.filter(
             predicted_height=prediction,
             current_height=current_height,
-        )[0].update(
+        ).update(
             bio_age=bio_age,
             slope_to_bio_age=slope
         )

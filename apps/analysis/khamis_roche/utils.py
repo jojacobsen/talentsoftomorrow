@@ -69,13 +69,14 @@ def create_khamis_roche(sender, instance, created):
         return True
     else:
         # Updates predicted height
-        instance.player.khamisroche_set.filter(
+        # (Does not use update() method because of signals)
+        khr = instance.player.khamisroche_set.filter(
             current_height=current_height,
             current_weight=current_weight,
             parents_height=parents_height
-        )[0].update(
-            predicted_height=parents_height,
-            meta=meta,
-            date=date
-        )
+        )[0]
+        khr.predicted_height = predicted_height
+        khr.meta = meta
+        khr.date = date
+        khr.save()
         return True
