@@ -5,4 +5,4 @@ class PerformanceConfig(AppConfig):
     name = 'performance'
 
     def ready(self):
-        from .signals import handlers
+        import apps.performance.signals.handlers

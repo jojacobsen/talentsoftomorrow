@@ -90,6 +90,9 @@ class RscriptAnalysis(object):
         :param smaller_is_better:
         :return benchmark:
         """
+        # statistic_array[0]: Age
+        # statistic_array[1]: Average
+        # statistic_array[2]: SD
         i = Interpolate(statistic_array[0], statistic_array[1])
         population_mean = i[age]
         i = Interpolate(statistic_array[0], statistic_array[2])

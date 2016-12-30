@@ -11,7 +11,7 @@ from django.contrib.postgres.fields import JSONField
 class Height(models.Model):
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
-    date = models.DateTimeField()
+    date = models.DateField()
     height = MeasurementField(measurement=Distance, unit_choices=[("cm", "cm")])
 
     def __str__(self):
@@ -21,7 +21,7 @@ class Height(models.Model):
 class Weight(models.Model):
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
-    date = models.DateTimeField()
+    date = models.DateField()
     weight = MeasurementField(measurement=WeightMeasurement, unit_choices=[("kg", "kg")])
 
     def __str__(self):
@@ -31,7 +31,7 @@ class Weight(models.Model):
 class PredictedHeight(models.Model):
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
-    date = models.DateTimeField()
+    date = models.DateField()
     predicted_height = MeasurementField(measurement=Distance, unit_choices=[("cm", "cm")])
     METHOD_CHOICES = (
         ('dna', 'DNA Test'),  # DNA Test has always priority

@@ -41,7 +41,14 @@ def create_khamis_roche(sender, instance, created):
             return False
 
     # Current age based on date of height measurement (rounded to x.5)
-    current_age = round(((current_height.date.date() - instance.player.birthday).days / 365) * 2) / 2
+    current_age = round(((current_height.date - instance.player.birthday).days / 365.25) * 2) / 2
+
+    # Age limit is 8-17.5 years
+    if current_age < 8:
+        current_age = 8
+    elif current_age > 17.5:
+        current_age = 17.5
+
     # Median Date between weight and height record
     date = current_height.date + (current_weight.date - current_height.date)/2
 

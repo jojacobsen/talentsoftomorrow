@@ -1,5 +1,6 @@
 from django.db import models
-from django.contrib.postgres.fields import ArrayField
+from django.contrib.postgres.fields import JSONField
+from django.core.validators import MaxLengthValidator, MinLengthValidator
 from accounts.models import Player
 from profile.models import BioAge
 
@@ -23,11 +24,16 @@ class Measurement(models.Model):
     unit = models.ForeignKey(Unit, on_delete=models.CASCADE)
     slug_name = models.CharField(max_length=100)
     description = models.CharField(max_length=2000)
-    upper_limit = models.DecimalField(max_digits=16, decimal_places=10)
-    lower_limit = models.DecimalField(max_digits=16, decimal_places=10)
-    statistic_array = ArrayField(ArrayField(models.FloatField()))  # TODO: Fix this weird thing (Json field?)
+    precision = models.IntegerField(default=2,
+                                    help_text='How many decimals should be shown in Webapp?')
+    upper_limit = models.DecimalField(max_digits=16, decimal_places=10, help_text='Highest possible value.')
+    lower_limit = models.DecimalField(max_digits=16, decimal_places=10, help_text='Lowest possible value.')
+    statistic_array = JSONField(validators=[MinLengthValidator(3), MaxLengthValidator(3)],
+                                default=list([[], [], []]),
+                                help_text="Use the following format (age, average, SD) "
+                                          "with all the same length: "
+                                          "[[9,10,11],[3,3.5,4],[2,2,2]].")
     smaller_is_better = models.BooleanField(default=False)
-    # TODO: get_value with limited decimal places
 
     def __str__(self):
         return self.name + ' in ' + self.unit.name
@@ -43,6 +49,9 @@ class Performance(models.Model):
 
     def __str__(self):
         return self.player.user.username
+
+    def limit_decimals(self):
+        return round(self.value, self.measurement.precision)
 
 
 class Benchmark(models.Model):

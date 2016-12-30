@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Measurement, Unit, Performance
+from .models import Measurement, Unit, Performance, Benchmark
 
 
 class PerformanceAdmin(admin.ModelAdmin):
@@ -22,3 +22,4 @@ class PerformanceAdmin(admin.ModelAdmin):
 admin.site.register(Measurement)
 admin.site.register(Unit)
 admin.site.register(Performance, PerformanceAdmin)
+admin.site.register(Benchmark)

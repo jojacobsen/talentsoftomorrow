@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from fernet_fields import EncryptedTextField
 
 
+# TODO Move it to AWS
 def user_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/uuid/<filename>
     u = uuid.uuid4()
@@ -13,7 +14,16 @@ def user_directory_path(instance, filename):
 class Club(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100, null=True)
-    measurements = models.ManyToManyField('performance.Measurement', blank=True)
+    SYSTEM_CHOICES = (
+        ('SI', 'Metric'),
+        ('Imp', 'Imperial'),
+    )
+    measurement_system = models.CharField(max_length=10, choices=SYSTEM_CHOICES,
+                                          help_text='Defines Input/Output units for height & weight. '
+                                                    '(Internal always cm & kg)')
+    measurements = models.ManyToManyField('performance.Measurement', blank=True,
+                                          help_text='Which measurements is the club using? '
+                                                    'Be aware of units (cm, inch, ...)!')
 
     def __str__(self):
         return self.user.username

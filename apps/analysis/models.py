@@ -10,7 +10,7 @@ from measurement.measures import Distance
 class KhamisRoche(models.Model):
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
-    date = models.DateTimeField()  # Median Date between Height and Weight record
+    date = models.DateField()  # Median Date between Height and Weight record
     predicted_height = MeasurementField(measurement=Distance, unit_choices=[("cm", "cm")])
     current_height = models.ForeignKey('profile.Height', on_delete=models.CASCADE)
     current_weight = models.ForeignKey('profile.Weight', on_delete=models.CASCADE)
