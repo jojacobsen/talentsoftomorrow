@@ -1,4 +1,4 @@
-import uuid
+import string
 import random
 from .models import ProfilePicture, Club, Coach, Player
 from rest_framework import serializers, exceptions
@@ -14,6 +14,13 @@ def create_username(last_name, first_name):
         ''.join(e for e in username if e.isalnum())
 
     return username
+
+
+def lab_key_generator(size=5, chars=string.ascii_lowercase + string.digits):
+    lab_key = ''.join(random.choice(chars) for _ in range(size))
+    while Player.objects.filter(lab_key=lab_key).exists():
+        lab_key = ''.join(random.choice(chars) for _ in range(size))
+    return lab_key
 
 
 class GroupSerializer(serializers.ModelSerializer):
@@ -143,7 +150,7 @@ class NewPlayerSerializer(serializers.ModelSerializer):
         player_group = Group.objects.get(name='Player')
         user.groups.add(player_group)
         validated_data['user'] = user
-        validated_data['lab_key'] = str(uuid.uuid5(uuid.NAMESPACE_X500, user.username))
+        validated_data['lab_key'] = lab_key_generator()
 
         # Create the player
         player = Player.objects.create(**validated_data)
