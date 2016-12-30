@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.postgres.fields import JSONField
-from django.core.validators import MaxLengthValidator, MinLengthValidator
+from django.core.validators import MaxLengthValidator, MinLengthValidator, validate_slug
 from accounts.models import Player
 from profile.models import BioAge
 
@@ -22,8 +22,9 @@ class Unit(models.Model):
 class Measurement(models.Model):
     name = models.CharField(max_length=300)
     unit = models.ForeignKey(Unit, on_delete=models.CASCADE)
-    slug_name = models.CharField(max_length=100)
+    slug_name = models.CharField(max_length=100, validators=[validate_slug])
     description = models.CharField(max_length=2000)
+    category = models.CharField(max_length=100, default='test', validators=[validate_slug])
     precision = models.IntegerField(default=2,
                                     help_text='How many decimals should be shown in Webapp?')
     upper_limit = models.DecimalField(max_digits=16, decimal_places=10, help_text='Highest possible value.')

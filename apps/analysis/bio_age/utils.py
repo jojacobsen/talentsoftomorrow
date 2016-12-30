@@ -16,7 +16,7 @@ def create_bio_age(sender, instance, created):
     except PredictedHeight.DoesNotExist:
         try:
             # If not DNA test, latest KHR result
-            prediction = instance.player.predictedheight_set.filter(player=instance.player, method='khr').latest('date')
+            prediction = instance.player.predictedheight_set.filter(method='khr').latest('date')
         except PredictedHeight.DoesNotExist:
             # Return nada if not even KHR result
             return False
