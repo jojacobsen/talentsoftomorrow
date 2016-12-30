@@ -1,5 +1,4 @@
-from .serializers import PerformanceAnalyseSerializer, PerformanceHistoricSerializer, PerformanceToBioAgeSerializer, \
-    HeightEstimationSerializer
+from .serializers import PerformanceHistoricSerializer, PerformanceToBioAgeSerializer, HeightEstimationSerializer
 from accounts.models import Player
 from accounts.filters import PlayerFilter
 
@@ -19,27 +18,6 @@ class JSONResponse(HttpResponse):
         content = JSONRenderer().render(data)
         kwargs['content_type'] = 'application/json'
         super(JSONResponse, self).__init__(content, **kwargs)
-
-
-class PerformanceAnaylseListView(generics.ListAPIView):
-    permission_classes = (IsAuthenticated,)
-
-    serializer_class = PerformanceAnalyseSerializer
-    filter_backends = (filters.DjangoFilterBackend,)
-    filter_class = PlayerFilter
-    # Parse JSON
-    parser_classes = (JSONParser,)
-
-    def get_queryset(self):
-        group = self.request.user.groups.values_list('name', flat=True)
-
-        if 'Club' in group:
-            queryset = Player.objects.filter(club=self.request.user.club, archived=False)
-        elif 'Coach' in group:
-            queryset = Player.objects.filter(club=self.request.user.coach.club, archived=False)
-        else:
-            raise exceptions.PermissionDenied('User has no permission to access user data of player.')
-        return queryset
 
 
 class PerformanceHistoricListView(generics.ListAPIView):
