@@ -25,7 +25,7 @@ class PerformanceHistoricSerializer(serializers.BaseSerializer):
         }
 
 
-class PerformanceToBioAgeSerializer(serializers.BaseSerializer):
+class PerformanceBioAgeSerializer(serializers.BaseSerializer):
     def to_representation(self, obj):
         """
         Performance to BioAge graph.
@@ -33,6 +33,45 @@ class PerformanceToBioAgeSerializer(serializers.BaseSerializer):
         :return:
         """
         pk = self.context['view'].kwargs['pk']
+        data = list()
+        try:
+            value = obj.performance_set.filter(
+                measurement__id=pk
+            ).values_list(
+                'value', flat=True
+            ).latest('date')
+        except Performance.DoesNotExist:
+            value = None
+        try:
+            # Latest BioAge is always the best
+            bio_age = obj.bioage_set.values_list('bio_age', flat=True).latest('created')
+        except BioAge.DoesNotExist:
+            bio_age = None
+
+        if bio_age and value:
+            data.append({
+                'x': bio_age,
+                'y': value,
+            }
+            )
+
+        return {
+            'data': data,
+            'player': obj.id,
+            'name': obj.first_name + ' ' + obj.last_name,
+            'type': 'column'
+        }
+
+
+class PerformanceGraphSerializer(serializers.BaseSerializer):
+    def to_representation(self, obj):
+        """
+        Latest Performance graph.
+        :param obj:
+        :return:
+        """
+        pk = self.context['view'].kwargs['pk']
+        data = list()
         try:
             value, date = obj.performance_set.filter(
                 measurement__id=pk
@@ -41,33 +80,21 @@ class PerformanceToBioAgeSerializer(serializers.BaseSerializer):
                 'date'
             ).latest('date')
         except Performance.DoesNotExist:
-            return {}
-        try:
-            # Latest BioAge is always the best
-            bio_age = obj.bioage_set.values_list('bio_age', flat=True).latest('created')
-        except BioAge.DoesNotExist:
-            return {}
+            value = None
+            date = None
 
-        data = list()
-        data.append({
-            'x': (date - obj.birthday).days / 365.25,
-            'y': value,
-            'bio_age': False,
-        }
-        )
-
-        data.append({
-            'x': bio_age,
-            'y': value,
-            'bio_age': True,
-        }
-        )
+        if value and date:
+            data.append({
+                'x': (date - obj.birthday).days / 365.25,
+                'y': value,
+            }
+            )
 
         return {
             'data': data,
             'player': obj.id,
             'name': obj.first_name + ' ' + obj.last_name,
-            'type': 'line'
+            'type': 'column'
         }
 
 

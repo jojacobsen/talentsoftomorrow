@@ -1,4 +1,5 @@
-from .serializers import PerformanceHistoricSerializer, PerformanceToBioAgeSerializer, HeightEstimationSerializer
+from .serializers import PerformanceHistoricSerializer, PerformanceBioAgeSerializer, HeightEstimationSerializer, \
+    PerformanceGraphSerializer
 from accounts.models import Player
 from accounts.filters import PlayerFilter
 
@@ -20,7 +21,7 @@ class JSONResponse(HttpResponse):
         super(JSONResponse, self).__init__(content, **kwargs)
 
 
-class PerformanceHistoricListView(generics.ListAPIView):
+class PerformanceHistoricGraphView(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
 
     serializer_class = PerformanceHistoricSerializer
@@ -40,10 +41,10 @@ class PerformanceHistoricListView(generics.ListAPIView):
         return queryset
 
 
-class PerformanceToBioAgeListView(generics.ListAPIView):
+class PerformanceBioAgeGraphView(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
 
-    serializer_class = PerformanceToBioAgeSerializer
+    serializer_class = PerformanceBioAgeSerializer
     filter_backends = (filters.DjangoFilterBackend,)
     filter_class = PlayerFilter
     # Parse JSON
@@ -60,7 +61,26 @@ class PerformanceToBioAgeListView(generics.ListAPIView):
         return queryset
 
 
-class HeightEstimationListView(generics.ListAPIView):
+class PerformanceGraphView(generics.ListAPIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = PerformanceGraphSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_class = PlayerFilter
+    # Parse JSON
+    parser_classes = (JSONParser,)
+
+    def get_queryset(self):
+        group = self.request.user.groups.values_list('name', flat=True)
+        if 'Club' in group:
+            queryset = Player.objects.filter(club=self.request.user.club, archived=False)
+        elif 'Coach' in group:
+            queryset = Player.objects.filter(club=self.request.user.coach.club, archived=False)
+        else:
+            raise exceptions.PermissionDenied('User has no permission to access user data of player.')
+        return queryset
+
+
+class HeightEstimationGraphView(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
 
     serializer_class = HeightEstimationSerializer
