@@ -119,3 +119,4 @@ class PHV(models.Model):
     current_weight = models.ForeignKey(Weight, on_delete=models.CASCADE)
     sitting_height = models.ForeignKey(SittingHeight, on_delete=models.CASCADE)
     phv_date = models.DateField()
+    date = models.DateField()  # Median date of height & weight measurements

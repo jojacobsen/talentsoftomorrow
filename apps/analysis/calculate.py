@@ -31,6 +31,7 @@ class RscriptAnalysis(object):
         self.benchmark_command = self.r_folder + "/bio_age/2016-08-04_benchmark_calculator.R"
         self.khamis_roche_command = self.r_folder + "/khamis_roche/2016-08-20_khamis_roche.R"
         self.coefficients_file_khr = self.r_folder + "/khamis_roche/2016-05-22_khamis_roche_coefficents.txt"
+        self.phv_command = settings.PROJECT_ROOT + "/apps/analysis" + "/mirwald/Mirwald.R"
 
     def get_bio_age(self, predicted_height, current_height, country='uk'):
         """
@@ -156,3 +157,30 @@ class RscriptAnalysis(object):
             meta = {}
 
         return predicted_height, meta
+
+    def get_phv(self, current_height, current_age, current_weight, sitting_height):
+        """
+        Calculates peak of growth spurt (PHV) based on the Mirwald method.
+        :param current_height:
+        :param current_age:
+        :param current_weight:
+        :param sitting_height:
+        :return phv_delta: Distance to PHV in Years
+        """
+        bash_command = " ".join([self.phv_command, str(current_age), str(current_height), str(current_weight),
+                                 str(sitting_height)])
+        process = subprocess.Popen(bash_command.split(), stdout=subprocess.PIPE)
+        output = str(process.communicate()[0])
+        results = output.split('\\n')
+        try:
+            phv_delta = float(results[1])
+        except IndexError:
+            logger.error('Could not calculate khr with following values: '
+                         '%s (current_height), '
+                         '%s (current_age),'
+                         '%s (current_weight),'
+                         '%s (sitting_height),'
+                         % (str(current_height), str(current_age), str(current_weight),
+                            str(sitting_height)))
+            phv_delta = None
+        return phv_delta  # Distance to PHV in Years
