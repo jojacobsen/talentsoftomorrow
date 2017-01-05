@@ -93,3 +93,41 @@ class PerformancePlayerSerializer(serializers.BaseSerializer):
 
                 p.setdefault(test.measurement.category, []).append(t)
         return p
+
+
+class BenchmarkSerializer(serializers.BaseSerializer):
+    def to_representation(self, obj):
+        benchmark_bio = list()
+        benchmark_chrono = list()
+        # Loop trough the club's measurements
+        for m in obj.club.measurements.filter():
+            # Get the two latest performance results
+            try:
+                t = obj.performance_set.filter(measurement=m).latest('date')
+            except Performance.DoesNotExist:
+                # Fallback benchmark is 50%
+                benchmark_bio.append(50.0)
+                benchmark_chrono.append(50.0)
+                continue
+            try:
+                # Check if performance is benchmarked
+                b = t.benchmark_set.get()
+                benchmark_chrono.append(float(b.benchmark))
+                if b.benchmark_bio:
+                    benchmark_bio.append(float(b.benchmark_bio))
+                else:
+                    benchmark_bio.append(50.0)
+            except Benchmark.DoesNotExist:
+                # Fallback benchmark is 50%
+                benchmark_bio.append(50.0)
+                benchmark_chrono.append(50.0)
+
+        # Calculate averages
+        benchmark_chrono_ave = sum(benchmark_chrono) / float(len(benchmark_chrono))
+        benchmark_bio_ave = sum(benchmark_bio) / float(len(benchmark_bio))
+        return {
+            'player': obj.id,
+            'benchmark_chrono_ave': benchmark_chrono_ave,
+            'benchmark_bio_ave': benchmark_bio_ave
+        }
+

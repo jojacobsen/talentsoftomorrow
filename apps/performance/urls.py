@@ -12,4 +12,5 @@ urlpatterns = [
     url(r'^(?P<pk>[0-9]+)/delete/$', views.PerformanceDeleteView.as_view(), name='performance-delete'),
     url(r'^measurement/list/$', views.MeasurementListView.as_view(), name='measurement-list'),
     url(r'^player/(?P<pk>[0-9]+)/latest/$', views.PerformancePlayerView.as_view(), name='performances-latest'),
+    url(r'^benchmark/latest/$', views.BenchmarkListView.as_view(), name='benchmark-latest-list'),
 ]
