@@ -1,11 +1,13 @@
 from accounts.models import Player
-from .serializers import PlayerProfileSerializer
+from .serializers import PlayerProfileSerializer, HeightSerializer, \
+    WeightSerializer, ParentsHeightSerializer
 
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
 from rest_framework import generics, exceptions
 from django.http import HttpResponse
+
 
 class JSONResponse(HttpResponse):
     """
@@ -35,3 +37,34 @@ class PlayerProfileView(generics.GenericAPIView):
 
         serializer = PlayerProfileSerializer(queryset)
         return JSONResponse(serializer.data)
+
+
+class HeightCreateView(generics.CreateAPIView):
+    """
+    Creates Height object.
+    """
+    permission_classes = (IsAuthenticated,)
+    serializer_class = HeightSerializer
+    # Parse JSON
+    parser_classes = (JSONParser,)
+
+
+class WeightCreateView(generics.CreateAPIView):
+    """
+    Creates Weight object.
+    """
+    permission_classes = (IsAuthenticated,)
+    serializer_class = WeightSerializer
+    # Parse JSON
+    parser_classes = (JSONParser,)
+
+
+class ParentsHeightCreateView(generics.CreateAPIView):
+    """
+    Creates Parents Height object.
+    """
+    permission_classes = (IsAuthenticated,)
+    serializer_class = ParentsHeightSerializer
+    # Parse JSON
+    parser_classes = (JSONParser,)
+
