@@ -1,6 +1,6 @@
 import datetime
 from rest_framework import serializers, exceptions
-from profile.models import Height, Weight, PredictedHeight, BioAge, ParentsHeight, SittingHeight
+from .models import Height, Weight, PredictedHeight, BioAge, ParentsHeight, SittingHeight, PHV
 from measurement.measures import Distance
 from measurement.measures import Weight as WeightMeasurement
 
@@ -24,6 +24,12 @@ class PlayerProfileSerializer(serializers.BaseSerializer):
         except Weight.DoesNotExist:
             current_weight = None
             weight_unit = None
+
+        try:
+            s_height = obj.sittingheight_set.filter().latest('date')
+            sitting_height, height_unit = s_height.value_club_unit()
+        except SittingHeight.DoesNotExist:
+            sitting_height = None
 
         try:
             # DNA result always highest prio
@@ -59,6 +65,18 @@ class PlayerProfileSerializer(serializers.BaseSerializer):
         except BioAge.DoesNotExist:
             bio_age = None
 
+        try:
+            # Latest PHV is always the best
+            phv_date = obj.phv_set.values_list('phv_date', flat=True).latest('date')
+            phv_days = (phv_date - datetime.date.today()).days
+            growth_spurt_start = phv_date - datetime.timedelta(days=90)  # 3 Month before PHV
+            growth_position = 10 - phv_days / 365.25  # To display it in graph (10 is fixed value)
+        except PHV.DoesNotExist:
+            phv_date = None
+            phv_days = None
+            growth_spurt_start = None
+            growth_position = None
+
         return {
             'player_id': obj.id,
             'player_name': obj.first_name + ' ' + obj.last_name,
@@ -70,12 +88,17 @@ class PlayerProfileSerializer(serializers.BaseSerializer):
             'prediction_method': prediction_method,
             'height_unit': height_unit,
             'height_date': height_date,
+            'sitting_height': sitting_height,
             'current_weight': current_weight,
             'weight_unit': weight_unit,
             'bio_age': bio_age,
             'real_age': current_age,
             'fathers_height': fathers_height,
-            'mothers_height': mothers_height
+            'mothers_height': mothers_height,
+            'phv_date': phv_date,
+            'phv_days': phv_days,
+            'growth_spurt_start': growth_spurt_start,
+            'growth_position': growth_position,
         }
 
 
