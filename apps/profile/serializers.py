@@ -22,7 +22,7 @@ class PlayerProfileSerializer(serializers.BaseSerializer):
 
         # Get latest weight record
         try:
-            current_weight = obj.weight_set.values_list('weight').latest('date')
+            current_weight = obj.weight_set.values_list('weight', flat=True).latest('date')
             if measurement_system == 'SI':
                 current_weight = current_weight.kg
                 weight_unit = 'kg'
@@ -42,6 +42,10 @@ class PlayerProfileSerializer(serializers.BaseSerializer):
                 'predicted_height',
                 'method'
             ).latest('date')
+            if measurement_system == 'SI':
+                predicted_height = predicted_height.cm
+            elif measurement_system == 'Imp':
+                predicted_height = predicted_height.inch
         except PredictedHeight.DoesNotExist:
             try:
                 # If not DNA test, latest KHR result
@@ -51,6 +55,10 @@ class PlayerProfileSerializer(serializers.BaseSerializer):
                     'predicted_height',
                     'method'
                 ).latest('date')
+                if measurement_system == 'SI':
+                    predicted_height = predicted_height.cm
+                elif measurement_system == 'Imp':
+                    predicted_height = predicted_height.inch
             except PredictedHeight.DoesNotExist:
                 # Return nada if not even KHR result
                 predicted_height = None

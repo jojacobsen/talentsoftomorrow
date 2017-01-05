@@ -1,5 +1,5 @@
 from .serializers import PerformanceHistoricSerializer, PerformanceBioAgeSerializer, HeightEstimationSerializer, \
-    PerformanceGraphSerializer
+    PerformanceGraphSerializer, OverviewSerializer
 from accounts.models import Player
 from accounts.filters import PlayerFilter
 
@@ -98,3 +98,24 @@ class HeightEstimationGraphView(generics.ListAPIView):
         else:
             raise exceptions.PermissionDenied('User has no permission to access user data of player.')
         return queryset
+
+
+class OverviewGraphView(generics.ListAPIView):
+    permission_classes = (IsAuthenticated,)
+
+    serializer_class = OverviewSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_class = PlayerFilter
+    # Parse JSON
+    parser_classes = (JSONParser,)
+
+    def get_queryset(self):
+        group = self.request.user.groups.values_list('name', flat=True)
+        if 'Club' in group:
+            queryset = Player.objects.filter(club=self.request.user.club, archived=False)
+        elif 'Coach' in group:
+            queryset = Player.objects.filter(club=self.request.user.coach.club, archived=False)
+        else:
+            raise exceptions.PermissionDenied('User has no permission to access user data of player.')
+        return queryset
+

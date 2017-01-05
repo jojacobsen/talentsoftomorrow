@@ -12,4 +12,6 @@ urlpatterns = [
         name='bio-age-performances-graph'),
     url(r'^performance/(?P<pk>[0-9]+)/latest/$', views.PerformanceGraphView.as_view(),
         name='performances-graph'),
+    url(r'^overview/$', views.OverviewGraphView.as_view(),
+        name='overview-graph'),
 ]

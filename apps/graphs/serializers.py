@@ -166,3 +166,10 @@ class HeightEstimationSerializer(serializers.BaseSerializer):
             'name': obj.first_name + ' ' + obj.last_name,
             'type': 'line'
         }
+
+
+class OverviewSerializer(serializers.BaseSerializer):
+    def to_representation(self, obj):
+        pass
+
+
