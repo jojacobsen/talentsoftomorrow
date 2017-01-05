@@ -83,6 +83,23 @@ class ParentsHeight(models.Model):
             return round(self.fathers_height.inch, 0), round(self.mothers_height.inch, 0), 'inch'
 
 
+class SittingHeight(models.Model):
+    player = models.ForeignKey(Player, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
+    date = models.DateField()
+    sitting_height = MeasurementField(measurement=Distance, unit_choices=[("cm", "cm")])
+
+    def __str__(self):
+        return self.player.user.username
+
+    def value_club_unit(self):
+        measurement_system = self.player.club.measurement_system
+        if measurement_system == 'SI':
+            return round(self.sitting_height.cm, 0), 'cm'
+        elif measurement_system == 'Imp':
+            return round(self.sitting_height.inch, 0), 'inch'
+
+
 class BioAge(models.Model):
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     predicted_height = models.ForeignKey(PredictedHeight, on_delete=models.CASCADE)
@@ -93,3 +110,12 @@ class BioAge(models.Model):
 
     def __str__(self):
         return self.player.user.username
+
+
+class PHV(models.Model):
+    player = models.ForeignKey(Player, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
+    current_height = models.ForeignKey(Height, on_delete=models.CASCADE)
+    current_weight = models.ForeignKey(Weight, on_delete=models.CASCADE)
+    sitting_height = models.ForeignKey(SittingHeight, on_delete=models.CASCADE)
+    phv_date = models.DateField()

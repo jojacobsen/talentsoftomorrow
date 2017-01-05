@@ -1,6 +1,6 @@
 from accounts.models import Player
 from .serializers import PlayerProfileSerializer, HeightSerializer, \
-    WeightSerializer, ParentsHeightSerializer
+    WeightSerializer, ParentsHeightSerializer, SittingHeightSerializer
 
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.renderers import JSONRenderer
@@ -65,6 +65,16 @@ class ParentsHeightCreateView(generics.CreateAPIView):
     """
     permission_classes = (IsAuthenticated,)
     serializer_class = ParentsHeightSerializer
+    # Parse JSON
+    parser_classes = (JSONParser,)
+
+
+class SittingHeightCreateView(generics.CreateAPIView):
+    """
+    Creates Sitting Height object.
+    """
+    permission_classes = (IsAuthenticated,)
+    serializer_class = SittingHeightSerializer
     # Parse JSON
     parser_classes = (JSONParser,)
 

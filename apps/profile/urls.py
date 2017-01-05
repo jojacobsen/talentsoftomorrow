@@ -13,4 +13,6 @@ urlpatterns = [
         name='weight-create'),
     url(r'^parents-height/create/$', views.ParentsHeightCreateView.as_view(),
         name='parents-height-create'),
+    url(r'^sitting-height/create/$', views.SittingHeightCreateView.as_view(),
+        name='sitting-height-create'),
 ]

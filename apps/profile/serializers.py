@@ -1,6 +1,6 @@
 import datetime
 from rest_framework import serializers, exceptions
-from profile.models import Height, Weight, PredictedHeight, BioAge, ParentsHeight
+from profile.models import Height, Weight, PredictedHeight, BioAge, ParentsHeight, SittingHeight
 from measurement.measures import Distance
 from measurement.measures import Weight as WeightMeasurement
 
@@ -225,5 +225,53 @@ class ParentsHeightSerializer(serializers.ModelSerializer):
             'fathers_height': fathers_height,
             'mothers_height': mothers_height,
             'unit': unit,
+            'player': instance.player.id
+        }
+
+
+class SittingHeightSerializer(serializers.ModelSerializer):
+    unit = serializers.CharField(allow_blank=False, max_length=10, required=True)
+
+    class Meta:
+        model = SittingHeight
+        fields = ('player', 'date', 'sitting_height', 'unit')
+
+    def validate(self, data):
+        group = self.context['request'].user.groups.values_list('name', flat=True)
+
+        if 'Club' in group:
+            if data['player'].club != self.context['request'].user.club:
+                raise exceptions.PermissionDenied('Club has no permission to access performance data of player.')
+        elif 'Coach' in group:
+            if data['player'].club != self.context['request'].user.coach.club:
+                raise exceptions.PermissionDenied('Coach has no permission to access performance data of player.')
+        elif 'Player' in group:
+            raise exceptions.PermissionDenied('Players can not post performance data.')
+        else:
+            raise exceptions.PermissionDenied('User group not selected.')
+
+        if data['unit'] == 'cm':
+            if 50 <= data['sitting_height'] <= 250:
+                sitting_height = Distance(cm=data['sitting_height'])
+            else:
+                raise serializers.ValidationError('Height %s cm seems to be wrong.' % data['sitting_height'])
+        elif data['unit'] == 'inch':
+            if 20 <= data['height'] <= 100:
+                sitting_height = Distance(inch=data['height'])
+            else:
+                raise serializers.ValidationError('Height %s inch seems to be wrong.' % data['sitting_height'])
+        else:
+            raise serializers.ValidationError('Field unit needs to be cm or inch!')
+        data.pop('unit')
+        data['sitting_height'] = sitting_height
+        return data
+
+    def to_representation(self, instance):
+        sitting_height = instance.value_club_unit()[0]
+        unit = instance.value_club_unit()[1]
+        return {
+            'sitting_height': sitting_height,
+            'unit': unit,
+            'date': instance.date,
             'player': instance.player.id
         }
