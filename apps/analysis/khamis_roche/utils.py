@@ -37,7 +37,7 @@ def create_khamis_roche(sender, instance, created):
         # Get parents height
         try:
             parents_height = instance.player.parentsheight_set.filter().latest('created')
-        except Weight.DoesNotExist:
+        except ParentsHeight.DoesNotExist:
             return False
 
     # Current age based on date of height measurement (rounded to x.5)

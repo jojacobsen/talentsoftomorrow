@@ -50,7 +50,7 @@ class PerformanceBioAgeSerializer(serializers.BaseSerializer):
 
         if bio_age and value:
             data.append({
-                'x': bio_age,
+                'x': round(bio_age, 1),
                 'y': value,
             }
             )
@@ -85,7 +85,7 @@ class PerformanceGraphSerializer(serializers.BaseSerializer):
 
         if value and date:
             data.append({
-                'x': (date - obj.birthday).days / 365.25,
+                'x': round((date - obj.birthday).days / 365.25, 1),
                 'y': value,
             }
             )
@@ -106,42 +106,32 @@ class HeightEstimationSerializer(serializers.BaseSerializer):
         :return:
         """
         try:
-            current_height, height_date = obj.height_set.values_list('height', 'date').latest('date')
+            height = obj.height_set.filter().latest('date')
+            height_date = height.date
             # Uses the date when height was recorded
-            current_age = (height_date - obj.birthday).days / 365.25
+            current_age = round((height_date - obj.birthday).days / 365.25, 1)
+            current_height, height_unit = height.value_club_unit()
         except Height.DoesNotExist:
             return {}
 
         try:
             # DNA result always highest prio
-            predicted_height, prediction_method = obj.predictedheight_set.filter(
+            prediction, prediction_method = obj.predictedheight_set.filter(
                 method='dna'
-            ).values_list(
-                'predicted_height',
-                'method'
             ).latest('date')
+            prediction_method = 'dna'
+            predicted_height, height_unit = prediction.value_club_unit()
         except PredictedHeight.DoesNotExist:
             try:
                 # If not DNA test, latest KHR result
-                predicted_height, prediction_method = obj.predictedheight_set.filter(
+                prediction = obj.predictedheight_set.filter(
                     method='khr'
-                ).values_list(
-                    'predicted_height',
-                    'method'
                 ).latest('date')
+                prediction_method = 'khr'
+                predicted_height, height_unit = prediction.value_club_unit()
             except PredictedHeight.DoesNotExist:
                 # Return nada if not even KHR result
                 return {}
-
-        measurement_system = obj.club.measurement_system
-        if measurement_system == 'SI':
-            predicted_height = predicted_height.cm
-            current_height = current_height.cm
-            height_unit = 'cm'
-        elif measurement_system == 'Imp':
-            predicted_height = predicted_height.inch
-            current_height = current_height.inch
-            height_unit = 'inch'
 
         data = list()
         # Add current height
