@@ -60,7 +60,7 @@ if(sitting_height<70 | sitting_height>240)stop("(2) sitting_height must be given
 #active formula
 leg_length <- height - sitting_height
 maturity_offset <- -9.236 +0.0002708*leg_length*sitting_height - 0.001663*age*leg_length + 0.007216*age* sitting_height + 0.02292*(100*weight /height)
-APHV <- maturity_offset + age #Predicted age at peak height velocity (APHV)
+APHV <- maturity_offset - age #Predicted age at peak height velocity (APHV)
 
 
 
