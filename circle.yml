@@ -1,12 +1,12 @@
 ---
 test:
   override:
-    - coverage run -m py.test --ds=settings.testing_circleci --nomigrations apps/
+    - coverage run manage.py test --settings=settings.testing_circleci
   post:
     - coverage html -d $CIRCLE_ARTIFACTS
 
 machine:
   python:
-    version: 3.5.2
+    version: 3.4.2
   environment:
     DJANGO_SETTINGS_MODULE: settings
