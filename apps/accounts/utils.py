@@ -1,6 +1,6 @@
 import string
 import random
-from .models import Player
+from accounts.models import Player
 from django.contrib.auth.models import User
 
 
