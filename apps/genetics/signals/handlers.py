@@ -16,9 +16,10 @@ def post_dna_height_handler(sender, instance=None, created=False, **kwargs):
                                        dna_height=instance)
     else:
         # Updates Height Prediction in Profile App
-        instance.player.predictedheight_set(
+        # (Does not use update() method because of signals)
+        prediction = instance.player.predictedheight_set.filter(
             dna_height=instance
-        ).update(
-            date=instance.date,
-            predicted_height=instance.predicted_height
-        )
+        )[0]
+        prediction.date = instance.date
+        prediction.predicted_height = instance.predicted_height
+        prediction.save()

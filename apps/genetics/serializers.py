@@ -1,7 +1,7 @@
 from rest_framework import serializers, exceptions
 from .models import DnaHeight
 from accounts.models import Player
-
+from measurement.measures import Distance
 
 class DnaHeightSerializer(serializers.ModelSerializer):
     class Meta:
@@ -22,4 +22,5 @@ class CreateDnaHeightSerializer(serializers.ModelSerializer):
             raise exceptions.NotFound('Player not found.')
 
         data['player'] = player
+        data['predicted_height'] = Distance(cm=data['predicted_height'])
         return data

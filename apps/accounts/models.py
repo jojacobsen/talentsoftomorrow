@@ -26,7 +26,7 @@ class Club(models.Model):
                                                     'Be aware of units (cm, inch, ...)!')
 
     def __str__(self):
-        return self.user.username
+        return self.name
 
 
 class Coach(models.Model):
