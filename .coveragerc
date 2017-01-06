@@ -1,3 +1,3 @@
 [run]
-source = dashboard/
-omit = dashboard/test*.py, dashboard/migrations/*.py
+source = apps/accounts/
+omit = tests.py

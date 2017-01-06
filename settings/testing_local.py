@@ -1,11 +1,10 @@
-import os
-
-from .base import *  # noqa
+from .dev import *
 
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": abspath(join(SITE_ROOT, "database", 'dev.db')),
     }
 }
 

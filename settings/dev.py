@@ -1,10 +1,6 @@
 import os
 from .base import *  # noqa
 
-INSTALLED_APPS.append('debug_toolbar')
-
-DEBUG = True
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -18,6 +14,13 @@ DATABASES = {
 
 JWT_AUTH['JWT_EXPIRATION_DELTA'] = datetime.timedelta(hours=8)
 
-CORS_ORIGIN_WHITELIST = (
-    'localhost:3000'
-)
+ALLOWED_HOSTS = ['*']
+CORS_ORIGIN_ALLOW_ALL = True
+
+INSTALLED_APPS.append('debug_toolbar')
+
+MIDDLEWARE.append('debug_toolbar.middleware.DebugToolbarMiddleware')
+
+INTERNAL_IPS = ['127.0.0.1']
+
+DEBUG = True

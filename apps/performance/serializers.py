@@ -5,6 +5,7 @@ from .models import Performance, Measurement, Unit, Benchmark
 class PerformanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Performance
+        fields = '__all__'
 
     def validate(self, data):
         group = self.context['request'].user.groups.values_list('name', flat=True)
@@ -42,6 +43,7 @@ class MeasurementSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Measurement
+        fields = '__all__'
 
 
 class PerformancePlayerSerializer(serializers.BaseSerializer):
