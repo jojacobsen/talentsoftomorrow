@@ -13,4 +13,5 @@ DATABASES = {
     }
 }
 
+R_AVAILABLE = False
 SECRET_KEY = 'Helluuuiiii!!!'

@@ -1,4 +1,4 @@
-from .models import ProfilePicture, Club, Coach, Player
+from accounts.models import ProfilePicture, Club, Coach, Player
 from rest_framework import serializers, exceptions
 from django.contrib.auth.models import User, Group
 from .utils import create_username, lab_key_generator
