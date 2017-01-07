@@ -60,3 +60,4 @@ def create_benchmark(sender, instance, created):
             benchmark=benchmark,
             benchmark_bio=benchmark_bio
         )
+        return True

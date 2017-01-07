@@ -2,9 +2,28 @@ from unittest import mock
 import unittest
 import decimal
 from django.conf import settings
+import datetime
+
+class TestInterpolate(unittest.TestCase):
+    def test_interpolate(self):
+        from apps.analysis.calculate import Interpolate
+        age = 14.386
+        statistic_array = [[9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13, 13.5, 14, 14.5, 15, 15.5, 16, 16.5, 17, 17.5],
+                           [4.528541667, 4.505416667, 4.482291667, 4.459166667, 4.436041667, 4.412916667, 4.389791667,
+                            4.366666667, 4.343541667, 4.320416667, 4.297291667, 4.274166667, 4.246041667, 4.217916667,
+                            4.189791667, 4.161666667, 4.133541667],
+                           [0.263276455, 0.263068882, 0.262861309, 0.262653736, 0.262446162, 0.262238589, 0.262031016,
+                            0.261823443, 0.261615869, 0.261408296, 0.261200723, 0.26099315, 0.224285769, 0.187578388,
+                            0.150871006, 0.114163625, 0.077456244]]
+        i = Interpolate(statistic_array[0], statistic_array[1])
+        population_mean = i[age]
+        self.assertEquals(4.302564167, population_mean)
+        i = Interpolate(statistic_array[0], statistic_array[2])
+        population_sd = i[age]
+        self.assertEquals(0.261248049644, population_sd)
 
 
-class TestCalculate(unittest.TestCase):
+class TestRscripts(unittest.TestCase):
     if settings.R_AVAILABLE:
         def test_get_bio_age(self):
             from apps.analysis.calculate import RscriptAnalysis
@@ -99,4 +118,68 @@ class TestCalculate(unittest.TestCase):
             sitting_height = 79.6
             mock_subprocess.Popen.communicate.return_value = mock.MagicMock()
             r.get_phv(current_height, current_age, current_weight, sitting_height)
+
+
+class TestSignals(unittest.TestCase):
+    @mock.patch('apps.analysis.signals.handlers.PredictedHeight')
+    def test_post_khamis_roche_handler(self, mock_predictedheight):
+        from apps.analysis.signals.handlers import post_khamis_roche_handler
+        sender = mock.MagicMock()
+        instance = mock.MagicMock()
+        mock_predictedheight.objects.create.return_value = mock.MagicMock()
+        post_khamis_roche_handler(sender, instance, created=True)
+        mock_predictedheight.objects.create.assert_called_with(player=instance.player,
+                                                               date=instance.date,
+                                                               predicted_height=instance.predicted_height,
+                                                               method='khr',
+                                                               khamis_roche=instance,
+                                                               dna_height=None)
+        post_khamis_roche_handler(sender, instance, created=False)
+        instance.player.predictedheight_set.filter.assert_called_with(khamis_roche=instance)
+
+
+class TestBenchmark(unittest.TestCase):
+    @mock.patch('apps.analysis.benchmark.utils.abs')
+    @mock.patch('apps.analysis.benchmark.utils.Benchmark')
+    @mock.patch('apps.analysis.benchmark.utils.RscriptAnalysis')
+    def test_create_benchmark(self, mock_rscriptanalysis, mock_benchmark, mock_abs):
+        from apps.analysis.benchmark.utils import Performance
+        from apps.analysis.benchmark.utils import create_benchmark
+        sender = mock.MagicMock()
+        instance = mock.MagicMock()
+        instance.date = datetime.date.today()
+        success = create_benchmark(sender, instance, True)
+        # Should only work if sender is Performance
+        self.assertEquals(success, False)
+        sender = Performance
+        mock_abs.return_value = 5
+        instance.player.bioage_set.filter.latest.return_value = mock.MagicMock()
+        mock_rscriptanalysis.get_benchmark.return_value = mock.MagicMock()
+        mock_benchmark.objects.create.return_value = mock.MagicMock()
+        success = create_benchmark(sender, instance, True)
+        self.assertEquals(success, True)
+        success = create_benchmark(sender, instance, False)
+        self.assertEquals(success, True)
+
+
+class TestBioAge(unittest.TestCase):
+    @mock.patch('apps.analysis.bio_age.utils.BioAge')
+    @mock.patch('apps.analysis.bio_age.utils.RscriptAnalysis')
+    def test_create_bio_age(self, mock_rscriptanalysis, mock_bioage):
+        from apps.analysis.bio_age.utils import create_bio_age
+        from apps.analysis.bio_age.utils import PredictedHeight
+        sender = mock.MagicMock()
+        instance = mock.MagicMock()
+        success = create_bio_age(sender, instance, True)
+        self.assertEquals(success, False)
+        mock_rscriptanalysis.return_value.get_bio_age.return_value = [decimal.Decimal(15), []]
+        mock_bioage.objects.create.return_value = mock.MagicMock()
+        instance.player.predictedheight_set.filter.return_value.latest.return_value = instance
+        success = create_bio_age(sender, instance, True)
+        self.assertEquals(success, True)
+        success = create_bio_age(sender, instance, False)
+        self.assertEquals(success, True)
+        instance.player.predictedheight_set.filter.return_value.latest.side_effect = PredictedHeight.DoesNotExist
+        success = create_bio_age(sender, instance, False)
+        self.assertEquals(success, False)
 
