@@ -42,3 +42,20 @@ class TestSerializers(unittest.TestCase):
         mock_player.objects.create.return_value = mock.MagicMock()
         player = new_player.create(validated_data)
         self.assertEquals(player, mock_player.objects.create.return_value)
+
+
+class TestViews(unittest.TestCase):
+    @mock.patch('apps.accounts.views.JSONResponse')
+    @mock.patch('apps.accounts.views.JSONParser')
+    @mock.patch('apps.accounts.views.NewPlayerSerializer')
+    def test_playercreateview(self, mock_newplayerserializer, mock_jsonparser, mock_jsonrsponse):
+        from apps.accounts.views import PlayerCreateView
+        player = PlayerCreateView()
+        json_response = mock.MagicMock()
+        mock_jsonrsponse.return_value = json_response
+        mock_newplayerserializer.return_value = mock.MagicMock()
+        data = mock.MagicMock
+        mock_jsonparser.return_value.parse.return_value = data
+        request = mock.MagicMock()
+        response = player.create(request, None)
+        self.assertEquals(response, json_response)

@@ -1,6 +1,6 @@
-from .models import Player, Club, Coach
-from .filters import PlayerFilter
-from .serializers import NewPlayerSerializer, PlayerSerializer, PlayersSerializer, CurrentPlayerSerializer, \
+from accounts.models import Player, Club, Coach
+from accounts.filters import PlayerFilter
+from accounts.serializers import NewPlayerSerializer, PlayerSerializer, PlayersSerializer, CurrentPlayerSerializer, \
     CurrentClubSerializer, CurrentCoachSerializer, CoachSerializer
 
 from rest_framework.permissions import IsAuthenticated
