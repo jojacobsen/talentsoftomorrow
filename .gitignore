@@ -65,3 +65,9 @@ target/
 venv
 dashboard/media
 .Rproj.user
+
+# static files
+static/
+
+# site_media files
+site_media/
