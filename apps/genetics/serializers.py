@@ -1,7 +1,8 @@
 from rest_framework import serializers, exceptions
-from .models import DnaHeight
+from genetics.models import DnaHeight
 from accounts.models import Player
 from measurement.measures import Distance
+
 
 class DnaHeightSerializer(serializers.ModelSerializer):
     class Meta:
