@@ -5,6 +5,11 @@ test:
   post:
     - coverage html -d $CIRCLE_ARTIFACTS
 
+checkout:
+    post:
+        *****
+        - pip install -U pip setuptools virtualenv
+
 dependencies:
   override:
     - pip install -r requirements/circle.txt
