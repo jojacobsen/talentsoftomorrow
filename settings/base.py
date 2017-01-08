@@ -5,6 +5,10 @@ base settings for talentsoftomorrow project.
 from .base_conf.path import *
 import datetime
 import djcelery
+import environ
+
+env = environ.Env()
+env.read_env()
 
 djcelery.setup_loader()
 BROKER_URL = 'amqp://rabbit:rabbit331@localhost:5672/stats'
@@ -83,7 +87,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'talentsoftomorrow.urls'
+ROOT_URLCONF = 'urls'
 
 LOGIN_REDIRECT_URL = "/"
 
@@ -136,22 +140,16 @@ JWT_AUTH = {
     'JWT_AUTH_HEADER_PREFIX': 'JWT',
 }
 
-WSGI_APPLICATION = 'talentsoftomorrow.wsgi.application'
+WSGI_APPLICATION = 'wsgi.application'
 
 
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'dashboard',
-        'USER': 'dashboard',
-        'PASSWORD': 'test123',
-        'HOST': 'localhost',
-        'PORT': '5432'
-    }
+    'default': env.db('DATABASE_URL', default='postgres:///files'),
 }
+DATABASES['default']['ATOMIC_REQUESTS'] = True
 
 
 # Password validation

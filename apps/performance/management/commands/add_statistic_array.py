@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 
-from dashboard.models import Measurement
+from performance.models import Measurement
 
 
 class Command(BaseCommand):
