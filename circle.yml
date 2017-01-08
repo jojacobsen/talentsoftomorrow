@@ -1,27 +1,16 @@
 ---
 test:
   override:
-    - coverage run -m py.test --ds=talentsoftomorrow.testing_circleci --nomigrations dashboard/
+    - coverage run manage.py test --settings=settings.testing_circleci
   post:
     - coverage html -d $CIRCLE_ARTIFACTS
 
+dependencies:
+  override:
+    - pip install -r requirements/circle.txt
+
 machine:
   python:
-    version: 3.4.2
+    version: 3.5.1
   environment:
-    DJANGO_SETTINGS_MODULE: talentsoftomorrow.settings
-
-deployment:
-  staging:
-    branch: master
-    codedeploy:
-      dashboard:
-        application_root: /
-        revision_location:
-          revision_type: S3
-          s3_location:
-            bucket: staging-bucket-tot-dashboard
-            key_pattern: apps/dashboard-{SHORT_COMMIT}-{BUILD_NUM}
-        region: eu-west-1
-        deployment_group: staging-instances
-        deployment_config: CodeDeployDefault.AllAtOnce
+    DJANGO_SETTINGS_MODULE: settings

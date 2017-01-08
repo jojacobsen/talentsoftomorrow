@@ -5,9 +5,6 @@ __pycache__/
 # C extensions
 *.so
 
-# Migrations
-dashboard/migrations/
-
 # User media files
 dashboard/media/
 
@@ -68,3 +65,9 @@ target/
 venv
 dashboard/media
 .Rproj.user
+
+# static files
+static/
+
+# site_media files
+site_media/
