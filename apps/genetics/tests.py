@@ -31,3 +31,14 @@ class TestSerializer(unittest.TestCase):
         serializer = CreateDnaHeightSerializer(context={'request': request})
         validated_data = serializer.validate(data)
         validated_data.assert_has_calls(player)
+
+
+class TestViews(unittest.TestCase):
+    @mock.patch('apps.genetics.views.JSONRenderer')
+    def test_jsonresponse(self, mock_jsonrenderer):
+        from apps.genetics.views import JSONResponse
+        content = mock.MagicMock()
+        mock_jsonrenderer.return_value.render.return_value = content
+        data = mock.MagicMock()
+        response = JSONResponse(data)
+        self.assertEquals(response.status_code, 200)

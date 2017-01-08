@@ -1,7 +1,7 @@
-from .serializers import PerformanceSerializer, MeasurementSerializer, \
+from performance.serializers import PerformanceSerializer, MeasurementSerializer, \
     PerformancePlayerSerializer, BenchmarkSerializer
-from .models import Performance
-from .filters import PerformanceFilter
+from performance.models import Performance
+from performance.filters import PerformanceFilter
 from accounts.models import Player
 from accounts.filters import PlayerFilter
 

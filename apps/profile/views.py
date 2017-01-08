@@ -1,5 +1,5 @@
 from accounts.models import Player
-from .serializers import PlayerProfileSerializer, HeightSerializer, \
+from profile.serializers import PlayerProfileSerializer, HeightSerializer, \
     WeightSerializer, ParentsHeightSerializer, SittingHeightSerializer
 
 from rest_framework.permissions import IsAuthenticated

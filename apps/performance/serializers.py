@@ -1,5 +1,5 @@
 from rest_framework import serializers, exceptions
-from .models import Performance, Measurement, Unit, Benchmark
+from performance.models import Performance, Measurement, Unit, Benchmark
 
 
 class PerformanceSerializer(serializers.ModelSerializer):

@@ -1,6 +1,6 @@
 import datetime
 from rest_framework import serializers, exceptions
-from .models import Height, Weight, PredictedHeight, BioAge, ParentsHeight, SittingHeight, PHV
+from profile.models import Height, Weight, PredictedHeight, BioAge, ParentsHeight, SittingHeight, PHV
 from measurement.measures import Distance
 from measurement.measures import Weight as WeightMeasurement
 

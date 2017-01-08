@@ -45,6 +45,16 @@ class TestSerializers(unittest.TestCase):
 
 
 class TestViews(unittest.TestCase):
+    @mock.patch('apps.accounts.views.JSONRenderer')
+    def test_jsonresponse(self, mock_jsonrenderer):
+        from apps.accounts.views import JSONResponse
+        content = mock.MagicMock()
+        mock_jsonrenderer.return_value.render.return_value = content
+        data = mock.MagicMock()
+        response = JSONResponse(data)
+        self.assertEquals(response.status_code, 200)
+
+
     @mock.patch('apps.accounts.views.JSONResponse')
     @mock.patch('apps.accounts.views.JSONParser')
     @mock.patch('apps.accounts.views.NewPlayerSerializer')
