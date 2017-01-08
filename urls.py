@@ -13,7 +13,7 @@ urlpatterns = [
     url(r'^graphs/', include('graphs.urls')),
     url(r'^performance/', include('performance.urls')),
     url(r'^profile/', include('profile.urls')),
-    url(r'^docs/', include('rest_framework_docs.urls'), name='docs'),
+    url(r'^docs/', include('rest_framework_docs.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 
