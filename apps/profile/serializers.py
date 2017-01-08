@@ -14,6 +14,7 @@ class PlayerProfileSerializer(serializers.BaseSerializer):
             current_age = round((height_date - obj.birthday).days / 365.25, 1)
             current_height, height_unit = height.value_club_unit()
         except Height.DoesNotExist:
+            height_unit = None
             current_height = None
             current_age = round((datetime.date.today() - obj.birthday).days / 365.25, 1)
 
