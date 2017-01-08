@@ -1,10 +1,12 @@
+{% load staticfiles %}
+
 {% extends "base.html" %}
 
 {% block head %}
     <title>Index</title>
 
     <!-- Custom CSS -->
-    <link href="../../static/css/sb-admin.css" rel="stylesheet">
+    <link href="{% static "css/sb-admin.css" %}" rel="stylesheet">
 
 
 {% endblock %}
@@ -28,7 +30,7 @@
                 <!-- /.row -->
                 <div class="row">
                     <div class="col-lg-12">
-                        See the full API documentation <a href="/docs">here</a>.
+                        See the full API documentation <a href="{% url 'docs' %}">here</a>.
                     </div>
                 </div>
                 <!-- /.row -->
@@ -43,9 +45,9 @@
     <!-- /#wrapper -->
 
     <!-- jQuery -->
-    <script src="../../static/js/jquery.js"></script>
+    <script src="{% static "js/jquery.js" %}"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="../../static/js/bootstrap.min.js"></script>
+    <script src="{% static "js/bootstrap.min.js" %}"></script>
 
 {% endblock %}
