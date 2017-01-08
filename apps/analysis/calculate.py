@@ -25,13 +25,21 @@ class Interpolate(object):
 class RscriptAnalysis(object):
     def __init__(self):
         # Where to look for R scripts
-        self.r_folder = settings.PROJECT_ROOT + "/R_scripts"
+        self.r_folder = settings.PROJECT_ROOT + "/apps/analysis"
 
-        self.height_prediction_command = self.r_folder + "/bio_age/2016-07-14_bioage_calculator.R"
-        self.benchmark_command = self.r_folder + "/bio_age/2016-08-04_benchmark_calculator.R"
-        self.khamis_roche_command = self.r_folder + "/khamis_roche/2016-08-20_khamis_roche.R"
-        self.coefficients_file_khr = self.r_folder + "/khamis_roche/2016-05-22_khamis_roche_coefficents.txt"
-        self.phv_command = settings.PROJECT_ROOT + "/apps/analysis" + "/mirwald/Mirwald.R"
+        # Bio age scripts
+        self.height_prediction_command = self.r_folder + "/bio_age/bioage_calculator.R"
+        self.average_height_data_uk = self.r_folder + "/bio_age/Heigh_prediction_data_google_doc_extract.xlsx"
+
+        # Benchmark scripts
+        self.benchmark_command = self.r_folder + "/benchmark/benchmark_calculator.R"
+
+        # KHR scripts
+        self.khamis_roche_command = self.r_folder + "/khamis_roche/khamis_roche.R"
+        self.coefficients_file_khr = self.r_folder + "/khamis_roche/khamis_roche_coefficents.txt"
+
+        # PHV scripts
+        self.phv_command = self.r_folder + "/mirwald/Mirwald.R"
 
     def get_bio_age(self, predicted_height, current_height, country='uk'):
         """
@@ -44,7 +52,7 @@ class RscriptAnalysis(object):
         :return slope:
         """
         if country == 'uk':
-            average_height_data = self.r_folder + '/bio_age/2016-07-06_Heigh_prediction_data_google_doc_extract.xlsx'
+            average_height_data = self.average_height_data_uk
         else:
             logger.error('Other countries than UK not implemented yet!')
             bio_age = None
