@@ -7,7 +7,9 @@ test:
 
 dependencies:
   override:
-    - pip install -r requirements/base.txt
+    - pip install -r requirements/circle.txt
+  pre:
+    - pip install virtualenv
 
 machine:
   python:
