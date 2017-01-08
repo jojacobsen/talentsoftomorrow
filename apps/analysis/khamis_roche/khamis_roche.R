@@ -1,4 +1,4 @@
-#!/Library/Frameworks/R.framework/Versions/Current/Resources/Rscript
+#!/usr/lib/R/bin/Rscript
 args<-commandArgs()
 
 
