@@ -5,6 +5,10 @@ test:
   post:
     - coverage html -d $CIRCLE_ARTIFACTS
 
+dependencies:
+  override:
+    - pip install -r requirements/circle.txt
+
 machine:
   python:
     version: 3.5.1
