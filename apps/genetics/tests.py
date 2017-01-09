@@ -42,3 +42,18 @@ class TestViews(unittest.TestCase):
         data = mock.MagicMock()
         response = JSONResponse(data)
         self.assertEquals(response.status_code, 200)
+
+    @mock.patch('apps.genetics.views.JSONResponse')
+    @mock.patch('apps.genetics.views.JSONParser')
+    @mock.patch('apps.genetics.views.CreateDnaHeightSerializer')
+    def test_dnaheightcreate(self, mock_dnaheightserializer, mock_jsonparser, mock_jsonrsponse):
+        from apps.genetics.views import DnaHeightCreateView
+        dna_height = DnaHeightCreateView()
+        json_response = mock.MagicMock()
+        mock_jsonrsponse.return_value = json_response
+        mock_dnaheightserializer.return_value = mock.MagicMock()
+        data = mock.MagicMock
+        mock_jsonparser.return_value.parse.return_value = data
+        request = mock.MagicMock()
+        response = dna_height.create(request, None)
+        self.assertEquals(response, json_response)

@@ -116,7 +116,7 @@ class HeightEstimationSerializer(serializers.BaseSerializer):
 
         try:
             # DNA result always highest prio
-            prediction, prediction_method = obj.predictedheight_set.filter(
+            prediction = obj.predictedheight_set.filter(
                 method='dna'
             ).latest('date')
             prediction_method = 'dna'
