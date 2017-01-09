@@ -40,6 +40,11 @@ def create_khamis_roche(sender, instance, created):
         except ParentsHeight.DoesNotExist:
             return False
 
+    if not (parents_height == instance or current_height == instance or current_weight == instance):
+        # If our relevant data didn't changed or wasn't newly
+        # created, why to calculate a new khr?
+        return False
+
     # Median Date between weight and height record
     date = current_height.date + (current_weight.date - current_height.date) / 2
 

@@ -191,7 +191,8 @@ class TestKhamisRoche(unittest.TestCase):
     @mock.patch('apps.analysis.khamis_roche.utils.RscriptAnalysis')
     def test_create_bio_age(self, mock_rscriptanalysis, mock_khr, mock_round):
         from apps.analysis.khamis_roche.utils import create_khamis_roche
-        sender = mock.MagicMock()
+        from apps.analysis.khamis_roche.utils import Height
+        sender = Height
         instance = mock.MagicMock()
         mock_round.return_value = 14.5
         mock_khr.objects.create.return_value = mock.MagicMock()
@@ -210,7 +211,8 @@ class TestMirwald(unittest.TestCase):
     @mock.patch('apps.analysis.mirwald.utils.RscriptAnalysis')
     def test_create_phv(self, mock_rscriptanalysis, mock_phv):
         from apps.analysis.mirwald.utils import create_phv
-        sender = mock.MagicMock()
+        from apps.analysis.mirwald.utils import Height
+        sender = Height
         instance = mock.MagicMock()
         mock_phv.objects.create.return_value = mock.MagicMock()
         mock_rscriptanalysis.return_value.get_phv.return_value = 1.8

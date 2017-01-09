@@ -18,8 +18,8 @@ def create_benchmark(sender, instance, created):
         return False
 
     try:
-        # Latest BioAge is always the best
-        bio_age = instance.player.bioage_set.filter().latest('created')
+        # Get newest BioAge (but should be same date or older than performance date)
+        bio_age = instance.player.bioage_set.filter(current_height__date__lte=performance.date).latest('created')
     except BioAge.DoesNotExist:
         bio_age = None
 

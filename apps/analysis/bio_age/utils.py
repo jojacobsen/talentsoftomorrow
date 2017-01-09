@@ -4,27 +4,34 @@ from profile.models import BioAge, PredictedHeight, Height
 
 def create_bio_age(sender, instance, created):
     """
-    Calculates bio age with latest available values and stores it.
+    Calculates bio age and stores it.
     :param sender:
     :param instance:
     :param created:
     :return:
     """
-    try:
-        # DNA result always highest prio
-        prediction = instance.player.predictedheight_set.filter(method='dna').latest('date')
-    except PredictedHeight.DoesNotExist:
+    if sender == PredictedHeight:
+        prediction = instance
+    else:
         try:
-            # If not DNA test, latest KHR result
-            prediction = instance.player.predictedheight_set.filter(method='khr').latest('date')
+            # DNA result always highest prio
+            prediction = instance.player.predictedheight_set.filter(method='dna').latest('date')
         except PredictedHeight.DoesNotExist:
-            # Return nada if not even KHR result
+            try:
+                # If not DNA test, latest KHR result
+                prediction = instance.player.predictedheight_set.filter(method='khr').latest('date')
+            except PredictedHeight.DoesNotExist:
+                # Return nada if not even KHR result
+                return False
+
+    if sender == Height:
+        current_height = instance
+    else:
+        try:
+            current_height = instance.player.height_set.filter().latest('date')
+        except Height.DoesNotExist:
+            # Current height is not available
             return False
-    try:
-        current_height = instance.player.height_set.filter().latest('date')
-    except Height.DoesNotExist:
-        # Current height is not available
-        return False
 
     if not (prediction == instance or current_height == instance):
         # If our relevant data (latest prediction or current height) didn't

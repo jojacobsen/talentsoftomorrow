@@ -40,6 +40,11 @@ def create_phv(sender, instance, created):
         except SittingHeight.DoesNotExist:
             return False
 
+    if not (sitting_height == instance or current_height == instance or current_weight == instance):
+        # If our relevant data didn't changed or wasn't newly
+        # created, why to calculate a new phv?
+        return False
+
     # Median Date between weight and height record
     date = sitting_height.date + ((current_height.date + (current_weight.date - current_height.date) / 2)
                                   - sitting_height.date) / 1.5
