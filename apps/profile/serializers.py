@@ -35,7 +35,7 @@ class PlayerProfileSerializer(serializers.BaseSerializer):
 
         try:
             # DNA result always highest prio
-            prediction, prediction_method = obj.predictedheight_set.filter(
+            prediction = obj.predictedheight_set.filter(
                 method='dna'
             ).latest('date')
             prediction_method = 'dna'
@@ -80,7 +80,7 @@ class PlayerProfileSerializer(serializers.BaseSerializer):
             growth_position = None
 
         return {
-            'player_id': obj.id,
+            'player': obj.id,
             'player_name': obj.first_name + ' ' + obj.last_name,
             'lab_key': obj.lab_key,
             'gender': obj.gender,
@@ -276,13 +276,13 @@ class SittingHeightSerializer(serializers.ModelSerializer):
             raise exceptions.PermissionDenied('User group not selected.')
 
         if data['unit'] == 'cm':
-            if 50 <= data['sitting_height'] <= 250:
+            if 40 <= data['sitting_height'] <= 200:
                 sitting_height = Distance(cm=data['sitting_height'])
             else:
                 raise serializers.ValidationError('Height %s cm seems to be wrong.' % data['sitting_height'])
         elif data['unit'] == 'inch':
-            if 20 <= data['height'] <= 100:
-                sitting_height = Distance(inch=data['height'])
+            if 20 <= data['sitting_height'] <= 100:
+                sitting_height = Distance(inch=data['sitting_height'])
             else:
                 raise serializers.ValidationError('Height %s inch seems to be wrong.' % data['sitting_height'])
         else:
