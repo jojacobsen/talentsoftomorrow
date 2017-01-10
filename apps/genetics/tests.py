@@ -20,7 +20,7 @@ class TestSignals(unittest.TestCase):
         instance.player.predictedheight_set.filter.assert_called_with(dna_height=instance)
 
 
-class TestSerializer(unittest.TestCase):
+class TestSerializers(unittest.TestCase):
     @mock.patch('apps.genetics.serializers.Player')
     def test_validate_dnaheightserializer(self, mock_player):
         from apps.genetics.serializers import CreateDnaHeightSerializer

@@ -14,7 +14,7 @@ class TestViews(unittest.TestCase):
         self.assertEquals(response.status_code, 200)
 
 
-class TestSerializer(unittest.TestCase):
+class TestSerializers(unittest.TestCase):
     def test_performancehistoricserializer(self):
         from apps.graphs.serializers import PerformanceHistoricSerializer
         obj = mock.MagicMock()

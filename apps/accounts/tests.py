@@ -64,7 +64,7 @@ class TestViews(unittest.TestCase):
         json_response = mock.MagicMock()
         mock_jsonrsponse.return_value = json_response
         mock_newplayerserializer.return_value = mock.MagicMock()
-        data = mock.MagicMock
+        data = mock.MagicMock()
         mock_jsonparser.return_value.parse.return_value = data
         request = mock.MagicMock()
         response = player.create(request, None)
