@@ -7,6 +7,7 @@ from measurement.measures import Distance
 class DnaHeightSerializer(serializers.ModelSerializer):
     class Meta:
         model = DnaHeight
+        fields = '__all__'
 
 
 class CreateDnaHeightSerializer(serializers.ModelSerializer):

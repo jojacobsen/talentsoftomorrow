@@ -13,6 +13,7 @@ class GroupSerializer(serializers.ModelSerializer):
 class ProfilePictureSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProfilePicture
+        fields = '__all__'
 
 
 class CurrentUserSerializer(serializers.ModelSerializer):
@@ -45,6 +46,7 @@ class ClubSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Club
+        fields = '__all__'
 
 
 class CoachSerializer(serializers.ModelSerializer):
@@ -79,6 +81,7 @@ class CurrentClubSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Club
+        fields = '__all__'
 
 
 class CurrentCoachSerializer(serializers.ModelSerializer):

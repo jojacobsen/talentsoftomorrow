@@ -36,6 +36,7 @@ class PerformanceSerializer(serializers.ModelSerializer):
 class UnitSerializer(serializers.ModelSerializer):
     class Meta:
         model = Unit
+        fields = '__all__'
 
 
 class MeasurementSerializer(serializers.ModelSerializer):
