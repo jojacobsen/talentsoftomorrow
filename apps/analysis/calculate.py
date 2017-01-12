@@ -29,7 +29,6 @@ class RscriptAnalysis(object):
 
         # Bio age scripts
         self.height_prediction_command = self.r_folder + "/bio_age/bioage_calculator.R"
-        self.average_height_data_uk = self.r_folder + "/bio_age/Heigh_prediction_data_google_doc_extract.xlsx"
 
         # Benchmark scripts
         self.benchmark_command = self.r_folder + "/benchmark/benchmark_calculator.R"
@@ -52,7 +51,7 @@ class RscriptAnalysis(object):
         :return slope:
         """
         if country == 'uk':
-            average_height_data = self.average_height_data_uk
+            pass
         else:
             logger.error('Other countries than UK not implemented yet!')
             bio_age = None
@@ -61,8 +60,7 @@ class RscriptAnalysis(object):
 
         if current_height < predicted_height:
             # Swoop....prediction should be higher than current height
-            bash_command = " ".join([self.height_prediction_command, str(predicted_height), str(current_height),
-                                    average_height_data])
+            bash_command = " ".join([self.height_prediction_command, str(predicted_height), str(current_height)])
             process = subprocess.Popen(bash_command.split(), stdout=subprocess.PIPE)
             output = str(process.communicate()[0])
             results = output.split('\\n')
