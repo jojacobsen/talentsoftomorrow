@@ -83,8 +83,8 @@ class RscriptAnalysis(object):
 
         else:
             # Otherwise just take current height as predicted height, because we are always right!
-            bio_age = decimal.Decimal(18)
-            slope = [[18, float(current_height)]]
+            bio_age = decimal.Decimal(17.5)
+            slope = [[17.5, float(current_height)]]
 
         return bio_age, slope
 
