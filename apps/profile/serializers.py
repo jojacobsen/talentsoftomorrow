@@ -10,6 +10,8 @@ class PlayerProfileSerializer(serializers.BaseSerializer):
         try:
             height = obj.height_set.filter().latest('date')
             height_date = height.date
+            # Set flag if height measurement is older than 6 month
+            height_expired = (datetime.date.today() - height_date).days > 180
             # Uses the date when height was recorded
             current_age = round((height_date - obj.birthday).days / 365.25, 1)
             current_height, height_unit = height.value_club_unit()
@@ -17,6 +19,7 @@ class PlayerProfileSerializer(serializers.BaseSerializer):
             height_date = None
             height_unit = None
             current_height = None
+            height_expired = None
             current_age = round((datetime.date.today() - obj.birthday).days / 365.25, 1)
 
         # Get latest weight record
@@ -90,6 +93,7 @@ class PlayerProfileSerializer(serializers.BaseSerializer):
             'prediction_method': prediction_method,
             'height_unit': height_unit,
             'height_date': height_date,
+            'height_expired': height_expired,
             'sitting_height': sitting_height,
             'current_weight': current_weight,
             'weight_unit': weight_unit,
