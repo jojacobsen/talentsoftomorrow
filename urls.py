@@ -10,15 +10,16 @@ urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name='index.html'), name='index'),
     url(r'^accounts/', include('accounts.urls')),
     url(r'^dna/', include('genetics.urls')),
+    url(r'^feed/', include('feed.urls')),
     url(r'^graphs/', include('graphs.urls')),
     url(r'^performance/', include('performance.urls')),
     url(r'^profile/', include('profile.urls')),
-    url(r'^docs/', include('rest_framework_docs.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 
 if settings.DEBUG:
     import debug_toolbar
     urlpatterns += [
+        url(r'^docs/', include('rest_framework_docs.urls')),
         url(r'^__debug__/', include(debug_toolbar.urls)),
     ]

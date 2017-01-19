@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     # Apps
     'accounts',
     'analysis',
+    'feed',
     'genetics',
     'graphs',
     'performance',
