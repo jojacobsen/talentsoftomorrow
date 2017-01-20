@@ -41,12 +41,12 @@ class PerformanceBioAgeSerializer(serializers.BaseSerializer):
                 'value', flat=True
             ).latest('date')
         except Performance.DoesNotExist:
-            value = None
+            return None
         try:
             # Latest BioAge is always the best
             bio_age = obj.bioage_set.values_list('bio_age', flat=True).latest('created')
         except BioAge.DoesNotExist:
-            bio_age = None
+            return None
 
         if bio_age and value:
             data.append({
@@ -80,8 +80,7 @@ class PerformanceGraphSerializer(serializers.BaseSerializer):
                 'date'
             ).latest('date')
         except Performance.DoesNotExist:
-            value = None
-            date = None
+            return None
 
         if value and date:
             data.append({
