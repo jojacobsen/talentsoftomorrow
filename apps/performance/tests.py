@@ -138,6 +138,8 @@ class TestSerializers(unittest.TestCase):
         validated_data = serializer.to_representation(obj)
         self.assertEquals(validated_data['test'][0]['value'], 5)
         self.assertEquals(validated_data['test'][0]['progress'], 'up')
+        self.assertEquals(validated_data['benchmark_bio_ave'], 1.0)
+        self.assertEquals(validated_data['benchmark_chrono_ave'], 1.0)
 
     def test_benchmarkserializer(self):
         from apps.performance.serializers import BenchmarkSerializer
