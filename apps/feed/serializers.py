@@ -10,11 +10,11 @@ class FeedDashboardSerializer(serializers.BaseSerializer):
         :return:
         """
         if obj.__class__ is BioAge:
-            slug = 'bio-age-created'
+            slug = 'bio_age_created'
         if obj.__class__ is PredictedHeight:
-            slug = 'predicted-height-created'
+            slug = 'predicted_height_created'
         if obj.__class__ is PHV:
-            slug = 'phv-created'
+            slug = 'phv_created'
         return {
             'player': obj.player.id,
             'created': obj.created,
