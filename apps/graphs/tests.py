@@ -20,8 +20,8 @@ class TestSerializers(unittest.TestCase):
         obj = mock.MagicMock()
         performances = [mock.MagicMock()]
         obj.performance_set.filter.return_value = performances
-        view = mock.MagicMock()
-        serializer = PerformanceHistoricSerializer(context={'view': view})
+        pk = mock.MagicMock()
+        serializer = PerformanceHistoricSerializer(context={'pk': pk})
         validated_data = serializer.to_representation(obj)
         self.assertEquals(validated_data['player'], obj.id)
 
@@ -32,8 +32,8 @@ class TestSerializers(unittest.TestCase):
         obj.performance_set.filter.return_value.values_list.return_value.latest.return_value = performances_value
         bio_age = decimal.Decimal(15)
         obj.bioage_set.values_list.return_value.latest.return_value = bio_age
-        view = mock.MagicMock()
-        serializer = PerformanceBioAgeSerializer(context={'view': view})
+        pk = mock.MagicMock()
+        serializer = PerformanceBioAgeSerializer(context={'pk': pk})
         validated_data = serializer.to_representation(obj)
         self.assertEquals(validated_data['data'][0]['x'], bio_age)
         self.assertEquals(validated_data['data'][0]['y'], performances_value)
@@ -47,8 +47,8 @@ class TestSerializers(unittest.TestCase):
         age = 14.5
         mock_round.return_value = age
         obj.performance_set.filter.return_value.values_list.return_value.latest.return_value = [performances, date]
-        view = mock.MagicMock()
-        serializer = PerformanceGraphSerializer(context={'view': view})
+        pk = mock.MagicMock()
+        serializer = PerformanceGraphSerializer(context={'pk': pk})
         validated_data = serializer.to_representation(obj)
         self.assertEquals(validated_data['player'], obj.id)
         self.assertEquals(validated_data['data'][0]['x'], age)
@@ -68,8 +68,7 @@ class TestSerializers(unittest.TestCase):
         prediction.value_club_unit.return_value = [predicted_height, height_unit]
         obj.height_set.filter.return_value.latest.return_value = height
         height.value_club_unit.return_value = [current_height, height_unit]
-        view = mock.MagicMock()
-        serializer = HeightEstimationSerializer(context={'view': view})
+        serializer = HeightEstimationSerializer()
         validated_data = serializer.to_representation(obj)
         self.assertEquals(validated_data['player'], obj.id)
         self.assertEquals(validated_data['data'][0]['x'], age)

@@ -10,12 +10,14 @@ class PerformanceHistoricSerializer(serializers.BaseSerializer):
         :param obj:
         :return:
         """
-        pk = self.context['view'].kwargs['pk']
+        pk = self.context['pk']
         performances = obj.performance_set.filter(measurement__id=pk)
         data = list()
         for p in performances:
             data.append([(p.date - obj.birthday).days / 365.25, p.value])
         data.sort()
+        if not data:
+            return
 
         return {
             'data': data,
@@ -32,7 +34,7 @@ class PerformanceBioAgeSerializer(serializers.BaseSerializer):
         :param obj:
         :return:
         """
-        pk = self.context['view'].kwargs['pk']
+        pk = self.context['pk']
         data = list()
         try:
             value = obj.performance_set.filter(
@@ -41,12 +43,12 @@ class PerformanceBioAgeSerializer(serializers.BaseSerializer):
                 'value', flat=True
             ).latest('date')
         except Performance.DoesNotExist:
-            return None
+            return
         try:
             # Latest BioAge is always the best
             bio_age = obj.bioage_set.values_list('bio_age', flat=True).latest('created')
         except BioAge.DoesNotExist:
-            return None
+            return
 
         if bio_age and value:
             data.append({
@@ -70,7 +72,7 @@ class PerformanceGraphSerializer(serializers.BaseSerializer):
         :param obj:
         :return:
         """
-        pk = self.context['view'].kwargs['pk']
+        pk = self.context['pk']
         data = list()
         try:
             value, date = obj.performance_set.filter(
@@ -80,7 +82,7 @@ class PerformanceGraphSerializer(serializers.BaseSerializer):
                 'date'
             ).latest('date')
         except Performance.DoesNotExist:
-            return None
+            return
 
         if value and date:
             data.append({
@@ -111,7 +113,7 @@ class HeightEstimationSerializer(serializers.BaseSerializer):
             current_age = round((height_date - obj.birthday).days / 365.25, 1)
             current_height, height_unit = height.value_club_unit()
         except Height.DoesNotExist:
-            return {}
+            return
 
         try:
             # DNA result always highest prio
@@ -130,7 +132,7 @@ class HeightEstimationSerializer(serializers.BaseSerializer):
                 predicted_height, height_unit = prediction.value_club_unit()
             except PredictedHeight.DoesNotExist:
                 # Return nada if not even KHR result
-                return {}
+                return
 
         data = list()
         # Add current height
