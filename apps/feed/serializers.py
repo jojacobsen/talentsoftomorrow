@@ -10,16 +10,16 @@ class FeedDashboardSerializer(serializers.BaseSerializer):
         :return:
         """
         if obj.__class__ is BioAge:
-            message = 'Bio Age has been determined.'
+            slug = 'bio-age-created'
         if obj.__class__ is PredictedHeight:
-            message = 'Predicted Height is ready.'
+            slug = 'predicted-height-created'
         if obj.__class__ is PHV:
-            message = 'Peak Height Velocity has been calculated.'
+            slug = 'phv-created'
         return {
             'player': obj.player.id,
             'created': obj.created,
             'name': ' '.join([obj.player.first_name, obj.player.last_name]),
-            'message': message
+            'slug': slug
         }
 
 
