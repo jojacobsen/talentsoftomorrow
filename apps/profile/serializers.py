@@ -109,7 +109,7 @@ class PlayerProfileSerializer(serializers.BaseSerializer):
 
 
 class HeightSerializer(serializers.ModelSerializer):
-    unit = serializers.CharField(allow_blank=False, max_length=10, required=True)
+    unit = serializers.CharField(allow_blank=False, max_length=10, required=False)
 
     class Meta:
         model = Height
@@ -121,27 +121,39 @@ class HeightSerializer(serializers.ModelSerializer):
         if 'Club' in group:
             if data['player'].club != self.context['request'].user.club:
                 raise exceptions.PermissionDenied('Club has no permission to access performance data of player.')
+            else:
+                measurement_system = self.context['request'].user.club.measurement_system
         elif 'Coach' in group:
             if data['player'].club != self.context['request'].user.coach.club:
                 raise exceptions.PermissionDenied('Coach has no permission to access performance data of player.')
+            else:
+                measurement_system = self.context['request'].user.coach.club.measurement_system
         elif 'Player' in group:
             raise exceptions.PermissionDenied('Players can not post performance data.')
         else:
             raise exceptions.PermissionDenied('User group not selected.')
 
-        if data['unit'] == 'cm':
+        try:
+            unit = data['unit']
+            data.pop('unit')
+        except KeyError:
+            if measurement_system == 'SI':
+                unit = 'cm'
+            elif measurement_system == 'Imp':
+                unit = 'inch'
+
+        if unit == 'cm':
             if 50 <= data['height'] <= 250:
                 height = Distance(cm=data['height'])
             else:
                 raise serializers.ValidationError('Height %s cm seems to be wrong.' % data['height'])
-        elif data['unit'] == 'inch':
+        elif unit == 'inch':
             if 20 <= data['height'] <= 100:
                 height = Distance(inch=data['height'])
             else:
                 raise serializers.ValidationError('Height %s inch seems to be wrong.' % data['height'])
         else:
             raise serializers.ValidationError('Field unit needs to be cm or inch!')
-        data.pop('unit')
         data['height'] = height
         return data
 
@@ -157,7 +169,7 @@ class HeightSerializer(serializers.ModelSerializer):
 
 
 class WeightSerializer(serializers.ModelSerializer):
-    unit = serializers.CharField(allow_blank=False, max_length=10, required=True)
+    unit = serializers.CharField(allow_blank=False, max_length=10, required=False)
 
     class Meta:
         model = Weight
@@ -169,27 +181,39 @@ class WeightSerializer(serializers.ModelSerializer):
         if 'Club' in group:
             if data['player'].club != self.context['request'].user.club:
                 raise exceptions.PermissionDenied('Club has no permission to access performance data of player.')
+            else:
+                measurement_system = self.context['request'].user.club.measurement_system
         elif 'Coach' in group:
             if data['player'].club != self.context['request'].user.coach.club:
                 raise exceptions.PermissionDenied('Coach has no permission to access performance data of player.')
+            else:
+                measurement_system = self.context['request'].user.coach.club.measurement_system
         elif 'Player' in group:
             raise exceptions.PermissionDenied('Players can not post performance data.')
         else:
             raise exceptions.PermissionDenied('User group not selected.')
 
-        if data['unit'] == 'kg':
+        try:
+            unit = data['unit']
+            data.pop('unit')
+        except KeyError:
+            if measurement_system == 'SI':
+                unit = 'kg'
+            elif measurement_system == 'Imp':
+                unit = 'lb'
+
+        if unit == 'kg':
             if 20 <= data['weight'] <= 150:
                 weight = WeightMeasurement(kg=data['weight'])
             else:
                 raise serializers.ValidationError('Weight %s kg seems to be wrong.' % data['weight'])
-        elif data['unit'] == 'lb':
+        elif unit == 'lb':
             if 40 <= data['weight'] <= 300:
                 weight = WeightMeasurement(lb=data['weight'])
             else:
                 raise serializers.ValidationError('Weight %s lb seems to be wrong.' % data['weight'])
         else:
             raise serializers.ValidationError('Field unit needs to be kg or lb!')
-        data.pop('unit')
         data['weight'] = weight
         return data
 
@@ -205,7 +229,7 @@ class WeightSerializer(serializers.ModelSerializer):
 
 
 class ParentsHeightSerializer(serializers.ModelSerializer):
-    unit = serializers.CharField(allow_blank=False, max_length=10, required=True)
+    unit = serializers.CharField(allow_blank=False, max_length=10, required=False)
 
     class Meta:
         model = ParentsHeight
@@ -217,22 +241,35 @@ class ParentsHeightSerializer(serializers.ModelSerializer):
         if 'Club' in group:
             if data['player'].club != self.context['request'].user.club:
                 raise exceptions.PermissionDenied('Club has no permission to access performance data of player.')
+            else:
+                measurement_system = self.context['request'].user.club.measurement_system
         elif 'Coach' in group:
             if data['player'].club != self.context['request'].user.coach.club:
                 raise exceptions.PermissionDenied('Coach has no permission to access performance data of player.')
+            else:
+                measurement_system = self.context['request'].user.coach.club.measurement_system
         elif 'Player' in group:
             raise exceptions.PermissionDenied('Players can not post performance data.')
         else:
             raise exceptions.PermissionDenied('User group not selected.')
 
-        if data['unit'] == 'cm':
+        try:
+            unit = data['unit']
+            data.pop('unit')
+        except KeyError:
+            if measurement_system == 'SI':
+                unit = 'cm'
+            elif measurement_system == 'Imp':
+                unit = 'inch'
+
+        if unit == 'cm':
             if (50 <= data['fathers_height'] <= 250) and (50 <= data['mothers_height'] <= 250):
                 fathers_height = Distance(cm=data['fathers_height'])
                 mothers_height = Distance(cm=data['mothers_height'])
             else:
                 raise serializers.ValidationError('Height (%s / %s) cm seems to be wrong.' % (data['fathers_height'],
                                                                                               data['mothers_height']))
-        elif data['unit'] == 'inch':
+        elif unit == 'inch':
             if (20 <= data['fathers_height'] <= 100) and (20 <= data['mothers_height'] <= 100):
                 fathers_height = Distance(inch=data['fathers_height'])
                 mothers_height = Distance(inch=data['mothers_height'])
@@ -241,7 +278,6 @@ class ParentsHeightSerializer(serializers.ModelSerializer):
                                                                                                 data['mothers_height']))
         else:
             raise serializers.ValidationError('Field unit needs to be cm or inch!')
-        data.pop('unit')
         data['fathers_height'] = fathers_height
         data['mothers_height'] = mothers_height
         return data
@@ -259,7 +295,7 @@ class ParentsHeightSerializer(serializers.ModelSerializer):
 
 
 class SittingHeightSerializer(serializers.ModelSerializer):
-    unit = serializers.CharField(allow_blank=False, max_length=10, required=True)
+    unit = serializers.CharField(allow_blank=False, max_length=10, required=False)
 
     class Meta:
         model = SittingHeight
@@ -271,27 +307,39 @@ class SittingHeightSerializer(serializers.ModelSerializer):
         if 'Club' in group:
             if data['player'].club != self.context['request'].user.club:
                 raise exceptions.PermissionDenied('Club has no permission to access performance data of player.')
+            else:
+                measurement_system = self.context['request'].user.club.measurement_system
         elif 'Coach' in group:
             if data['player'].club != self.context['request'].user.coach.club:
                 raise exceptions.PermissionDenied('Coach has no permission to access performance data of player.')
+            else:
+                measurement_system = self.context['request'].user.coach.club.measurement_system
         elif 'Player' in group:
             raise exceptions.PermissionDenied('Players can not post performance data.')
         else:
             raise exceptions.PermissionDenied('User group not selected.')
 
-        if data['unit'] == 'cm':
+        try:
+            unit = data['unit']
+            data.pop('unit')
+        except KeyError:
+            if measurement_system == 'SI':
+                unit = 'cm'
+            elif measurement_system == 'Imp':
+                unit = 'inch'
+
+        if unit == 'cm':
             if 40 <= data['sitting_height'] <= 200:
                 sitting_height = Distance(cm=data['sitting_height'])
             else:
                 raise serializers.ValidationError('Height %s cm seems to be wrong.' % data['sitting_height'])
-        elif data['unit'] == 'inch':
+        elif unit == 'inch':
             if 20 <= data['sitting_height'] <= 100:
                 sitting_height = Distance(inch=data['sitting_height'])
             else:
                 raise serializers.ValidationError('Height %s inch seems to be wrong.' % data['sitting_height'])
         else:
             raise serializers.ValidationError('Field unit needs to be cm or inch!')
-        data.pop('unit')
         data['sitting_height'] = sitting_height
         return data
 
