@@ -36,7 +36,7 @@ class TestRscripts(unittest.TestCase):
             predicted_height = 140
             current_height = 180
             age, slope = r.get_bio_age(predicted_height, current_height, country='uk')
-            self.assertEquals(decimal.Decimal(18), age)
+            self.assertEquals(decimal.Decimal(17.5), age)
 
         @mock.patch('apps.analysis.calculate.Interpolate')
         def test_get_benchmark(self, mock_interpolate):

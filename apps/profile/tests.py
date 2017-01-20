@@ -1,5 +1,6 @@
 from unittest import mock
 import unittest
+import datetime
 
 
 class TestViews(unittest.TestCase):
@@ -20,6 +21,7 @@ class TestSerializers(unittest.TestCase):
         obj = mock.MagicMock()
         view = mock.MagicMock()
         height = mock.MagicMock()
+        height.date = datetime.date.today()
         weight = mock.MagicMock()
         s_height = mock.MagicMock()
         prediction = mock.MagicMock()
@@ -55,6 +57,7 @@ class TestSerializers(unittest.TestCase):
         self.assertEquals(validated_data['current_weight'], current_weight)
         self.assertEquals(validated_data['predicted_height'], predicted_height)
         self.assertEquals(validated_data['current_height'], current_height)
+        self.assertEquals(validated_data['height_expired'], False)
 
     def test_heightserializervalidate(self):
         from apps.profile.serializers import HeightSerializer
