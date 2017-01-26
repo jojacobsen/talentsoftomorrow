@@ -35,6 +35,7 @@ class TestSerializers(unittest.TestCase):
         current_weight = 45.0
         weight_unit = 'kg'
         bio_age = 16
+        method = 'dna'
         bio_age_method = 'pre'
         height.value_club_unit.return_value = [current_height, height_unit]
         obj.height_set.filter.return_value.latest.return_value = height
@@ -62,7 +63,7 @@ class TestSerializers(unittest.TestCase):
         self.assertEquals(validated_data['current_height'], current_height)
         self.assertEquals(validated_data['height_expired'], False)
         self.assertEquals(validated_data['bio_age'], bio_age)
-        self.assertEquals(validated_data['bio_age_method'], bio_age_method)
+        self.assertEquals(validated_data['method'], method)
 
     def test_heightserializervalidate(self):
         from apps.profile.serializers import HeightSerializer
