@@ -24,6 +24,16 @@ class TestInterpolate(unittest.TestCase):
         self.assertEquals(0.261248049644, population_sd)
 
 
+class TestPythonAnalysis(unittest.TestCase):
+    def test_get_alternative_bio_age(self):
+        from apps.analysis.calculate import PythonAnalysis
+        current_age = 14
+        phv_age = 14
+        p = PythonAnalysis()
+        bio_age = p.get_alternative_bio_age(current_age, phv_age)
+        self.assertEquals(decimal.Decimal(14), bio_age)
+
+
 class TestRscripts(unittest.TestCase):
     if settings.R_AVAILABLE:
         def test_get_bio_age(self):
@@ -183,6 +193,24 @@ class TestBioAge(unittest.TestCase):
         instance.player.predictedheight_set.filter.return_value.latest.side_effect = PredictedHeight.DoesNotExist
         success = create_bio_age(sender, instance, False)
         self.assertEquals(success, False)
+
+    @mock.patch('apps.analysis.bio_age.utils.BioAge')
+    @mock.patch('apps.analysis.bio_age.utils.PythonAnalysis')
+    def test_create_alternative_bio_age(self, mock_pythonanalysis, mock_bioage):
+        from apps.analysis.bio_age.utils import create_alternative_bio_age
+        from apps.analysis.bio_age.utils import PHV
+        sender = mock.MagicMock()
+        instance = mock.MagicMock()
+        success = create_alternative_bio_age(sender, instance, True)
+        self.assertEquals(success, False)
+        sender = PHV
+        instance.player.bioage_set.filter.return_value.values_list.return_value = None
+        mock_pythonanalysis.return_value.get_alternative_bio_age.return_value = decimal.Decimal(15)
+        mock_bioage.objects.create.return_value = mock.MagicMock()
+        success = create_alternative_bio_age(sender, instance, True)
+        self.assertEquals(success, True)
+        success = create_alternative_bio_age(sender, instance, False)
+        self.assertEquals(success, True)
 
 
 class TestKhamisRoche(unittest.TestCase):

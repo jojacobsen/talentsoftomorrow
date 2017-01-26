@@ -190,3 +190,18 @@ class RscriptAnalysis(object):
                             str(sitting_height)))
             phv_delta = None
         return phv_delta  # Distance to PHV in Years
+
+
+class PythonAnalysis(object):
+    def __init__(self):
+        self.phv_average = 14  # Just a random choice
+
+    def get_alternative_bio_age(self, current_age, phv_age):
+        """
+        Calculates alternative Bio Age based on Peak Height velocity
+        :param current_age:
+        :param phv_age:
+        :return bio_age:
+        """
+        bio_age = self.phv_average + current_age - phv_age
+        return decimal.Decimal(bio_age)

@@ -66,9 +66,10 @@ class PlayerProfileSerializer(serializers.BaseSerializer):
 
         try:
             # Latest BioAge is always the best
-            bio_age = obj.bioage_set.values_list('bio_age', flat=True).latest('created')
+            bio_age, bioage_method = obj.bioage_set.values_list('bio_age', 'method').latest('created')
         except BioAge.DoesNotExist:
             bio_age = None
+            bioage_method = None
 
         try:
             # Latest PHV is always the best
@@ -82,6 +83,14 @@ class PlayerProfileSerializer(serializers.BaseSerializer):
             growth_spurt_start = None
             growth_position = None
 
+        # Which method was used?
+        if prediction_method and bioage_method:
+            method = prediction_method
+        elif bioage_method:
+            method = bioage_method
+        else:
+            method = None
+
         return {
             'player': obj.id,
             'player_name': obj.first_name + ' ' + obj.last_name,
@@ -90,7 +99,7 @@ class PlayerProfileSerializer(serializers.BaseSerializer):
             'birthday': obj.birthday,
             'current_height': current_height,
             'predicted_height': predicted_height,
-            'prediction_method': prediction_method,
+            'method': method,
             'height_unit': height_unit,
             'height_date': height_date,
             'height_expired': height_expired,

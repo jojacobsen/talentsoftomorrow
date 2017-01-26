@@ -34,6 +34,8 @@ class TestSerializers(unittest.TestCase):
         sitting_height = 155.0
         current_weight = 45.0
         weight_unit = 'kg'
+        bio_age = 16
+        bio_age_method = 'pre'
         height.value_club_unit.return_value = [current_height, height_unit]
         obj.height_set.filter.return_value.latest.return_value = height
         weight.value_club_unit.return_value = [current_weight, weight_unit]
@@ -44,6 +46,7 @@ class TestSerializers(unittest.TestCase):
         obj.predictedheight_set.filter.return_value.latest.return_value = prediction
         parents_height.value_club_unit.return_value = [fathers_height, mothers_height, height_unit]
         obj.parentsheight_set.filter.return_value.latest.return_value = parents_height
+        obj.bioage_set.values_list.return_value.latest.return_value = [bio_age, bio_age_method]
         age = 14.5
         mock_round.return_value = age
         serializer = PlayerProfileSerializer(context={'view': view})
@@ -58,6 +61,8 @@ class TestSerializers(unittest.TestCase):
         self.assertEquals(validated_data['predicted_height'], predicted_height)
         self.assertEquals(validated_data['current_height'], current_height)
         self.assertEquals(validated_data['height_expired'], False)
+        self.assertEquals(validated_data['bio_age'], bio_age)
+        self.assertEquals(validated_data['bio_age_method'], bio_age_method)
 
     def test_heightserializervalidate(self):
         from apps.profile.serializers import HeightSerializer

@@ -100,18 +100,6 @@ class SittingHeight(models.Model):
             return round(self.sitting_height.inch, 0), 'inch'
 
 
-class BioAge(models.Model):
-    player = models.ForeignKey(Player, on_delete=models.CASCADE)
-    predicted_height = models.ForeignKey(PredictedHeight, on_delete=models.CASCADE)
-    current_height = models.ForeignKey(Height, on_delete=models.CASCADE)
-    bio_age = models.DecimalField(max_digits=20, decimal_places=10)
-    slope_to_bio_age = JSONField(default=list())
-    created = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.player.user.username
-
-
 class PHV(models.Model):
     player = models.ForeignKey(Player, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
@@ -120,3 +108,21 @@ class PHV(models.Model):
     sitting_height = models.ForeignKey(SittingHeight, on_delete=models.CASCADE)
     phv_date = models.DateField()
     date = models.DateField()  # Median date of height & weight measurements
+
+
+class BioAge(models.Model):
+    player = models.ForeignKey(Player, on_delete=models.CASCADE)
+    predicted_height = models.ForeignKey(PredictedHeight, on_delete=models.CASCADE, blank=True, null=True)
+    current_height = models.ForeignKey(Height, on_delete=models.CASCADE, blank=True, null=True)
+    phv = models.ForeignKey(PHV, on_delete=models.CASCADE, blank=True, null=True)
+    bio_age = models.DecimalField(max_digits=20, decimal_places=10)
+    slope_to_bio_age = JSONField(default=list())
+    created = models.DateTimeField(auto_now_add=True)
+    METHOD_CHOICES = (
+        ('pre', 'Height Prediction'),  # Height Prediction has always priority
+        ('phv', 'Peak Height Velocity'),
+    )
+    method = models.CharField(max_length=5, choices=METHOD_CHOICES, default=METHOD_CHOICES[0][0])
+
+    def __str__(self):
+        return self.player.user.username

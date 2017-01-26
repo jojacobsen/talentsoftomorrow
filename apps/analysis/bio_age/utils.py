@@ -1,5 +1,5 @@
-from analysis.calculate import RscriptAnalysis
-from profile.models import BioAge, PredictedHeight, Height
+from analysis.calculate import RscriptAnalysis, PythonAnalysis
+from profile.models import BioAge, PredictedHeight, Height, PHV
 
 
 def create_bio_age(sender, instance, created):
@@ -47,7 +47,8 @@ def create_bio_age(sender, instance, created):
                               predicted_height=prediction,
                               current_height=current_height,
                               bio_age=bio_age,
-                              slope_to_bio_age=slope)
+                              slope_to_bio_age=slope,
+                              method='pre')
         return True
     else:
         # Updates the currently used bio age (.update does not trigger signals!)
@@ -57,5 +58,39 @@ def create_bio_age(sender, instance, created):
         ).update(
             bio_age=bio_age,
             slope_to_bio_age=slope
+        )
+        return True
+
+
+def create_alternative_bio_age(sender, instance, created):
+    if sender == PHV:
+        phv = instance
+    else:
+        return False
+
+    # Bio Age based on prediction is better
+    if phv.player.bioage_set.filter(method='pre').values_list('created', flat=True):
+        return False
+
+    # Current age based on median Date between weight and height record
+    current_age = (phv.date - instance.player.birthday).days / 365.25
+    phv_age = (phv.phv_date - instance.player.birthday).days / 365.25
+
+    p = PythonAnalysis()
+    bio_age = p.get_alternative_bio_age(current_age, phv_age)
+
+    if created:
+        # Creates a new bio age object
+        BioAge.objects.create(player=instance.player,
+                              bio_age=bio_age,
+                              phv=instance,
+                              method='phv')
+        return True
+    else:
+        # Updates the currently used bio age (.update does not trigger signals!)
+        instance.player.bioage_set.filter(
+            phv=instance
+        ).update(
+            bio_age=bio_age,
         )
         return True

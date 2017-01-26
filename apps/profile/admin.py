@@ -33,25 +33,36 @@ class ParentsHeightAdmin(admin.ModelAdmin):
 
 
 class BioAgeAdmin(admin.ModelAdmin):
-    list_display = ['player', 'bio_age', 'get_age', 'get_predicted_height', 'get_current_height', 'created']
+    list_display = ['player', 'bio_age', 'method', 'get_age', 'get_predicted_height', 'get_current_height',
+                    'get_phv_age', 'created']
     list_filter = ['player__club__name', 'created']
     search_fields = ['player__user__username']
 
     def get_predicted_height(self, obj):
-        return obj.predicted_height.predicted_height
+        if obj.predicted_height:
+            return obj.predicted_height.predicted_height
     get_predicted_height.short_description = 'Predicted Height'  # Renames column head
 
     def get_current_height(self, obj):
-        return obj.current_height.height
+        if obj.current_height:
+            return obj.current_height.height
     get_current_height.short_description = 'Current Height'  # Renames column head
 
+    def get_phv_age(self, obj):
+        if obj.phv:
+            return round(((obj.phv.phv_date - obj.player.birthday).days / 365.25), 1)
+    get_phv_age.short_description = 'PHV Age'
+
     def get_age(self, obj):
-        return round((obj.predicted_height.date - obj.player.birthday).days / 365.25, 1)
+        if obj.phv:
+            return round(((obj.phv.date - obj.player.birthday).days / 365.25), 1)
+        if obj.current_height:
+            return round((obj.current_height.date - obj.player.birthday).days / 365.25, 1)
     get_age.short_description = 'Age'  # Renames column head
 
 
 class PHVAdmin(admin.ModelAdmin):
-    list_display = ['player', 'phv_date', 'get_phv_age', 'get_age', 'get_current_weight', 'get_current_height',
+    list_display = ['player', 'phv_date', 'get_phv_age', 'get_age','get_current_weight', 'get_current_height',
                     'get_sitting_height', 'date', 'created']
     list_filter = ['player__club__name', 'created']
     search_fields = ['player__user__username']
@@ -74,8 +85,7 @@ class PHVAdmin(admin.ModelAdmin):
     get_age.short_description = 'Age'  # Renames column head
 
     def get_phv_age(self, obj):
-        age = (obj.date - obj.player.birthday).days / 365.25
-        return round(age + ((obj.phv_date - obj.date).days / 365.25), 1)
+        return round(((obj.phv_date - obj.player.birthday).days / 365.25), 1)
     get_phv_age.short_description = 'PHV Age'
 
 
