@@ -338,12 +338,12 @@ class SittingHeightSerializer(serializers.ModelSerializer):
                 unit = 'inch'
 
         if unit == 'cm':
-            if 40 <= data['sitting_height'] <= 200:
+            if 20 <= data['sitting_height'] <= 200:
                 sitting_height = Distance(cm=data['sitting_height'])
             else:
                 raise serializers.ValidationError('Height %s cm seems to be wrong.' % data['sitting_height'])
         elif unit == 'inch':
-            if 20 <= data['sitting_height'] <= 100:
+            if 10 <= data['sitting_height'] <= 100:
                 sitting_height = Distance(inch=data['sitting_height'])
             else:
                 raise serializers.ValidationError('Height %s inch seems to be wrong.' % data['sitting_height'])

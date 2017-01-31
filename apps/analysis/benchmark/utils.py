@@ -20,6 +20,7 @@ def create_benchmark(sender, instance, created):
     try:
         # Get newest BioAge (but should be same date or older than performance date)
         bio_age = instance.player.bioage_set.filter(current_height__date__lte=performance.date).latest('created')
+        bio_age_date = bio_age.current_height.date
     except BioAge.DoesNotExist:
         bio_age = None
 
@@ -27,6 +28,7 @@ def create_benchmark(sender, instance, created):
         try:
             # Get newest BioAge (but should be same date or older than performance date)
             bio_age = instance.player.bioage_set.filter(method='phv', phv__date__lte=performance.date).latest('created')
+            bio_age_date = bio_age.phv.date
         except BioAge.DoesNotExist:
             bio_age = None
 
@@ -44,7 +46,7 @@ def create_benchmark(sender, instance, created):
 
     if bio_age:
         # Height measurement can't be older than half a year
-        if abs((performance.date - bio_age.current_height.date).days) < 183:
+        if abs((performance.date - bio_age_date).days) < 183:
             benchmark_bio = r.get_benchmark(instance.value,
                                             float(bio_age.bio_age),
                                             instance.measurement.statistic_array,
