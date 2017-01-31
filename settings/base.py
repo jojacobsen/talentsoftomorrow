@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'django_cleanup',
     'modeltranslation',
     'django_measurement',
-    'memcache_status',
     'storages',
 
     # Apps
@@ -250,6 +249,6 @@ OPBEAT = {
 }
 
 CORS_ORIGIN_WHITELIST = (
-    'https://testdashboard.talentstomorrow.com'
+    'https://app.talentstomorrow.com'
 )
 
