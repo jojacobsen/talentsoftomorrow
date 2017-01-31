@@ -23,6 +23,13 @@ def create_benchmark(sender, instance, created):
     except BioAge.DoesNotExist:
         bio_age = None
 
+    if not bio_age:
+        try:
+            # Get newest BioAge (but should be same date or older than performance date)
+            bio_age = instance.player.bioage_set.filter(method='phv', phv__date__lte=performance.date).latest('created')
+        except BioAge.DoesNotExist:
+            bio_age = None
+
     # Uses the date when the measurement was taken
     current_age = (performance.date - instance.player.birthday).days / 365.25
 
