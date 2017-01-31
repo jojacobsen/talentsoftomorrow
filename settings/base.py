@@ -215,7 +215,7 @@ DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 #STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 AWS_ACCESS_KEY_ID = 'AKIAIGHN33QN3TXYA4CA'
 AWS_SECRET_ACCESS_KEY = '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'
-AWS_STORAGE_BUCKET_NAME = 'static-files-f2flkf2fgvmyn13aev4321cdasd1d'
+AWS_STORAGE_BUCKET_NAME = 'static-files-asdf324fqsadkn1109fsadfbvmb64adf4af4142cknkj'
 AWS_AUTO_CREATE_BUCKET = True
 
 # Email Settings
