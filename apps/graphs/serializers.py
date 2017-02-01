@@ -14,7 +14,7 @@ class PerformanceHistoricSerializer(serializers.BaseSerializer):
         performances = obj.performance_set.filter(measurement__id=pk)
         data = list()
         for p in performances:
-            data.append([(round(p.date - obj.birthday).days / 365.25, ), round(p.value, 2)])
+            data.append([round((p.date - obj.birthday).days / 365.25, 2), round(p.value, 2)])
         data.sort()
         if not data:
             return
