@@ -53,7 +53,7 @@ class PerformanceBioAgeSerializer(serializers.BaseSerializer):
         if bio_age and value:
             data.append({
                 'x': round(bio_age, 1),
-                'y': value,
+                'y': round(value, 2),
             }
             )
 
@@ -87,7 +87,7 @@ class PerformanceGraphSerializer(serializers.BaseSerializer):
         if value and date:
             data.append({
                 'x': round((date - obj.birthday).days / 365.25, 1),
-                'y': value,
+                'y': round(value, 2),
             }
             )
 
