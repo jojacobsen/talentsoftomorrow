@@ -15,12 +15,14 @@ class TestViews(unittest.TestCase):
 
 
 class TestSerializers(unittest.TestCase):
-    def test_performancehistoricserializer(self):
+    @mock.patch('apps.graphs.serializers.round_test_list')
+    def test_performancehistoricserializer(self, mock_round_test_list):
         from apps.graphs.serializers import PerformanceHistoricSerializer
         obj = mock.MagicMock()
         performances = [mock.MagicMock()]
         obj.performance_set.filter.return_value = performances
         pk = mock.MagicMock()
+        mock_round_test_list.return_value = mock.MagicMock()
         serializer = PerformanceHistoricSerializer(context={'pk': pk})
         validated_data = serializer.to_representation(obj)
         self.assertEquals(validated_data['player'], obj.id)
@@ -73,3 +75,32 @@ class TestSerializers(unittest.TestCase):
         self.assertEquals(validated_data['player'], obj.id)
         self.assertEquals(validated_data['data'][0]['x'], age)
         self.assertEquals(validated_data['data'][0]['y'], current_height)
+
+
+class TestUtils(unittest.TestCase):
+    def test_add_test_to_list(self):
+        from apps.graphs.utils import add_test_to_list
+        age = 13.5
+        value = 4
+        data = [[age, 5]]
+        output = add_test_to_list(data, age, value, True)
+        self.assertEquals(output[0][1], value)
+        data = [[age, 5]]
+        output = add_test_to_list(data, age, value, False)
+        self.assertEquals(output[0][1], 5)
+        value = 6
+        data = [[age, 5]]
+        output = add_test_to_list(data, age, value, False)
+        self.assertEquals(output[0][1], value)
+        data = [[age, 5]]
+        output = add_test_to_list(data, age, value, True)
+        self.assertEquals(output[0][1], 5)
+
+    def test_round_test_list(self):
+        from apps.graphs.utils import round_test_list
+        age = 13.578123498798
+        value = 4.7878781238989
+        data = [[age, value]]
+        round_test_list(data)
+        self.assertEquals(data[0][0], 13.58)
+        self.assertEquals(data[0][1], 4.79)
