@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from performance.models import Performance
 from profile.models import Height, Weight, PredictedHeight, BioAge
+from graphs.utils import add_test_to_list, round_test_list
 
 
 class PerformanceHistoricSerializer(serializers.BaseSerializer):
@@ -13,8 +14,14 @@ class PerformanceHistoricSerializer(serializers.BaseSerializer):
         pk = self.context['pk']
         performances = obj.performance_set.filter(measurement__id=pk)
         data = list()
+        smaller_is_better = None
         for p in performances:
-            data.append([round((p.date - obj.birthday).days / 365.25, 2), round(p.value, 2)])
+            if not smaller_is_better:
+                smaller_is_better = p.measurement.smaller_is_better
+            age = (p.date - obj.birthday).days / 365.25
+            data = add_test_to_list(data, age, p.value, smaller_is_better)
+
+        round_test_list(data)
         data.sort()
         if not data:
             return
