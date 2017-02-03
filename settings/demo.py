@@ -12,5 +12,9 @@ DATABASES = {
     }
 }
 
-ALLOWED_HOSTS = ['*.talentstomorrow.com']
+CORS_ORIGIN_WHITELIST = (
+    'https://demo.talentstomorrow.com'
+)
+
+ALLOWED_HOSTS = ['*']
 JWT_AUTH['JWT_EXPIRATION_DELTA'] = datetime.timedelta(days=7)
