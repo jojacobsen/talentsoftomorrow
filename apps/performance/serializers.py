@@ -1,5 +1,7 @@
+import datetime
 from rest_framework import serializers, exceptions
 from performance.models import Performance, Measurement, Unit, Benchmark
+from profile.models import Height, BioAge
 
 
 class PerformanceSerializer(serializers.ModelSerializer):
@@ -120,6 +122,21 @@ class BenchmarkSerializer(serializers.BaseSerializer):
     def to_representation(self, obj):
         benchmark_bio = list()
         benchmark_chrono = list()
+        try:
+            height = obj.height_set.filter().latest('date')
+            height_date = height.date
+            # Uses the date when height was recorded
+            current_age = round((height_date - obj.birthday).days / 365.25, 1)
+        except Height.DoesNotExist:
+            current_age = round((datetime.date.today() - obj.birthday).days / 365.25, 1)
+
+        try:
+            # Latest BioAge is always the best
+            bio_age, bioage_method = obj.bioage_set.values_list('bio_age', 'method').latest('created')
+        except BioAge.DoesNotExist:
+            bio_age = None
+
+        measurements = list()
         # Loop trough the club's measurements
         for m in obj.club.measurements.filter():
             # Get the two latest performance results
@@ -133,22 +150,38 @@ class BenchmarkSerializer(serializers.BaseSerializer):
             try:
                 # Check if performance is benchmarked
                 b = t.benchmark_set.get()
-                benchmark_chrono.append(float(b.benchmark))
+                chrono_b = float(b.benchmark)
                 if b.benchmark_bio:
-                    benchmark_bio.append(float(b.benchmark_bio))
+                    bio_b = float(b.benchmark_bio)
                 else:
-                    benchmark_bio.append(50.0)
+                    bio_b = 50.0
             except Benchmark.DoesNotExist:
                 # Fallback benchmark is 50%
-                benchmark_bio.append(50.0)
-                benchmark_chrono.append(50.0)
+                bio_b = 50.0
+                chrono_b = 50.0
+
+            benchmark_bio.append(bio_b)
+            benchmark_chrono.append(chrono_b)
+            measurements.append({
+                'id': t.measurement.id,
+                'latest_performance': t.value,
+                'bio_benchmark': bio_b,
+                'age_benchmark': chrono_b
+            })
 
         # Calculate averages
         benchmark_chrono_ave = sum(benchmark_chrono) / float(len(benchmark_chrono))
         benchmark_bio_ave = sum(benchmark_bio) / float(len(benchmark_bio))
         return {
             'player': obj.id,
-            'benchmark_chrono_ave': benchmark_chrono_ave,
-            'benchmark_bio_ave': benchmark_bio_ave
+            'full_name': ' '.join([obj.first_name, obj.last_name]),
+            'initials': obj.first_name[0] + obj.last_name[0],
+            'current_age': current_age,
+            'current_bio_age': bio_age,
+            'measurements': measurements,
+            'overall_avg': {
+                'benchmark_chrono_ave': benchmark_chrono_ave,
+                'benchmark_bio_ave': benchmark_bio_ave
+            }
         }
 

@@ -141,10 +141,17 @@ class TestSerializers(unittest.TestCase):
         self.assertEquals(validated_data['benchmark_bio_ave'], 1.0)
         self.assertEquals(validated_data['benchmark_chrono_ave'], 1.0)
 
-    def test_benchmarkserializer(self):
+    @mock.patch('apps.performance.serializers.round')
+    def test_benchmarkserializer(self, mock_round):
         from apps.performance.serializers import BenchmarkSerializer
         obj = mock.MagicMock()
+        obj.first_name = 'John'
+        obj.last_name = 'Doe'
+        mock_round.return_value = 15.0
         measurements = [mock.MagicMock()]
+        bio_age = 16
+        bio_age_method = 'pre'
+        obj.bioage_set.values_list.return_value.latest.return_value = [bio_age, bio_age_method]
         obj.club.measurements.filter.return_value = measurements
         measurement = mock.MagicMock(category='test')
         performances = mock.MagicMock(value=5, measurement=measurement)
