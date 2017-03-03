@@ -9,4 +9,4 @@ class PlayerFilter(filters.FilterSet):
 
     class Meta:
         model = Player
-        fields = ['min_birthday', 'max_birthday']
+        fields = ['min_birthday', 'max_birthday', 'team__id']
