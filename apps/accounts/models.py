@@ -62,3 +62,9 @@ class ProfilePicture(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
+class Team(models.Model):
+    name = models.CharField(max_length=100)
+    club = models.ForeignKey(Club, on_delete=models.CASCADE)
+    players = models.ManyToManyField(Player, blank=True)

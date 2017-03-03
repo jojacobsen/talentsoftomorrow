@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Club, Coach, Player, ProfilePicture
+from .models import Club, Coach, Player, ProfilePicture, Team
 import datetime
 
 from django.utils.translation import ugettext_lazy as _
@@ -84,8 +84,14 @@ class ProfilePictureAdmin(admin.ModelAdmin):
     search_fields = ['user__username']
 
 
+class TeamAdmin(admin.ModelAdmin):
+    list_display = ['name', 'club']
+    search_fields = ['name', 'players__user__username', 'players__first_name', 'players__last_name', 'club__name']
+
+
 # Re-register UserAdmin
 admin.site.register(Coach, CoachAdmin)
 admin.site.register(Club, ClubAdmin)
 admin.site.register(Player, PlayerAdmin)
 admin.site.register(ProfilePicture, ProfilePictureAdmin)
+admin.site.register(Team, TeamAdmin)

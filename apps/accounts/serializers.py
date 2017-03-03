@@ -1,4 +1,4 @@
-from accounts.models import ProfilePicture, Club, Coach, Player
+from accounts.models import ProfilePicture, Club, Coach, Player, Team
 from rest_framework import serializers, exceptions
 from django.contrib.auth.models import User, Group
 from .utils import create_username, lab_key_generator
@@ -139,3 +139,27 @@ class NewPlayerSerializer(serializers.ModelSerializer):
         # Create the player
         player = Player.objects.create(**validated_data)
         return player
+
+
+class TeamCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Team
+        exclude = ('club',)
+
+    def create(self, validated_data):
+        # Check the group of the current user
+        group = self.context['request'].user.groups.values_list('name', flat=True)
+        if 'Club' in group:
+            validated_data['club'] = self.context['request'].user.club
+        elif 'Coach' in group:
+            validated_data['club'] = self.context['request'].user.coach.club
+
+        # Create the team
+        team = Team.objects.create(**validated_data)
+        return team
+
+
+class TeamSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Team
+        fields = '__all__'

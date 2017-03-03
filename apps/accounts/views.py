@@ -1,7 +1,7 @@
-from accounts.models import Player, Club, Coach
+from accounts.models import Player, Club, Coach, Team
 from accounts.filters import PlayerFilter
 from accounts.serializers import NewPlayerSerializer, PlayerSerializer, PlayersSerializer, CurrentPlayerSerializer, \
-    CurrentClubSerializer, CurrentCoachSerializer, CoachSerializer
+    CurrentClubSerializer, CurrentCoachSerializer, CoachSerializer, TeamSerializer, TeamCreateSerializer
 
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.renderers import JSONRenderer
@@ -142,6 +142,7 @@ class CoachListView(generics.ListAPIView):
 
 class UserDetailView(generics.GenericAPIView):
     permission_classes = (IsAuthenticated,)
+    serializer_class = TeamSerializer
 
     def get(self, request):
         group = request.user.groups.values_list('name', flat=True)
@@ -159,3 +160,47 @@ class UserDetailView(generics.GenericAPIView):
             return JSONResponse('User group not selected.', status=400)
 
         return JSONResponse(serializer.data)
+
+
+class TeamCreateView(generics.CreateAPIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = TeamCreateSerializer
+    # Parse JSON
+    parser_classes = (JSONParser,)
+
+
+class TeamListView(generics.ListAPIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = TeamSerializer
+    # Parse JSON
+    parser_classes = (JSONParser,)
+
+    def get_queryset(self):
+        group = self.request.user.groups.values_list('name', flat=True)
+
+        if 'Club' in group:
+            queryset = Team.objects.filter(club=self.request.user.club)
+        elif 'Coach' in group:
+            queryset = Team.objects.filter(club=self.request.user.coach.club)
+        else:
+            raise exceptions.PermissionDenied('User has no permission to access user data of player.')
+        return queryset
+
+
+class TeamView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = TeamSerializer
+    # Parse JSON
+    parser_classes = (JSONParser,)
+
+    def get_queryset(self):
+        pk = self.kwargs['pk']
+        group = self.request.user.groups.values_list('name', flat=True)
+
+        if 'Club' in group:
+            queryset = Team.objects.filter(pk=pk, club=self.request.user.club)
+        elif 'Coach' in group:
+            queryset = Team.objects.filter(pk=pk, club=self.request.user.coach.club)
+        else:
+            raise exceptions.PermissionDenied('User has no permission to access user data of player.')
+        return queryset
