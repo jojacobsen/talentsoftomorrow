@@ -91,9 +91,18 @@ class PlayerProfileSerializer(serializers.BaseSerializer):
         else:
             method = None
 
+        teams = obj.team_set.filter()
+        teams_s = list()
+        for team in teams:
+            teams_s.append({
+                'id': team.id,
+                'name': team.name
+            })
+
         return {
             'player': obj.id,
             'player_name': obj.first_name + ' ' + obj.last_name,
+            'teams': teams_s,
             'lab_key': obj.lab_key,
             'gender': obj.gender,
             'birthday': obj.birthday,

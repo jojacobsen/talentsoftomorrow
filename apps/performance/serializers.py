@@ -164,6 +164,10 @@ class BenchmarkSerializer(serializers.BaseSerializer):
             benchmark_chrono.append(chrono_b)
             measurements.append({
                 'id': t.measurement.id,
+                'name': t.measurement.name,
+                'slug': t.measurement.slug_name,
+                'unit': t.measurement.unit.name,
+                'unit_abbreviation': t.measurement.unit.abbreviation,
                 'latest_performance': t.value,
                 'bio_benchmark': bio_b,
                 'age_benchmark': chrono_b
