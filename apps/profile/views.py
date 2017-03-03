@@ -1,4 +1,5 @@
 from accounts.models import Player
+from profile.models import SittingHeight, ParentsHeight, Weight, Height
 from profile.serializers import PlayerProfileSerializer, HeightSerializer, \
     WeightSerializer, ParentsHeightSerializer, SittingHeightSerializer
 
@@ -78,3 +79,102 @@ class SittingHeightCreateView(generics.CreateAPIView):
     # Parse JSON
     parser_classes = (JSONParser,)
 
+    def get_queryset(self):
+        pk = self.kwargs['pk']
+        group = self.request.user.groups.values_list('name', flat=True)
+
+        if 'Club' in group:
+            queryset = SittingHeight.objects.filter(pk=pk, player__club=self.request.user.club)
+        elif 'Coach' in group:
+            queryset = SittingHeight.objects.filter(pk=pk, player__club=self.request.user.coach.club)
+        else:
+            raise exceptions.PermissionDenied('User has no permission to access user data of player.')
+        return queryset
+
+
+class HeightView(generics.RetrieveUpdateDestroyAPIView):
+    """
+    Deletes Height object.
+    """
+    permission_classes = (IsAuthenticated,)
+    serializer_class = HeightSerializer
+    # Parse JSON
+    parser_classes = (JSONParser,)
+
+    def get_queryset(self):
+        pk = self.kwargs['pk']
+        group = self.request.user.groups.values_list('name', flat=True)
+
+        if 'Club' in group:
+            queryset = Height.objects.filter(pk=pk, player__club=self.request.user.club)
+        elif 'Coach' in group:
+            queryset = Height.objects.filter(pk=pk, player__club=self.request.user.coach.club)
+        else:
+            raise exceptions.PermissionDenied('User has no permission to access user data of player.')
+        return queryset
+
+
+class WeightView(generics.RetrieveUpdateDestroyAPIView):
+    """
+    Deletes Weight object.
+    """
+    permission_classes = (IsAuthenticated,)
+    serializer_class = WeightSerializer
+    # Parse JSON
+    parser_classes = (JSONParser,)
+
+    def get_queryset(self):
+        pk = self.kwargs['pk']
+        group = self.request.user.groups.values_list('name', flat=True)
+
+        if 'Club' in group:
+            queryset = Weight.objects.filter(pk=pk, player__club=self.request.user.club)
+        elif 'Coach' in group:
+            queryset = Weight.objects.filter(pk=pk, player__club=self.request.user.coach.club)
+        else:
+            raise exceptions.PermissionDenied('User has no permission to access user data of player.')
+        return queryset
+
+
+class ParentsHeightView(generics.RetrieveUpdateDestroyAPIView):
+    """
+    Deletes Parents Height object.
+    """
+    permission_classes = (IsAuthenticated,)
+    serializer_class = ParentsHeightSerializer
+    # Parse JSON
+    parser_classes = (JSONParser,)
+
+    def get_queryset(self):
+        pk = self.kwargs['pk']
+        group = self.request.user.groups.values_list('name', flat=True)
+
+        if 'Club' in group:
+            queryset = ParentsHeight.objects.filter(pk=pk, player__club=self.request.user.club)
+        elif 'Coach' in group:
+            queryset = ParentsHeight.objects.filter(pk=pk, player__club=self.request.user.coach.club)
+        else:
+            raise exceptions.PermissionDenied('User has no permission to access user data of player.')
+        return queryset
+
+
+class SittingHeightView(generics.RetrieveUpdateDestroyAPIView):
+    """
+    Deletes Sitting Height object.
+    """
+    permission_classes = (IsAuthenticated,)
+    serializer_class = SittingHeightSerializer
+    # Parse JSON
+    parser_classes = (JSONParser,)
+
+    def get_queryset(self):
+        pk = self.kwargs['pk']
+        group = self.request.user.groups.values_list('name', flat=True)
+
+        if 'Club' in group:
+            queryset = SittingHeight.objects.filter(pk=pk, player__club=self.request.user.club)
+        elif 'Coach' in group:
+            queryset = SittingHeight.objects.filter(pk=pk, player__club=self.request.user.coach.club)
+        else:
+            raise exceptions.PermissionDenied('User has no permission to access user data of player.')
+        return queryset

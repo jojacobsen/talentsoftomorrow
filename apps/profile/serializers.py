@@ -126,7 +126,8 @@ class HeightSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         group = self.context['request'].user.groups.values_list('name', flat=True)
-
+        if 'player' not in data:
+            raise serializers.ValidationError('Player id missing. Please add the player key.')
         if 'Club' in group:
             if data['player'].club != self.context['request'].user.club:
                 raise exceptions.PermissionDenied('Club has no permission to access performance data of player.')
@@ -186,7 +187,8 @@ class WeightSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         group = self.context['request'].user.groups.values_list('name', flat=True)
-
+        if 'player' not in data:
+            raise serializers.ValidationError('Player id missing. Please add the player key.')
         if 'Club' in group:
             if data['player'].club != self.context['request'].user.club:
                 raise exceptions.PermissionDenied('Club has no permission to access performance data of player.')
@@ -246,7 +248,8 @@ class ParentsHeightSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         group = self.context['request'].user.groups.values_list('name', flat=True)
-
+        if 'player' not in data:
+            raise serializers.ValidationError('Player id missing. Please add the player key.')
         if 'Club' in group:
             if data['player'].club != self.context['request'].user.club:
                 raise exceptions.PermissionDenied('Club has no permission to access performance data of player.')
@@ -312,7 +315,8 @@ class SittingHeightSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         group = self.context['request'].user.groups.values_list('name', flat=True)
-
+        if 'player' not in data:
+            raise serializers.ValidationError('Player id missing. Please add the player key.')
         if 'Club' in group:
             if data['player'].club != self.context['request'].user.club:
                 raise exceptions.PermissionDenied('Club has no permission to access performance data of player.')
