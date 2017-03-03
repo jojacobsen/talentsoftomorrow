@@ -10,6 +10,9 @@ def create_bio_age(sender, instance, created):
     :param created:
     :return:
     """
+    if instance.player.club.bioage_method == 'PHV':
+        return False
+
     if sender == PredictedHeight:
         prediction = instance
     else:
@@ -68,9 +71,12 @@ def create_alternative_bio_age(sender, instance, created):
     else:
         return False
 
-    # Bio Age based on prediction is better
-    if phv.player.bioage_set.filter(method='pre').values_list('created', flat=True):
+    if instance.player.club.bioage_method == 'pre':
         return False
+    elif instance.player.club.bioage_method == 'best':
+        # Bio Age based on prediction is better
+        if phv.player.bioage_set.filter(method='pre').values_list('created', flat=True):
+            return False
 
     # Current age based on median Date between weight and height record
     current_age = (phv.date - instance.player.birthday).days / 365.25

@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 from fernet_fields import EncryptedTextField
 
 
-# TODO Move it to AWS
 def user_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/uuid/<filename>
     u = uuid.uuid4()
@@ -21,6 +20,15 @@ class Club(models.Model):
     measurement_system = models.CharField(max_length=10, choices=SYSTEM_CHOICES,
                                           help_text='Defines Input/Output units for height & weight. '
                                                     '(Internal always cm & kg)')
+    BIOAGE_CHOICES = (
+        ('PHV', 'PHV'),
+        ('pre', 'Height Prediction'),
+        ('best', 'best')
+    )
+    bioage_method = models.CharField(max_length=10, choices=BIOAGE_CHOICES,
+                                     help_text='Which method should be used to calculate the bio age?',
+                                     default='best')
+
     measurements = models.ManyToManyField('performance.Measurement', blank=True,
                                           help_text='Which measurements is the club using? '
                                                     'Be aware of units (cm, inch, ...)!')
