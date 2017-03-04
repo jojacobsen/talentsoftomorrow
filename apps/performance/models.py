@@ -35,6 +35,7 @@ class Measurement(models.Model):
                                           "with all the same length: "
                                           "[[9,10,11],[3,3.5,4],[2,2,2]].")
     smaller_is_better = models.BooleanField(default=False)
+    data = JSONField(default=dict(), help_text="Arbitrary Json Field", blank=True)
 
     def __str__(self):
         return self.name + ' in ' + self.unit.name

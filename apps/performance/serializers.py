@@ -168,6 +168,7 @@ class BenchmarkSerializer(serializers.BaseSerializer):
                 'slug': t.measurement.slug_name,
                 'unit': t.measurement.unit.name,
                 'unit_abbreviation': t.measurement.unit.abbreviation,
+                'data': t.measurement.data,
                 'latest_performance': t.value,
                 'bio_benchmark': bio_b,
                 'age_benchmark': chrono_b
