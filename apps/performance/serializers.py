@@ -133,6 +133,7 @@ class BenchmarkSerializer(serializers.BaseSerializer):
         try:
             # Latest BioAge is always the best
             bio_age, bioage_method = obj.bioage_set.values_list('bio_age', 'method').latest('created')
+            bio_age = round(bio_age, 1)
         except BioAge.DoesNotExist:
             bio_age = None
 
@@ -169,7 +170,7 @@ class BenchmarkSerializer(serializers.BaseSerializer):
                 'unit': t.measurement.unit.name,
                 'unit_abbreviation': t.measurement.unit.abbreviation,
                 'data': t.measurement.data,
-                'latest_performance': t.value,
+                'latest_performance': t.limit_decimals(),
                 'bio_benchmark': bio_b,
                 'age_benchmark': chrono_b
             })
