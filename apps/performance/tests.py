@@ -41,49 +41,15 @@ class TestViews(unittest.TestCase):
         return_queryset = performances.get_queryset()
         self.assertEquals(return_queryset, queryset)
 
-    @mock.patch('apps.performance.views.JSONResponse')
-    @mock.patch('apps.performance.views.PerformanceSerializer')
     @mock.patch('apps.performance.views.Performance')
-    def test_performancedetailview(self, mock_performance, mock_performanceserializer, mock_jsonrsponse):
-        from apps.performance.views import PerformanceDetailView
+    def test_performanceview_queryset(self, mock_performance):
+        from apps.performance.views import PerformanceView
         request = mock.MagicMock()
-        performance = mock.MagicMock()
-        mock_performance.objects.get.return_value = performance
-        mock_performanceserializer.return_value = mock.MagicMock()
-        response = mock.MagicMock()
-        mock_jsonrsponse.return_value = response
-        request.user.groups.values_list.return_value = 'Club'
-        p = PerformanceDetailView(request=request)
-        response_test = p.get(request)
-        self.assertEquals(response_test, response)
-        request.user.groups.values_list.return_value = 'Coach'
-        response_test = p.get(request)
-        self.assertEquals(response_test, response)
-
-    @mock.patch('apps.performance.views.Performance')
-    def test_performanceupdateview_queryset(self, mock_performance):
-        from apps.performance.views import PerformanceUpdateView
-        request = mock.MagicMock()
+        kwargs = mock.MagicMock()
         queryset = mock.MagicMock()
         mock_performance.objects.filter.return_value = queryset
         request.user.groups.values_list.return_value = 'Club'
-        kwargs = mock.MagicMock()
-        performances = PerformanceUpdateView(request=request, kwargs=kwargs)
-        return_queryset = performances.get_queryset()
-        self.assertEquals(return_queryset, queryset)
-        request.user.groups.values_list.return_value = 'Coach'
-        return_queryset = performances.get_queryset()
-        self.assertEquals(return_queryset, queryset)
-
-    @mock.patch('apps.performance.views.Performance')
-    def test_performancedeleteview_queryset(self, mock_performance):
-        from apps.performance.views import PerformanceDeleteView
-        request = mock.MagicMock()
-        queryset = mock.MagicMock()
-        mock_performance.objects.filter.return_value = queryset
-        request.user.groups.values_list.return_value = 'Club'
-        kwargs = mock.MagicMock()
-        performances = PerformanceDeleteView(request=request, kwargs=kwargs)
+        performances = PerformanceView(request=request, kwargs=kwargs)
         return_queryset = performances.get_queryset()
         self.assertEquals(return_queryset, queryset)
         request.user.groups.values_list.return_value = 'Coach'

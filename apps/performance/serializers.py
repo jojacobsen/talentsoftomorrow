@@ -11,7 +11,8 @@ class PerformanceSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         group = self.context['request'].user.groups.values_list('name', flat=True)
-
+        if 'player' not in data:
+            raise serializers.ValidationError('Player id missing. Please add the player key.')
         if 'Club' in group:
             if data['player'].club != self.context['request'].user.club:
                 raise exceptions.PermissionDenied('Club has no permission to access performance data of player.')
@@ -23,6 +24,8 @@ class PerformanceSerializer(serializers.ModelSerializer):
         else:
             raise exceptions.PermissionDenied('User group not selected.')
 
+        if 'measurement' not in data:
+            raise serializers.ValidationError('Measurement id missing.')
         if not (data['measurement'].lower_limit <= data['value'] <= data['measurement'].upper_limit):
             raise serializers.ValidationError('%s is not between %s...%s %s' % (data['value'],
                                                                                 data['measurement'].lower_limit,
