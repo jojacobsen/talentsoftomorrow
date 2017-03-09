@@ -66,42 +66,7 @@ class PerformanceListView(generics.ListAPIView):
         return queryset
 
 
-class PerformanceDetailView(generics.GenericAPIView):
-    """
-    Detailed performance view.
-    """
-    permission_classes = (IsAuthenticated,)
-
-    def get(self, request, pk=None):
-        group = request.user.groups.values_list('name', flat=True)
-
-        if 'Club' in group:
-            try:
-                queryset = Performance.objects.get(pk=pk, player__club=self.request.user.club)
-            except Performance.DoesNotExist:
-                raise exceptions.PermissionDenied('User has no permission to access user data of player.')
-
-        elif 'Coach' in group:
-            try:
-                queryset = Performance.objects.get(pk=pk, player__club=self.request.user.coach.club)
-            except Performance.DoesNotExist:
-                raise exceptions.PermissionDenied('User has no permission to access user data of player.')
-
-        elif 'Player' in group:
-            try:
-                queryset = Performance.objects.get(pk=pk, player__user=self.request.user)
-            except Performance.DoesNotExist:
-                raise exceptions.PermissionDenied('User has no permission to access user data of player.')
-
-        else:
-            return JSONResponse('User group not selected.', status=400)
-
-        serializer = PerformanceSerializer(queryset)
-
-        return JSONResponse(serializer.data)
-
-
-class PerformanceUpdateView(generics.UpdateAPIView):
+class PerformanceView(generics.RetrieveUpdateDestroyAPIView):
     """
     Updates Performance object.
     """
@@ -128,26 +93,6 @@ class PerformanceUpdateView(generics.UpdateAPIView):
         serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)
         return JSONResponse(serializer.data)
-
-
-class PerformanceDeleteView(generics.DestroyAPIView):
-    """
-    Deletes Performance object.
-    """
-    permission_classes = (IsAuthenticated,)
-    serializer_class = PerformanceSerializer
-
-    def get_queryset(self):
-        pk = self.kwargs['pk']
-        group = self.request.user.groups.values_list('name', flat=True)
-
-        if 'Club' in group:
-            queryset = Performance.objects.filter(pk=pk, player__club=self.request.user.club)
-        elif 'Coach' in group:
-            queryset = Performance.objects.filter(pk=pk, player__club=self.request.user.coach.club)
-        else:
-            raise exceptions.PermissionDenied('User has no permission to access user data of player.')
-        return queryset
 
 
 class MeasurementListView(generics.ListAPIView):
