@@ -20,9 +20,9 @@ class Height(models.Model):
     def value_club_unit(self):
         measurement_system = self.player.club.measurement_system
         if measurement_system == 'SI':
-            return round(self.height.cm, 0), 'cm'
+            return round(self.height.cm, 1), 'cm'
         elif measurement_system == 'Imp':
-            return round(self.height.inch, 0), 'inch'
+            return round(self.height.inch, 1), 'inch'
 
 
 class Weight(models.Model):
@@ -37,9 +37,9 @@ class Weight(models.Model):
     def value_club_unit(self):
         measurement_system = self.player.club.measurement_system
         if measurement_system == 'SI':
-            return round(self.weight.kg, 0), 'kg'
+            return round(self.weight.kg, 1), 'kg'
         elif measurement_system == 'Imp':
-            return round(self.weight.lb, 0), 'lb'
+            return round(self.weight.lb, 1), 'lb'
 
 
 class PredictedHeight(models.Model):
@@ -61,9 +61,9 @@ class PredictedHeight(models.Model):
     def value_club_unit(self):
         measurement_system = self.player.club.measurement_system
         if measurement_system == 'SI':
-            return round(self.predicted_height.cm, 0), 'cm'
+            return round(self.predicted_height.cm, 1), 'cm'
         elif measurement_system == 'Imp':
-            return round(self.predicted_height.inch, 0), 'inch'
+            return round(self.predicted_height.inch, 1), 'inch'
 
 
 class ParentsHeight(models.Model):
@@ -78,9 +78,9 @@ class ParentsHeight(models.Model):
     def value_club_unit(self):
         measurement_system = self.player.club.measurement_system
         if measurement_system == 'SI':
-            return round(self.fathers_height.cm, 0), round(self.mothers_height.cm, 0), 'cm'
+            return round(self.fathers_height.cm, 1), round(self.mothers_height.cm, 0), 'cm'
         elif measurement_system == 'Imp':
-            return round(self.fathers_height.inch, 0), round(self.mothers_height.inch, 0), 'inch'
+            return round(self.fathers_height.inch, 1), round(self.mothers_height.inch, 0), 'inch'
 
 
 class SittingHeight(models.Model):
@@ -95,9 +95,9 @@ class SittingHeight(models.Model):
     def value_club_unit(self):
         measurement_system = self.player.club.measurement_system
         if measurement_system == 'SI':
-            return round(self.sitting_height.cm, 0), 'cm'
+            return round(self.sitting_height.cm, 1), 'cm'
         elif measurement_system == 'Imp':
-            return round(self.sitting_height.inch, 0), 'inch'
+            return round(self.sitting_height.inch, 1), 'inch'
 
 
 class PHV(models.Model):

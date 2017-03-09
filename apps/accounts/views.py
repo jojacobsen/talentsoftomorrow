@@ -61,38 +61,7 @@ class PlayerListView(generics.ListAPIView):
         return queryset
 
 
-class PlayerDetailView(generics.GenericAPIView):
-    permission_classes = (IsAuthenticated,)
-
-    def get(self, request, pk=None):
-        group = request.user.groups.values_list('name', flat=True)
-
-        if 'Club' in group:
-            try:
-                queryset = Player.objects.get(pk=pk, club=self.request.user.club, archived=False)
-            except Player.DoesNotExist:
-                raise exceptions.PermissionDenied('User has no permission to access user data of player.')
-
-        elif 'Coach' in group:
-            try:
-                queryset = Player.objects.get(pk=pk, club=self.request.user.coach.club, archived=False)
-            except Player.DoesNotExist:
-                raise exceptions.PermissionDenied('User has no permission to access user data of player.')
-
-        elif 'Player' in group:
-            try:
-                queryset = Player.objects.get(pk=pk, user=self.request.user, archived=False)
-            except Player.DoesNotExist:
-                raise exceptions.PermissionDenied('User has no permission to access user data of player.')
-
-        else:
-            return JSONResponse('User group not selected.', status=400)
-
-        serializer = PlayerSerializer(queryset)
-        return JSONResponse(serializer.data)
-
-
-class PlayerUpdateView(generics.UpdateAPIView):
+class PlayerView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = PlayerSerializer
 

@@ -2,9 +2,13 @@ from .dev import *
 
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": abspath(join(SITE_ROOT, "database", 'dev.db')),
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'tottest',
+        'USER': 'test',
+        'PASSWORD': 'test123',
+        'HOST': 'localhost',
+        'PORT': '5432'
     }
 }
 
