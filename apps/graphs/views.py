@@ -42,7 +42,7 @@ class PerformanceHistoricGraphView(generics.ListAPIView):
         return queryset
 
     def get(self, request, pk, *args, **kwargs):
-        queryset = self.get_queryset()
+        queryset = self.filter_queryset(self.get_queryset())
         serializer = PerformanceHistoricSerializer(queryset, many=True, context={'pk': pk})
         return JSONResponse(serializer.data)
 
@@ -66,7 +66,7 @@ class PerformanceBioAgeGraphView(generics.ListAPIView):
         return queryset
 
     def get(self, request, pk, *args, **kwargs):
-        queryset = self.get_queryset()
+        queryset = self.filter_queryset(self.get_queryset())
         serializer = PerformanceBioAgeSerializer(queryset, many=True, context={'pk': pk})
         return JSONResponse(serializer.data)
 
@@ -89,7 +89,7 @@ class PerformanceGraphView(generics.ListAPIView):
         return queryset
 
     def get(self, request, pk, *args, **kwargs):
-        queryset = self.get_queryset()
+        queryset = self.filter_queryset(self.get_queryset())
         serializer = PerformanceGraphSerializer(queryset, many=True, context={'pk': pk})
         return JSONResponse(serializer.data)
 
@@ -114,6 +114,6 @@ class HeightEstimationGraphView(generics.ListAPIView):
         return queryset
 
     def get(self, request, *args, **kwargs):
-        queryset = self.get_queryset()
+        queryset = self.filter_queryset(self.get_queryset())
         serializer = HeightEstimationSerializer(queryset, many=True)
         return JSONResponse(serializer.data)
