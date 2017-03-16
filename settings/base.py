@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'performance',
     'profile',
     'player_dashboard',
+    'questionnaire',
 ]
 
 REST_FRAMEWORK = {

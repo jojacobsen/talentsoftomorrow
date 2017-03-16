@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Height, Weight, PredictedHeight, ParentsHeight, BioAge, SittingHeight, PHV
-import datetime
+
 
 class HeightAdmin(admin.ModelAdmin):
     list_display = ['player', 'height', 'date', 'created']

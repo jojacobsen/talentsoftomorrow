@@ -14,6 +14,7 @@ urlpatterns = [
     url(r'^graphs/', include('graphs.urls')),
     url(r'^performance/', include('performance.urls')),
     url(r'^profile/', include('profile.urls')),
+    url(r'^questionnaire/', include('questionnaire.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 
