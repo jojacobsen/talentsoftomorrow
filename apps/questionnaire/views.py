@@ -2,15 +2,17 @@ from django.views import generic
 from django.core.exceptions import PermissionDenied
 
 from questionnaire.models import Questionnaire
+from player_dashboard.utils import get_questionnaire_list
 
 
 class QuestionnaireFormView(generic.DetailView):
     model = Questionnaire
-    template_name = 'questionnaire/questionnaire.html'
+    template_name = 'questionnaire/wizard.html'
 
     def get_context_data(self, **kwargs):
         context = super(QuestionnaireFormView, self).get_context_data(**kwargs)
-        context['menu_item'] = 'questionnaire'
+        context['link_questionnaire'] = get_questionnaire_list(self.request.user)
+        context['menu_item'] = kwargs['object'].slug
         return context
 
 

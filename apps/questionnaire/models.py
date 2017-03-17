@@ -8,6 +8,7 @@ from django.utils.translation import ugettext_lazy as _
 class Questionnaire(models.Model):
     name = models.CharField(max_length=200)
     slug = models.CharField(max_length=200)
+    short_description = models.CharField(max_length=200, blank=True, null=True)
     club = models.ManyToManyField(Club, blank=True)
     language = models.CharField(max_length=2, default=settings.LANGUAGE_CODE,
                                 verbose_name=_('Language'), choices=settings.LANGUAGES)
@@ -55,9 +56,10 @@ class Question(models.Model):
     text = models.TextField(blank=True, verbose_name=_("Text"))
     section = models.ForeignKey(Section)
     sort = models.IntegerField()
+    slug = models.SlugField(max_length=100, unique=True)
     TYPE_CHOICES = (
         ('choice-yesno', _('Choice: Yes or No')),
-        ('choice-yesnocomment', _('Choice & Comment: Yes or No or Whaaa?')),
+        ('choice-yesnocomment', _('Choice & Comment: Yes or No with a chance to comment on the answer')),
         ('open', _('Open: A simple one line input box')),
         ('open-textfield', _('Textfield: A box for lengthy answers')),
         ('choice', _('Choice: A list of choices to choose from')),
@@ -65,11 +67,13 @@ class Question(models.Model):
         ('choice-multiple', _('Multiple Choice: A list of choices with multiple answers')),
         ('choice-multiple-freeform', _('Multiple Choice & Free Form: '
                                        'Multiple Answers with multiple user defined answers')),
-        ('range', _('Range: A range of number from which one number can be chosen')),
+        ('range', _('Range: A range of options from which can be chosen')),
         ('number', _('Number: A number')),
-        ('comment', _('Not a question, but only a comment displayed to the user')),
+        ('comment', _('Comment: Not a question, but only a comment displayed to the user')),
     )
     question_type = models.CharField(max_length=50, choices=TYPE_CHOICES)
+    required = models.BooleanField(default=True, help_text="Is field required to answer?")
+    input_placeholder = models.CharField(blank=True, null=True, max_length=200)
     extra = JSONField(blank=True, default=dict())
     footer = models.TextField(u"Footer", help_text="Footer rendered below the question interpreted as textile",
                               blank=True)

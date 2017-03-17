@@ -1,0 +1,230 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block head %}
+    <title>Questionnaire</title>
+    <!-- BEGIN PLUGINS CSS -->
+    <link rel="stylesheet" href="{% static "plugins/components-summernote/dist/summernote.css" %}">
+    <link rel="stylesheet" href="{% static "plugins/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css" %}">
+    <link rel="stylesheet" href="{% static "plugins/switchery/dist/switchery.min.css" %}">
+    <link rel="stylesheet" href="{% static "plugins/nouislider/distribute/jquery.nouislider.min.css" %}">
+    <link rel="stylesheet" href="{% static "plugins/nouislider/distribute/jquery.nouislider.pips.min.css" %}">
+    <!-- END PLUGINS CSS -->
+{% endblock %}
+
+{% block body %}
+    {% include 'player_dashboard/sidebar.html' %}
+
+    <div class="content">
+
+		<div class="page-header full-content bg-brown">
+			<div class="row">
+				<div class="col-sm-6">
+					<h1>{{ questionnaire.name }} <small>{{ questionnaire.short_description }}</small></h1>
+				</div><!--.col-->
+				<div class="col-sm-6">
+					<ol class="breadcrumb">
+						<li><a href="{% url 'player_dashboard:dashboard' %}"><i class="ion-home"></i></a></li>
+						<li><a href="#">Questionnaires</a></li>
+						<li><a href="#" class="active">{{ questionnaire.name }}</a></li>
+					</ol>
+				</div><!--.col-->
+			</div><!--.row-->
+		</div><!--.page-header-->
+
+		<div class="row">
+			<div class="col-md-12">
+				<div class="panel bs-wizard bs-wizard-progress">
+						<div class="panel-heading">
+							<div class="panel-title">
+								<h4>{{ questionnaire.name }}</h4>
+								<div class="progress progress-striped active">
+									<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+								</div><!--.progress-->
+							</div><!--.panel-title-->
+						</div><!--.panel-heading-->
+						<div class="panel-body">
+
+							<form id="form1" method="post" action="#" class="form-horizontal">
+
+								<ul class="hide">
+                                    {% for s in questionnaire.section_set.all|dictsort:"sort"  %}
+									<li><a href="#tab{{ forloop.counter }}" data-toggle="tab">{{ s.heading }}</a></li>
+                                    {% endfor %}
+								</ul>
+
+								<div class="tab-content">
+                                    {% for s in questionnaire.section_set.all|dictsort:"sort"  %}
+									<div class="tab-pane" id="tab{{ forloop.counter }}">
+                                        {% for q in s.question_set.all|dictsort:"sort" %}
+                                            {% if q.question_type == 'choice-yesno' %}
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-4">{{ q.text }}</label>
+                                                    <div class="col-md-6">
+                                                        <div class="inputer">
+                                                            <div class="input-wrapper-no-line">
+                                                                <input type="checkbox" class="bs-switch" data-on-text="Yes" name="{{ q.slug }}" data-off-text="No" checked>
+                                                            </div>
+                                                            <p class="help-block">{{ q.footer|default_if_none:"" }}</p>
+                                                        </div>
+                                                    </div>
+                                                </div><!--.form-group-->
+                                            {% elif q.question_type == 'choice-yesnocomment' %}
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-4">{{ q.text }}</label>
+                                                    <div class="col-md-6">
+                                                        <div class="inputer">
+                                                            <div class="input-wrapper-no-line">
+                                                                <input type="checkbox" class="bs-switch" data-on-text="Yes" name="{{ q.slug }}" data-off-text="No" checked>
+                                                            </div>
+                                                            <p class="help-block">{{ q.footer|default_if_none:"" }}</p>
+                                                        </div>
+                                                    </div>
+                                                    <label class="control-label col-md-4">Comments:</label>
+                                                    <div class="col-md-6">
+                                                        <div class="inputer">
+                                                            <div class="input-wrapper">
+                                                                <input type="text" name="{{ q.slug }}-comment" class="form-control" placeholder="{{ q.input_placeholder|default_if_none:"" }}"
+                                                                       {% if q.required %}required{% endif %}>
+                                                            </div>
+                                                            <p class="help-block">{{ q.footer|default_if_none:"" }}</p>
+                                                        </div>
+                                                    </div>
+                                                </div><!--.form-group-->
+                                            {% elif q.question_type == 'open' %}
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-4">{{ q.text }}</label>
+                                                    <div class="col-md-6">
+                                                        <div class="inputer">
+                                                            <div class="input-wrapper">
+                                                                <input type="text" name="{{ q.slug }}" class="form-control" placeholder="{{ q.input_placeholder|default_if_none:"" }}"
+                                                                       {% if q.required %}required{% endif %}>
+                                                            </div>
+                                                            <p class="help-block">{{ q.footer|default_if_none:"" }}</p>
+                                                        </div>
+                                                    </div>
+                                                </div><!--.form-group-->
+                                            {% elif q.question_type == 'open-textfield' %}
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-4">{{ q.text }}</label>
+                                                    <div class="col-md-6">
+                                                        <div class="inputer">
+                                                            <div class="input-wrapper">
+                                                                <textarea class="form-control" name="{{ q.slug }}" rows="3" placeholder="{{ q.input_placeholder|default_if_none:"" }}" {% if q.required %}required{% endif %}></textarea>
+                                                            </div>
+                                                            <p class="help-block">{{ q.footer|default_if_none:"" }}</p>
+                                                        </div>
+                                                    </div>
+                                                </div><!--.form-group-->
+
+                                            {% elif q.question_type == 'choice-multiple' %}
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-4">{{ q.text }}</label>
+                                                    <div class="col-md-6">
+                                                        <div class="inputer">
+                                                            <div class="input-wrapper-no-line">
+                                                                <div class="checkboxer">
+                                                                    <input type="checkbox" value="" id="check1">
+                                                                    <label for="check1">Option one is this</label>
+                                                                </div><!--.checkbox-->
+                                                                <div class="checkboxer">
+                                                                    <input type="checkbox" value="" id="check2">
+                                                                    <label for="check2">Option two</label>
+                                                                </div><!--.checkbox-->
+                                                            </div>
+                                                            <p class="help-block">{{ q.footer|default_if_none:"" }}</p>
+                                                        </div>
+                                                    </div>
+                                                </div><!--.form-group-->
+                                            {% elif q.question_type == 'range' %}
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-4">{{ q.text }}</label>
+                                                    <div class="col-md-6">
+                                                        <div class="inputer">
+                                                            <div class="input-wrapper-no-line">
+                                                                <div class="nouislider nouislider-step"></div>
+                                                                <p class="help-block">{{ q.footer|default_if_none:"" }}</p>
+                                                                <input name="{{ q.slug }}" class="form-control example-val nouislider-step-value" disabled>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div><!--.form-group-->
+                                            {% elif q.question_type == 'number' %}
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-4">{{ q.text }}</label>
+                                                    <div class="col-md-2">
+                                                        <div class="inputer">
+                                                            <div class="input-wrapper">
+                                                                <input type="number" name="{{ q.slug }}" class="form-control" placeholder="{{ q.input_placeholder|default_if_none:"" }}"
+                                                                       {% if q.required %}required{% endif %}>
+                                                            </div>
+                                                            <p class="help-block">{{ q.footer|default_if_none:"" }}</p>
+                                                        </div>
+                                                    </div>
+                                                </div><!--.form-group-->
+                                            {% elif q.question_type == 'comment' %}
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-4"><span class="fonticon ion-information-circled"></span></label>
+                                                    <div class="col-md-6">
+                                                        <div class="inputer">
+                                                            <div class="input-wrapper-no-line">
+                                                                {{ q.text }}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div><!--.form-group-->
+                                            {% elif q.question_type == '' %}
+                                            {% elif q.question_type == '' %}
+                                            {% endif %}
+                                        {% endfor %}
+									</div><!--.tab-pane-->
+                                    {% endfor %}
+								</div><!--.tab-content-->
+							</form>
+
+						</div><!--.panel-body-->
+						<div class="panel-footer">
+							<ul class="wizard clearfix">
+								<li class="bs-wizard-prev pull-left"><button class="btn btn-flat btn-default">Previous</button></li>
+								<li class="bs-wizard-next pull-right"><button class="btn btn-blue">Next</button></li>
+								<li class="bs-wizard-submit pull-right"><button type="submit" class="btn btn-blue">Complete setup</button></li>
+							</ul>
+						</div><!--.panel-foter-->
+				</div><!--.panel-->
+			</div><!--.col-md-12-->
+		</div><!--.row-->
+	</div><!--.content-->
+
+    {% include 'player_dashboard/navigation.html' %}
+{% endblock %}
+
+{% block extra_body %}
+    <!-- BEGIN PLUGINS AREA -->
+    <script src="{% static "plugins/nouislider/distribute/jquery.nouislider.all.min.js" %}"></script>
+    <script src="{% static "plugins/jquery-validation/dist/jquery.validate.min.js" %}"></script>
+    <script src="{% static "plugins/twitter-bootstrap-wizard/jquery.bootstrap.wizard.min.js" %}"></script>
+    <script src="{% static "plugins/bootstrap-switch/dist/js/bootstrap-switch.min.js" %}"></script>
+    <script src="{% static "plugins/switchery/dist/switchery.min.js" %}"></script>
+	<!-- END PLUGINS AREA -->
+
+	<!-- PLUGINS INITIALIZATION AND SETTINGS -->
+    <script src="{% static "js/forms-no-ui-slider.js" %}"></script>
+	<script src="{% static "js/forms-switch.js" %}"></script>
+	<script src="{% static "js/forms-switchery.js" %}"></script>
+    <script src="{% static "js/forms-wizard.js" %}"></script>
+    <!-- END PLUGINS INITIALIZATION AND SETTINGS -->
+
+    <!-- BEGIN INITIALIZATION-->
+    <script>
+    $(document).ready(function () {
+		Layout.init();
+		FormsWizard.init();
+        FormsSwitch.init();
+		FormsSwitchery.init();
+		FormsNoUISlider.init();
+		Pleasure.init();
+    });
+    </script>
+    <!-- END INITIALIZATION-->
+{% endblock %}

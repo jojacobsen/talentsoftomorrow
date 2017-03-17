@@ -75,7 +75,7 @@ class PlayerProfileSerializer(serializers.BaseSerializer):
             # Latest PHV is always the best
             phv_date = obj.phv_set.values_list('phv_date', flat=True).latest('date')
             phv_days = (phv_date - datetime.date.today()).days
-            growth_spurt_start = phv_date - datetime.timedelta(days=90)  # 3 Month before PHV
+            growth_spurt_start = phv_date - datetime.timedelta(days=270)  # 9 Month before PHV
             growth_position = 10 - phv_days / 365.25  # To display it in graph (10 is fixed value)
         except PHV.DoesNotExist:
             phv_date = None

@@ -713,7 +713,7 @@ span.twitter-typeahead {
   cursor: col-resize;
 }
 .example-val:before {
-  content: 'Value: ';
+  content: '';
 }
 .nouiToggle {
   height: 50px;

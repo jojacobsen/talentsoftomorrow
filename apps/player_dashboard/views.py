@@ -1,5 +1,6 @@
 from django.core.exceptions import ImproperlyConfigured
 from django.views import generic
+from .utils import get_questionnaire_list
 
 
 class DashboardView(generic.TemplateView):
@@ -25,5 +26,6 @@ class DashboardView(generic.TemplateView):
         context = super(DashboardView, self).get_context_data(**kwargs)
         if not self.request.user.is_authenticated():
             return {}
+        context['link_questionnaire'] = get_questionnaire_list(self.request.user)
         context['menu_item'] = 'index'
         return context

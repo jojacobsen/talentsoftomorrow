@@ -291,8 +291,8 @@ th {
 }
 @font-face {
   font-family: 'Glyphicons Halflings';
-  src: url('/fonts/glyphicons-halflings-regular.eot');
-  src: url('/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('/fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('/fonts/glyphicons-halflings-regular.woff') format('woff'), url('/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+  src: url('/static/fonts/glyphicons-halflings-regular.eot');
+  src: url('/static/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('/static/fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('/static/fonts/glyphicons-halflings-regular.woff') format('woff'), url('/static/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('/static/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
 }
 .glyphicon {
   position: relative;
@@ -6553,8 +6553,8 @@ button.close {
  * -------------------------- */
 @font-face {
   font-family: 'FontAwesome';
-  src: url('/fonts/fontawesome-webfont.eot?v=4.3.0');
-  src: url('/fonts/fontawesome-webfont.eot?#iefix&v=4.3.0') format('embedded-opentype'), url('/fonts/fontawesome-webfont.woff2?v=4.3.0') format('woff2'), url('/fonts/fontawesome-webfont.woff?v=4.3.0') format('woff'), url('/fonts/fontawesome-webfont.ttf?v=4.3.0') format('truetype'), url('/fonts/fontawesome-webfont.svg?v=4.3.0#fontawesomeregular') format('svg');
+  src: url('/static/fonts/fontawesome-webfont.eot?v=4.3.0');
+  src: url('/static/fonts/fontawesome-webfont.eot?#iefix&v=4.3.0') format('embedded-opentype'), url('/static/fonts/fontawesome-webfont.woff2?v=4.3.0') format('woff2'), url('/static/fonts/fontawesome-webfont.woff?v=4.3.0') format('woff'), url('/fonts/fontawesome-webfont.ttf?v=4.3.0') format('truetype'), url('/static/fonts/fontawesome-webfont.svg?v=4.3.0#fontawesomeregular') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -8358,8 +8358,8 @@ MIT License: https://github.com/driftyco/ionicons
 */
 @font-face {
   font-family: "Ionicons";
-  src: url("../../globals/plugins/ionicons/fonts/ionicons.eot?v=2.0.0");
-  src: url("../../globals/plugins/ionicons/fonts/ionicons.eot?v=2.0.0#iefix") format("embedded-opentype"), url("../../globals/plugins/ionicons/fonts/ionicons.ttf?v=2.0.0") format("truetype"), url("../../globals/plugins/ionicons/fonts/ionicons.woff?v=2.0.0") format("woff"), url("../../globals/plugins/ionicons/fonts/ionicons.svg?v=2.0.0#Ionicons") format("svg");
+  src: url("/static/fonts/ionicons.eot?v=2.0.0");
+  src: url("/static/fonts/ionicons.eot?v=2.0.0#iefix") format("embedded-opentype"), url("/static/fonts/ionicons.ttf?v=2.0.0") format("truetype"), url("/static/fonts/ionicons.woff?v=2.0.0") format("woff"), url("/static/fonts/ionicons.svg?v=2.0.0#Ionicons") format("svg");
   font-weight: normal;
   font-style: normal;
 }
