@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block head %}
+    <title>Dashboard</title>
+    <link href="{% static "css/sb-admin.css" %}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+
+    <div id="wrapper">
+
+       {% include 'player_dashboard/navigation.html' %}
+
+        <div id="page-wrapper">
+
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">
+                            <small>Questionnaires</small>
+                        </h1>
+                    </div>
+                </div>
+                <!-- /.row -->
+                {% for q in questionnaire_list %}
+                <div class="row">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-bookmark fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                        <div class="huge"></div>
+                                        <div>{{ q.name }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="{% url 'questionnaire:form' q.id %}">
+                                <div class="panel-footer">
+                                    <span class="pull-left">Start Questionnaire</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+{% endblock %}

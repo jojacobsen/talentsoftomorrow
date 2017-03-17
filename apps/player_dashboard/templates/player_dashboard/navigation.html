@@ -1,0 +1,39 @@
+    <div class="layer-container">
+
+		<!-- BEGIN MENU LAYER -->
+		<div class="menu-layer">
+			<ul>
+				<li {% if menu_item == 'index' %}data-open-after="true"{% endif %}>
+					<a href="{% url 'player_dashboard:dashboard' %}">Dashboard</a>
+				</li>
+				<li>
+					<a href="javascript:;">Questionnaire</a>
+					<ul class="child-menu">
+                        {% for lq in link_questionnaire %}
+						<li><a href="{% url 'questionnaire:wizard' lq.1 %}" {% if menu_item == lq.2 %}data-open-after="true"{% endif %}>{{ lq.0 }}</a></li>
+                        {% endfor %}
+					</ul>
+				</li>
+				<li>
+					<a href="javascript:;">Performance</a>
+					<ul class="child-menu">
+						<li><a href="/">See Latest *NOT FUNCTIONAL*</a></li>
+						<li><a href="/">Rankings *NOT FUNCTIONAL*</a></li>
+					</ul>
+				</li>
+				<li>
+					<a href="javascript:;">Inputs</a>
+					<ul class="child-menu">
+						<li><a href="/">Height *NOT FUNCTIONAL*</a></li>
+						<li><a href="/">Weight *NOT FUNCTIONAL*</a></li>
+						<li><a href="/">Parents Height *NOT FUNCTIONAL*</a></li>
+						<li><a href="/">Sitting Height *NOT FUNCTIONAL*</a></li>
+					</ul>
+				</li>
+                <li>
+					<a href="{% url 'player_dashboard:logout' %}">Logout</a>
+				</li>
+			</ul>
+		</div><!--.menu-layer-->
+		<!-- END OF MENU LAYER -->
+	</div><!--.layer-container-->
