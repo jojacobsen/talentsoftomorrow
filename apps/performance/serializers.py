@@ -114,10 +114,13 @@ class PerformancePlayerSerializer(serializers.BaseSerializer):
                 # Fallback benchmark is 50%
                 benchmark_bio.append(50.0)
                 benchmark_chrono.append(50.0)
-
-        # Calculate averages
-        p['benchmark_chrono_ave'] = sum(benchmark_chrono) / float(len(benchmark_chrono))
-        p['benchmark_bio_ave'] = sum(benchmark_bio) / float(len(benchmark_bio))
+        try:
+            # Calculate averages
+            p['benchmark_chrono_ave'] = sum(benchmark_chrono) / float(len(benchmark_chrono))
+            p['benchmark_bio_ave'] = sum(benchmark_bio) / float(len(benchmark_bio))
+        except ZeroDivisionError:
+            p['benchmark_chrono_ave'] = None
+            p['benchmark_bio_ave'] = None
         return p
 
 
@@ -177,10 +180,13 @@ class BenchmarkSerializer(serializers.BaseSerializer):
                 'bio_benchmark': bio_b,
                 'age_benchmark': chrono_b
             })
-
-        # Calculate averages
-        benchmark_chrono_ave = sum(benchmark_chrono) / float(len(benchmark_chrono))
-        benchmark_bio_ave = sum(benchmark_bio) / float(len(benchmark_bio))
+        try:
+            # Calculate averages
+            benchmark_chrono_ave = sum(benchmark_chrono) / float(len(benchmark_chrono))
+            benchmark_bio_ave = sum(benchmark_bio) / float(len(benchmark_bio))
+        except ZeroDivisionError:
+            benchmark_chrono_ave = None
+            benchmark_bio_ave = None
         return {
             'player': obj.id,
             'full_name': ' '.join([obj.first_name, obj.last_name]),

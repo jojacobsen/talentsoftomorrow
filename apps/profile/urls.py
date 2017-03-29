@@ -23,4 +23,12 @@ urlpatterns = [
         name='parents-height'),
     url(r'^sitting-height/(?P<pk>[0-9]+)/$', views.SittingHeightView.as_view(),
         name='sitting-height'),
+    url(r'^height/list/$', views.HeightListView.as_view(),
+        name='height-list'),
+    url(r'^weight/list/$', views.WeightListView.as_view(),
+        name='weight-list'),
+    url(r'^sitting-height/list/$', views.SittingHeightListView.as_view(),
+        name='sitting-height-list'),
+    url(r'^parents-height/list/$', views.ParentsHeightListView.as_view(),
+        name='parents-height-list'),
 ]
