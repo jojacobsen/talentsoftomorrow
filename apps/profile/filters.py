@@ -1,5 +1,5 @@
 from rest_framework import filters
-from .models import Height, Weight, ParentsHeight, SittingHeight
+from profile.models import Height, Weight, ParentsHeight, SittingHeight
 
 
 class HeightFilter(filters.FilterSet):
