@@ -6,6 +6,15 @@ from accounts.models import Player
 from analysis.models import KhamisRoche
 from genetics.models import DnaHeight
 from django.contrib.postgres.fields import JSONField
+from django.core.exceptions import ValidationError
+
+
+def valid_pct(value):
+    """
+    Validates if percentage value is between 0 and 100
+    """
+    if not 0 <= value <= 100:
+        raise ValidationError('%s is not between 0...100' % value)
 
 
 class Height(models.Model):
@@ -98,6 +107,16 @@ class SittingHeight(models.Model):
             return round(self.sitting_height.cm, 1), 'cm'
         elif measurement_system == 'Imp':
             return round(self.sitting_height.inch, 1), 'inch'
+
+
+class BodyFat(models.Model):
+    player = models.ForeignKey(Player, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
+    date = models.DateField()
+    body_fat = models.DecimalField(max_digits=4, decimal_places=1, validators=[valid_pct])
+
+    def __str__(self):
+        return self.player.user.username
 
 
 class PHV(models.Model):

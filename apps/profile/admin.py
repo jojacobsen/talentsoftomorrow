@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Height, Weight, PredictedHeight, ParentsHeight, BioAge, SittingHeight, PHV
+from .models import Height, Weight, PredictedHeight, ParentsHeight, BioAge, SittingHeight, PHV, BodyFat
 
 
 class HeightAdmin(admin.ModelAdmin):
@@ -29,6 +29,12 @@ class SittingHeightAdmin(admin.ModelAdmin):
 class ParentsHeightAdmin(admin.ModelAdmin):
     list_display = ['player', 'fathers_height', 'mothers_height', 'created']
     list_filter = ['player__club__name', 'created']
+    search_fields = ['player__user__username']
+
+
+class BodyFatAdmin(admin.ModelAdmin):
+    list_display = ['player', 'body_fat', 'date', 'created']
+    list_filter = ['player__club__name', 'date', 'created']
     search_fields = ['player__user__username']
 
 
@@ -96,3 +102,4 @@ admin.site.register(ParentsHeight, ParentsHeightAdmin)
 admin.site.register(BioAge, BioAgeAdmin)
 admin.site.register(SittingHeight, SittingHeightAdmin)
 admin.site.register(PHV, PHVAdmin)
+admin.site.register(BodyFat, BodyFatAdmin)
