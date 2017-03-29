@@ -1,6 +1,6 @@
 import datetime
 from rest_framework import serializers, exceptions
-from profile.models import Height, Weight, PredictedHeight, BioAge, ParentsHeight, SittingHeight, PHV
+from profile.models import Height, Weight, PredictedHeight, BioAge, ParentsHeight, SittingHeight, PHV, BodyFat
 from measurement.measures import Distance
 from measurement.measures import Weight as WeightMeasurement
 
@@ -22,7 +22,7 @@ class PlayerProfileSerializer(serializers.BaseSerializer):
             height_expired = None
             current_age = round((datetime.date.today() - obj.birthday).days / 365.25, 1)
 
-        # Get latest weight record
+        # Get latest weight, sitting height, body fat record
         try:
             weight = obj.weight_set.filter().latest('date')
             current_weight, weight_unit = weight.value_club_unit()
@@ -35,6 +35,11 @@ class PlayerProfileSerializer(serializers.BaseSerializer):
             sitting_height, height_unit = s_height.value_club_unit()
         except SittingHeight.DoesNotExist:
             sitting_height = None
+
+        try:
+            body_fat = obj.bodyfat_set.values_list('body_fat', flat=True).latest('date')
+        except BodyFat.DoesNotExist:
+            body_fat = None
 
         try:
             # DNA result always highest prio
@@ -123,6 +128,7 @@ class PlayerProfileSerializer(serializers.BaseSerializer):
             'phv_days': phv_days,
             'growth_spurt_start': growth_spurt_start,
             'growth_position': growth_position,
+            'body_fat': body_fat
         }
 
 
@@ -209,7 +215,7 @@ class WeightSerializer(serializers.ModelSerializer):
             else:
                 measurement_system = self.context['request'].user.coach.club.measurement_system
         elif 'Player' in group:
-            raise exceptions.PermissionDenied('Players can not post performance data.')
+            raise exceptions.PermissionDenied('Players can not post data.')
         else:
             raise exceptions.PermissionDenied('User group not selected.')
 
@@ -270,7 +276,7 @@ class ParentsHeightSerializer(serializers.ModelSerializer):
             else:
                 measurement_system = self.context['request'].user.coach.club.measurement_system
         elif 'Player' in group:
-            raise exceptions.PermissionDenied('Players can not post performance data.')
+            raise exceptions.PermissionDenied('Players can not post data.')
         else:
             raise exceptions.PermissionDenied('User group not selected.')
 
@@ -337,7 +343,7 @@ class SittingHeightSerializer(serializers.ModelSerializer):
             else:
                 measurement_system = self.context['request'].user.coach.club.measurement_system
         elif 'Player' in group:
-            raise exceptions.PermissionDenied('Players can not post performance data.')
+            raise exceptions.PermissionDenied('Players can not post data.')
         else:
             raise exceptions.PermissionDenied('User group not selected.')
 
@@ -374,3 +380,24 @@ class SittingHeightSerializer(serializers.ModelSerializer):
             'date': instance.date,
             'player': instance.player.id
         }
+
+
+class BodyFatSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = BodyFat
+        fields = '__all__'
+
+    def validate(self, data):
+        group = self.context['request'].user.groups.values_list('name', flat=True)
+        if 'Club' in group:
+            if data['player'].club != self.context['request'].user.club:
+                raise exceptions.PermissionDenied('Club has no permission to access performance data of player.')
+        elif 'Coach' in group:
+            if data['player'].club != self.context['request'].user.coach.club:
+                raise exceptions.PermissionDenied('Coach has no permission to access performance data of player.')
+        elif 'Player' in group:
+            raise exceptions.PermissionDenied('Players can not post data.')
+        else:
+            raise exceptions.PermissionDenied('User group not selected.')
+
+        return data

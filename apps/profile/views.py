@@ -1,7 +1,7 @@
 from accounts.models import Player
 from profile.models import SittingHeight, ParentsHeight, Weight, Height
 from profile.serializers import PlayerProfileSerializer, HeightSerializer, \
-    WeightSerializer, ParentsHeightSerializer, SittingHeightSerializer
+    WeightSerializer, ParentsHeightSerializer, SittingHeightSerializer, BodyFatSerializer
 from .filters import HeightFilter, WeightFilter, SittingHeightFilter, ParentsHeightFilter
 
 from rest_framework.permissions import IsAuthenticated
@@ -81,17 +81,15 @@ class SittingHeightCreateView(generics.CreateAPIView):
     # Parse JSON
     parser_classes = (JSONParser,)
 
-    def get_queryset(self):
-        pk = self.kwargs['pk']
-        group = self.request.user.groups.values_list('name', flat=True)
 
-        if 'Club' in group:
-            queryset = SittingHeight.objects.filter(pk=pk, player__club=self.request.user.club)
-        elif 'Coach' in group:
-            queryset = SittingHeight.objects.filter(pk=pk, player__club=self.request.user.coach.club)
-        else:
-            raise exceptions.PermissionDenied('User has no permission to access user data of player.')
-        return queryset
+class BodyFatCreateView(generics.CreateAPIView):
+    """
+    Creates Bodyfat object.
+    """
+    permission_classes = (IsAuthenticated,)
+    serializer_class = BodyFatSerializer
+    # Parse JSON
+    parser_classes = (JSONParser,)
 
 
 class HeightView(generics.RetrieveUpdateDestroyAPIView):
