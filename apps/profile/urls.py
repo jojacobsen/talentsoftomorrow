@@ -15,6 +15,8 @@ urlpatterns = [
         name='parents-height-create'),
     url(r'^sitting-height/create/$', views.SittingHeightCreateView.as_view(),
         name='sitting-height-create'),
+    url(r'^body-fat/create/$', views.BodyFatCreateView.as_view(),
+        name='body-fat-create'),
     url(r'^height/(?P<pk>[0-9]+)/$', views.HeightView.as_view(),
         name='height'),
     url(r'^weight/(?P<pk>[0-9]+)/$', views.WeightView.as_view(),
