@@ -186,6 +186,7 @@ class HeightSerializer(serializers.ModelSerializer):
         height = instance.value_club_unit()[0]
         unit = instance.value_club_unit()[1]
         return {
+            'id': instance.id,
             'height': height,
             'unit': unit,
             'date': instance.date,
@@ -247,6 +248,7 @@ class WeightSerializer(serializers.ModelSerializer):
         weight = instance.value_club_unit()[0]
         unit = instance.value_club_unit()[1]
         return {
+            'id': instance.id,
             'weight': weight,
             'unit': unit,
             'date': instance.date,
@@ -314,6 +316,7 @@ class ParentsHeightSerializer(serializers.ModelSerializer):
         mothers_height = instance.value_club_unit()[1]
         unit = instance.value_club_unit()[2]
         return {
+            'id': instance.id,
             'fathers_height': fathers_height,
             'mothers_height': mothers_height,
             'unit': unit,
@@ -375,6 +378,7 @@ class SittingHeightSerializer(serializers.ModelSerializer):
         sitting_height = instance.value_club_unit()[0]
         unit = instance.value_club_unit()[1]
         return {
+            'id': instance.id,
             'sitting_height': sitting_height,
             'unit': unit,
             'date': instance.date,
