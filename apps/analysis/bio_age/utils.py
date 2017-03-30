@@ -43,7 +43,9 @@ def create_bio_age(sender, instance, created):
 
     r = RscriptAnalysis()
     bio_age, slope = r.get_bio_age(prediction.predicted_height.cm, current_height.height.cm)
-
+    if not bio_age:
+        # Bio Age calculation was not returning any result
+        return False
     if created:
         # Creates a new bio age object
         BioAge.objects.create(player=instance.player,
