@@ -1,7 +1,7 @@
 import os
 from .base import *  # noqa
 
-ALLOWED_HOSTS = ['*.talentstomorrow.com']
+ALLOWED_HOSTS = ['*']
 JWT_AUTH['JWT_EXPIRATION_DELTA'] = datetime.timedelta(days=7)
 
 OPBEAT = {
