@@ -244,11 +244,6 @@ EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = False
 """
 
-OPBEAT = {
-    'ORGANIZATION_ID': 'fab3fd138af14d0e8f2b4ad7efcd22ce',
-    'APP_ID': '5ea801dc6e',
-    'SECRET_TOKEN': '6799043939c43b57c3721338afd5b808fb88ec0a',
-}
 
 CORS_ORIGIN_WHITELIST = (
     'https://app.talentstomorrow.com'
