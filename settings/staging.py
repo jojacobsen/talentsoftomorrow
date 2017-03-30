@@ -7,6 +7,17 @@ CORS_ORIGIN_ALLOW_ALL = True
 ALLOWED_HOSTS = ['*']
 AWS_STORAGE_BUCKET_NAME = 'static-files-asdf324fqsadkn1109fsadfbvmb64adf4af4142cknkj'
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'tot-db',
+        'USER': 'test',
+        'PASSWORD': 'test123',
+        'HOST': 'localhost',
+        'PORT': '5432'
+    }
+}
+
 DEBUG = True
 
 OPBEAT = {
