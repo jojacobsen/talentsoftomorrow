@@ -38,7 +38,7 @@ class Measurement(models.Model):
     data = JSONField(default=dict(), help_text="Arbitrary Json Field", blank=True)
 
     def __str__(self):
-        return self.name + ' in ' + self.unit.name
+        return self.slug_name + ' in ' + self.unit.name
 
 
 class Performance(models.Model):
