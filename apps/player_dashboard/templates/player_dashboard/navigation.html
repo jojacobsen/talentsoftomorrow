@@ -9,9 +9,9 @@
 				<li>
 					<a href="javascript:;">Questionnaire</a>
 					<ul class="child-menu">
-                        {% for lq in link_questionnaire %}
-						<li><a href="{% url 'questionnaire:wizard' lq.1 %}" {% if menu_item == lq.2 %}data-open-after="true"{% endif %}>{{ lq.0 }}</a></li>
-                        {% endfor %}
+            {% for lq in link_questionnaire %}
+							<li><a href="{% url 'questionnaire:wizard' lq.1 %}" {% if menu_item == lq.2 %}data-open-after="true"{% endif %}>{{ lq.0 }}</a></li>
+            {% endfor %}
 					</ul>
 				</li>
 				<li>

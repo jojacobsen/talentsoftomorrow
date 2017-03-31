@@ -1,0 +1,20 @@
+$brand-primary: #469648;
+$brand-success: $brand-primary;
+$brand-secondary:  #F5CB5C;
+$brand-danger: #bd1c2d;
+$brand-warning: $brand-secondary;
+$brand-info: #1e94e3;
+$brand-light: #CFDBD5;
+$brand-lighter: #E8EDDF;
+$brand-darker: #242423;
+$brand-dark: #333333;
+
+@import './pleasure.admin';
+@import './pleasure.elements';
+@import './partials/chrome';
+@import './partials/dashboard';
+
+.full-block {
+  display: inline-block;
+  width: 100%;
+}
