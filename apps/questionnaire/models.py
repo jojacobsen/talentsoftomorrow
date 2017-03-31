@@ -13,32 +13,6 @@ class Questionnaire(models.Model):
     language = models.CharField(max_length=2, default=settings.LANGUAGE_CODE,
                                 verbose_name=_('Language'), choices=settings.LANGUAGES)
 
-    def get_questionnaire(self):
-        s = self.section_set.filter()
-        sections = list()
-        for section in s:
-            q = section.question_set.filter()
-            questions = list()
-            for question in q:
-                questions.append({
-                    'id': question.id,
-                    'text': question.text,
-                    'type': question.question_type,
-                    'extra': question.extra,
-                    'footer': question.footer
-                })
-            sections.append({
-                'id': section.id,
-                'questions': questions,
-                'heading': section.heading,
-                'sort': section.sort
-            })
-        return {
-            'name': self.name,
-            'slug': self.slug,
-            'sections': sections
-        }
-
     def __str__(self):
         return self.name
 
@@ -92,8 +66,14 @@ class Choice(models.Model):
         return u'(%s) %d. %s' % (self.question.number, self.sortid, self.text)
 
 
-class Answer(models.Model):
-    question = models.ForeignKey(Question, help_text="The question that this is an answer to")
+class Submission(models.Model):
     player = models.ForeignKey(Player, help_text="The player who supplied this answer")
+    questionnaire = models.ForeignKey(Questionnaire, on_delete=models.CASCADE)
+    date = models.DateTimeField(auto_now_add=True)
+
+
+class Answer(models.Model):
+    submission = models.ForeignKey(Submission, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, help_text="The question that this is an answer to")
     answer = models.TextField(max_length=1000)
     date = models.DateTimeField(auto_now_add=True)
