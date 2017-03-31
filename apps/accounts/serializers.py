@@ -103,9 +103,11 @@ class CurrentPlayerSerializer(serializers.ModelSerializer):
 
 
 class NewPlayerSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(max_length=None, min_length=5, allow_blank=True, write_only=True)
+
     class Meta:
         model = Player
-        exclude = ('user', 'lab_key', 'club')
+        fields = ('birthday', 'first_name', 'last_name', 'gender', 'email', 'active', 'archived')
 
     def validate(self, data):
         group = self.context['request'].user.groups.values_list('name', flat=True)
@@ -126,10 +128,14 @@ class NewPlayerSerializer(serializers.ModelSerializer):
             validated_data['club'] = self.context['request'].user.club
         elif 'Coach' in group:
             validated_data['club'] = self.context['request'].user.coach.club
+        if validated_data['email']:
+            email = validated_data.pop('email')
+        else:
+            email = None
 
         # Create the user for the player
         username = create_username(last_name=validated_data['last_name'], first_name=validated_data['first_name'])
-        user = User.objects.create_user(username=username)
+        user = User.objects.create_user(username=username, email=email)
         # Add the group
         player_group = Group.objects.get(name='Player')
         user.groups.add(player_group)
