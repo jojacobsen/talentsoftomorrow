@@ -24,7 +24,7 @@
   width: 100%;
   display: inline-block;
 
-  &, &:visited {
+  &, &:visited, &:focus {
     color: #fff !important;
   }
 }
