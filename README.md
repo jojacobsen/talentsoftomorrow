@@ -30,7 +30,7 @@ $ source venv/bin/activate
 Install the required packages using the same versions with following command:
 
 ```
-$ pip install -r requirements.txt
+$ pip install -r requirements/development.txt
 ```
 
 This will help ensure consistency across installations, across deployments, and across developers.
@@ -61,7 +61,7 @@ $ python manage.py createsuperuser
 If the server is not running start it like so:
 
 ```
-$ python manage.py runserver --settings=talentsoftomorrow.settings_development
+$ python manage.py runserver --settings=settings.dev
 ```
 
 ## 4. Authentication
