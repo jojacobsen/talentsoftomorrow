@@ -103,7 +103,7 @@ class CurrentPlayerSerializer(serializers.ModelSerializer):
 
 
 class NewPlayerSerializer(serializers.ModelSerializer):
-    email = serializers.EmailField(max_length=None, min_length=5, allow_blank=True, write_only=True)
+    email = serializers.EmailField(max_length=None, min_length=5, allow_blank=True, write_only=True, required=False)
 
     class Meta:
         model = Player
@@ -128,7 +128,7 @@ class NewPlayerSerializer(serializers.ModelSerializer):
             validated_data['club'] = self.context['request'].user.club
         elif 'Coach' in group:
             validated_data['club'] = self.context['request'].user.coach.club
-        if validated_data['email']:
+        if validated_data.get('email'):
             email = validated_data.pop('email')
         else:
             email = None
