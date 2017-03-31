@@ -7,11 +7,23 @@
 					<a href="{% url 'player_dashboard:dashboard' %}">Dashboard</a>
 				</li>
 				<li>
-					<a href="javascript:;">Questionnaire</a>
+					<a href="javascript:;">DAIILY WELL BEING</a>
 					<ul class="child-menu">
-            {% for lq in link_questionnaire %}
+							<li>
+								<a href="#">
+									<i class="fa fa-line-chart fa-fw" aria-hidden="true"></i>
+									HISTORY
+								</a>
+								<a href="{% url 'questionnaire:wizard' 1 %}">
+									<i class="fa fa-plus-square-o fa-fw" aria-hidden="true"></i>
+									ENTER NEW
+								</a>
+
+							</li>
+
+<!--             {% for lq in link_questionnaire %}
 							<li><a href="{% url 'questionnaire:wizard' lq.1 %}" {% if menu_item == lq.2 %}data-open-after="true"{% endif %}>{{ lq.0 }}</a></li>
-            {% endfor %}
+            {% endfor %} -->
 					</ul>
 				</li>
 				<li>

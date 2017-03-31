@@ -35,13 +35,10 @@
 
 		<div class="row">
 			<div class="col-md-12">
-				<div class="panel bs-wizard bs-wizard-progress">
+				<div class="panel questionnaire bs-wizard bs-wizard-progress">
 						<div class="panel-heading">
 							<div class="panel-title">
-								<h4>{{ questionnaire.name }}</h4>
-								<div class="progress progress-striped active">
-									<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-								</div><!--.progress-->
+								<h2>{{ questionnaire.name }}</h2>
 							</div><!--.panel-title-->
 						</div><!--.panel-heading-->
 						<div class="panel-body">
@@ -153,7 +150,7 @@
                                             {% elif q.question_type == 'number' %}
                                                 <div class="form-group">
                                                     <label class="control-label col-md-4">{{ q.text }}</label>
-                                                    <div class="col-md-2">
+                                                    <div class="col-md-6">
                                                         <div class="inputer">
                                                             <div class="input-wrapper">
                                                                 <input type="number" name="{{ q.slug }}" class="form-control" placeholder="{{ q.input_placeholder|default_if_none:"" }}"
@@ -188,7 +185,7 @@
 							<ul class="wizard clearfix">
 								<li class="bs-wizard-prev pull-left"><button class="btn btn-flat btn-default">Previous</button></li>
 								<li class="bs-wizard-next pull-right"><button class="btn btn-blue">Next</button></li>
-								<li class="bs-wizard-submit pull-right"><button type="submit" class="btn btn-blue">Complete setup</button></li>
+								<li class="bs-wizard-submit pull-right"><button type="submit" class="btn btn-blue">Save</button></li>
 							</ul>
 						</div><!--.panel-foter-->
 				</div><!--.panel-->
