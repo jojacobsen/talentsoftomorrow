@@ -62,6 +62,20 @@
 								<div class="tab-content">
                                     {% for s in questionnaire.section_set.all|dictsort:"sort"  %}
 									<div class="tab-pane" id="tab{{ forloop.counter }}">
+
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4">Date</label>
+                                            <div class="col-md-6">
+                                                <div class="inputer">
+                                                    <div class="input-wrapper">
+                                                        <input type="text" name="birthday" class="js-datepicker form-control bootstrap-daterangepicker-basic valid active" value="{% now 'm/d/Y' %}">
+                                                    </div>
+                                                    <p class="help-block">Pick a date</p>
+                                                </div>
+                                            </div>
+                                        </div><!--.form-group-->
+
                                         {% for q in s.question_set.all|dictsort:"sort" %}
                                             {% if q.question_type == 'choice-yesno' %}
                                                 <div class="form-group">
@@ -147,8 +161,9 @@
                                                     <label class="control-label col-md-4">{{ q.text }}</label>
                                                     <div class="col-md-6">
                                                         <div class="inputer">
-                                                            <div class="input-wrapper-no-line">
+                                                            <div class="input-wrapper-no-line questionnaire-slider-wrapper">
                                                                 <div class="nouislider nouislider-step"></div>
+                                                                <ul class="questionnaire-slider-numbers"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li></ul>
                                                                 <p class="help-block">{{ q.footer|default_if_none:"" }}</p>
                                                                 <input name="{{ q.slug }}" class="form-control example-val nouislider-step-value" disabled>
                                                             </div>
@@ -213,6 +228,8 @@
     <script src="{% static "plugins/twitter-bootstrap-wizard/jquery.bootstrap.wizard.min.js" %}"></script>
     <script src="{% static "plugins/bootstrap-switch/dist/js/bootstrap-switch.min.js" %}"></script>
     <script src="{% static "plugins/switchery/dist/switchery.min.js" %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css" rel="stylesheet">
 	<!-- END PLUGINS AREA -->
 
 	<!-- PLUGINS INITIALIZATION AND SETTINGS -->
@@ -220,6 +237,7 @@
 	<script src="{% static "js/forms-switch.js" %}"></script>
 	<script src="{% static "js/forms-switchery.js" %}"></script>
     <script src="{% static "js/forms-wizard.js" %}"></script>
+    <script src="{% static "js/bs-datepicker.js" %}"></script>
     <!-- END PLUGINS INITIALIZATION AND SETTINGS -->
 
     <!-- BEGIN INITIALIZATION-->
@@ -231,6 +249,7 @@
 		FormsSwitchery.init();
 		FormsNoUISlider.init();
 		Pleasure.init();
+        BsDatepicker.init();
     });
     </script>
     <!-- END INITIALIZATION-->
