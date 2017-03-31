@@ -1,0 +1,30 @@
+.page-header {
+  background-color: $brand-darker;
+  border-bottom: 4px solid $brand-warning;
+}
+
+.overlay .logo {
+  bottom: 125px;
+  left: -80px;
+  letter-spacing: 4px;
+}
+
+/* ================ */
+/* === SIDE NAV === */
+/* ================ */
+
+.menu-layer {
+  li {
+    &.open {
+      background-color: $brand-secondary;
+    }
+
+    a:hover {
+      background-color: $brand-secondary;
+    }
+
+    .hover-bg {
+      background-color: $brand-darker;
+    }
+  }
+}

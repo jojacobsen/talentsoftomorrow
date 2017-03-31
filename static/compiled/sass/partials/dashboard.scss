@@ -1,0 +1,21 @@
+.dashboard-card-1:before {
+  background-image: url('../img/bg-3.jpg');
+}
+
+
+.dashboard-history-link {
+  font-size: 14px;
+  text-align: center;
+  width: 100%;
+
+  a {
+    display: inline-block;
+    border-bottom: 1px solid gray;
+    padding: 10px 0 0px;
+    color: gray;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
