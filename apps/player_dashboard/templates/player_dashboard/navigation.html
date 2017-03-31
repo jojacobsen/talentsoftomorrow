@@ -7,42 +7,39 @@
 					<a href="{% url 'player_dashboard:dashboard' %}">Dashboard</a>
 				</li>
 				<li>
-					<a href="javascript:;">DAIILY WELL BEING</a>
-					<ul class="child-menu">
-							<li>
-								<a href="#">
-									<i class="fa fa-line-chart fa-fw" aria-hidden="true"></i>
-									HISTORY
-								</a>
-								<a href="{% url 'questionnaire:wizard' 1 %}">
-									<i class="fa fa-plus-square-o fa-fw" aria-hidden="true"></i>
-									ENTER NEW
-								</a>
+					<a href="javascript:;">Training sessions</a>
 
-							</li>
+					<ul class="child-menu">
+						<li>
+							<a href="{% url 'questionnaire:wizard' 'training-session' %}">
+								Enter training session
+							</a>
+						</li>
+						<li>
+							<a href="{% url 'questionnaire:history' 'training-session' %}">
+								View history
+							</a>
+						</li>
+					</ul>
+				</li>
 
-<!--             {% for lq in link_questionnaire %}
-							<li><a href="{% url 'questionnaire:wizard' lq.1 %}" {% if menu_item == lq.2 %}data-open-after="true"{% endif %}>{{ lq.0 }}</a></li>
-            {% endfor %} -->
-					</ul>
-				</li>
 				<li>
-					<a href="javascript:;">Performance</a>
+					<a href="javascript:;">Daily wellbeing</a>
+
 					<ul class="child-menu">
-						<li><a href="/">See Latest *NOT FUNCTIONAL*</a></li>
-						<li><a href="/">Rankings *NOT FUNCTIONAL*</a></li>
+						<li>
+							<a href="{% url 'questionnaire:wizard' 'training-session' %}">
+								Enter daily wellbeing
+							</a>
+						</li>
+						<li>
+							<a href="{% url 'questionnaire:history' 'training-session' %}">
+								View history
+							</a>
+						</li>
 					</ul>
 				</li>
-				<li>
-					<a href="javascript:;">Inputs</a>
-					<ul class="child-menu">
-						<li><a href="/">Height *NOT FUNCTIONAL*</a></li>
-						<li><a href="/">Weight *NOT FUNCTIONAL*</a></li>
-						<li><a href="/">Parents Height *NOT FUNCTIONAL*</a></li>
-						<li><a href="/">Sitting Height *NOT FUNCTIONAL*</a></li>
-					</ul>
-				</li>
-                <li>
+        <li>
 					<a href="{% url 'player_dashboard:logout' %}">Logout</a>
 				</li>
 			</ul>

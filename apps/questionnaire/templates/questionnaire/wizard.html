@@ -24,11 +24,18 @@
 					<h1>{{ questionnaire.name }} <small>{{ questionnaire.short_description }}</small></h1>
 				</div><!--.col-->
 				<div class="col-sm-6">
-					<ol class="breadcrumb">
-						<li><a href="{% url 'player_dashboard:dashboard' %}"><i class="ion-home"></i></a></li>
-						<li><a href="#">Questionnaires</a></li>
-						<li><a href="#" class="active">{{ questionnaire.name }}</a></li>
-					</ol>
+
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="{% url 'player_dashboard:dashboard' %}">
+                                <i class="ion-home"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="active">
+                            <i class="ion-home"></i> {{ questionnaire.name }}</a>
+                        </li>
+                    </ol>
 				</div><!--.col-->
 			</div><!--.row-->
 		</div><!--.page-header-->
@@ -185,7 +192,9 @@
 							<ul class="wizard clearfix">
 								<li class="bs-wizard-prev pull-left"><button class="btn btn-flat btn-default">Previous</button></li>
 								<li class="bs-wizard-next pull-right"><button class="btn btn-blue">Next</button></li>
-								<li class="bs-wizard-submit pull-right"><button type="submit" class="btn btn-blue">Save</button></li>
+								<li class="bs-wizard-submit pull-right">
+                                    <button type="submit" class="btn btn-success btn-lg">SAVE</button>
+                                </li>
 							</ul>
 						</div><!--.panel-foter-->
 				</div><!--.panel-->

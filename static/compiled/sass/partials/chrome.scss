@@ -16,11 +16,21 @@
 .menu-layer {
   li {
     &.open {
-      background-color: $brand-secondary;
+      background-color: $gray-darker;
+
     }
 
-    a:hover {
-      background-color: $brand-secondary;
+    &:before {
+      color: #fff;
+    }
+
+    a {
+      color: #fff !important;
+
+      &:hover {
+        background-color: $brand-secondary;
+        color: $gray-darker !important;
+      }
     }
 
     .hover-bg {

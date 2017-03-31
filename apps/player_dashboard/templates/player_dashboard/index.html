@@ -29,12 +29,14 @@
         <p class="text-grey">
           Track your training sessions, to bla bla lorem ipsum
         </p>
-        <button type="button" class="btn btn-lg btn-success btn-ripple full-block">
+
+        <a href="{% url 'questionnaire:wizard' 'training-session' %}"
+          class="btn btn-lg btn-success btn-ripple dashboard-btn">
           Enter training session
-        </button>
+        </a>
 
         <div class="dashboard-history-link">
-          <a href="#">
+          <a href="{% url 'questionnaire:history' 'training-session' %}">
             View history
           </a>
         </div>

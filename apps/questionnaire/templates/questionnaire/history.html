@@ -10,54 +10,56 @@
 
 {% block body %}
 
-    <div id="wrapper">
+    {% include 'player_dashboard/sidebar.html' %}
 
-       {% include 'player_dashboard/sidebar.html' %}
+    <div class="content">
+        <div class="page-header full-content">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h1>History <small>Questionnaire name</small></h1>
+                </div><!--.col-->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="{% url 'player_dashboard:dashboard' %}">
+                                <i class="ion-home"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="active">
+                                <i class="ion-stats-bars"></i> History
+                            </a>
+                        </li>
+                    </ol>
+                </div><!--.col-->
+            </div><!--.row-->
+        </div><!--.page-header-->
 
-        <div id="page-wrapper">
-
-            <div class="container-fluid">
-
-                <!-- Page Heading -->
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h1 class="page-header">
-                            <small>History</small>
-                        </h1>
-                    </div>
-                </div>
-                <!-- /.row -->
-                {% for s in submission_list %}
-                <div class="row">
-                    <div class="col-lg-3 col-md-6">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">
-                                <div class="row">
-                                    <div class="col-xs-3">
-                                        <i class="fa fa-bookmark fa-5x"></i>
-                                    </div>
-                                    <div class="col-xs-9 text-right">
-                                        <div class="huge"></div>
-                                        <div>{{ s.date }}</div>
-                                        {% for a in s.answer_set.all %}
-                                            {{ a.question.text }}
-                                            {{ a.answer }}
-                                        {% endfor %}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-
+        {% if submission_list %}
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            {% for a in submission_list.0.answer_set.all %}
+                                <th>{{ a.question.text  }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for s in submission_list %}
+                            <tr>
+                                <td>{{ s.date }}</td>
+                                {% for a in s.answer_set.all %}
+                                    <td>{{ a.answer }}</td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
-            <!-- /.container-fluid -->
-
-        </div>
-        <!-- /#page-wrapper -->
-
+        {% endif %}
     </div>
-    <!-- /#wrapper -->
 
     {% include 'player_dashboard/navigation.html' %}
 {% endblock %}

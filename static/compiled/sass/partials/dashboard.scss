@@ -19,3 +19,12 @@
     }
   }
 }
+
+.dashboard-btn {
+  width: 100%;
+  display: inline-block;
+
+  &, &:visited {
+    color: #fff !important;
+  }
+}
