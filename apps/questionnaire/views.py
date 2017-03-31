@@ -48,3 +48,10 @@ class SubmissionView(generic.ListView):
             return Submission.objects.filter(player=self.request.user.player, questionnaire__slug=slug)
         else:
             raise PermissionDenied('User has no permission to access user data of player.')
+
+    def get_context_data(self, **kwargs):
+        slug = self.kwargs['slug']
+        context = super(SubmissionView, self).get_context_data(**kwargs)
+        context['questionnaire'] = Questionnaire.objects.get(slug=slug)
+        context['menu_item'] = slug + '-history'
+        return context
