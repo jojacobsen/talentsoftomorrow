@@ -37,7 +37,11 @@
 
         {% if submission_list %}
             <div class="table-responsive">
-                <table class="table table-striped">
+                <div id="history-container"></div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-striped history-table">
                     <thead>
                         <tr>
                             <th>Date</th>
@@ -66,16 +70,37 @@
 
 {% block extra_body %}
     <!-- BEGIN PLUGINS AREA -->
+        <script src="{% static "bower_components/highcharts/highcharts.src.js" %}"></script>
 	<!-- END PLUGINS AREA -->
 
 	<!-- PLUGINS INITIALIZATION AND SETTINGS -->
+        <script src="{% static "js/history.highcharts.js" %}"></script>
     <!-- END PLUGINS INITIALIZATION AND SETTINGS -->
 
     <!-- BEGIN INITIALIZATION-->
     <script>
     $(document).ready(function () {
+        window.chartTitle = "{{ questionnaire.name }} history";
+        window.chartLabels = ["Date"]
+        window.chartData = []
+
+        {% for a in submission_list.0.answer_set.all %}
+            window.chartLabels.push("{{ a.question.text }}");
+        {% endfor %}
+
+        {% for s in submission_list %}
+            var dataRow = ["{{ s.date }}"];
+
+            {% for a in s.answer_set.all %}
+                dataRow.push("{{ a.answer }}");
+            {% endfor %}
+
+            window.chartData.push(dataRow);
+        {% endfor %}
+
 		Layout.init();
 		Pleasure.init();
+        HighchartsConfig.init();
     });
     </script>
     <!-- END INITIALIZATION-->
