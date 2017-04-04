@@ -20,7 +20,7 @@ def create_benchmark(sender, instance, created):
     try:
         # Get newest BioAge (but should be same date or in a time range of 183 days as performance date)
         bio_age = instance.player.bioage_set.filter(
-            current_height__date__lte=performance.date + datetime.timedelta(days=183)
+            current_height__date__lte=(performance.date + datetime.timedelta(days=183))
         ).latest('created')
         bio_age_date = bio_age.current_height.date
     except BioAge.DoesNotExist:
