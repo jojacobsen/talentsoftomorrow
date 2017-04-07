@@ -9,5 +9,7 @@ urlpatterns = [
     url(r'^(?P<slug>[-\w]+)/$', views.QuestionnaireFormView.as_view(),
         name='wizard'),
     url(r'^history/(?P<slug>[-\w]+)/$', views.SubmissionView.as_view(),
-        name='history')
+        name='history'),
+    url(r'^submit/(?P<slug>[-\w]+)/$', views.SubmissionCreateView.as_view(),
+        name='submit')
 ]

@@ -32,15 +32,15 @@ class Question(models.Model):
     sort = models.IntegerField()
     slug = models.SlugField(max_length=100, unique=True)
     TYPE_CHOICES = (
-        ('choice-yesno', _('Choice: Yes or No')),
-        ('choice-yesnocomment', _('Choice & Comment: Yes or No with a chance to comment on the answer')),
+        #('choice-yesno', _('Choice: Yes or No')),
+        #('choice-yesnocomment', _('Choice & Comment: Yes or No with a chance to comment on the answer')),
         ('open', _('Open: A simple one line input box')),
         ('open-textfield', _('Textfield: A box for lengthy answers')),
-        ('choice', _('Choice: A list of choices to choose from')),
-        ('choice-freeform', _('Choice & Free Form: A list of choices with a chance to enter something else')),
-        ('choice-multiple', _('Multiple Choice: A list of choices with multiple answers')),
-        ('choice-multiple-freeform', _('Multiple Choice & Free Form: '
-                                       'Multiple Answers with multiple user defined answers')),
+        #('choice', _('Choice: A list of choices to choose from')),
+        #('choice-freeform', _('Choice & Free Form: A list of choices with a chance to enter something else')),
+        #('choice-multiple', _('Multiple Choice: A list of choices with multiple answers')),
+        #('choice-multiple-freeform', _('Multiple Choice & Free Form: '
+        #                               'Multiple Answers with multiple user defined answers')),
         ('range', _('Range: A range of options from which can be chosen')),
         ('number', _('Number: A number')),
         ('comment', _('Comment: Not a question, but only a comment displayed to the user')),
@@ -69,11 +69,19 @@ class Choice(models.Model):
 class Submission(models.Model):
     player = models.ForeignKey(Player, help_text="The player who supplied this answer")
     questionnaire = models.ForeignKey(Questionnaire, on_delete=models.CASCADE)
-    date = models.DateTimeField(auto_now_add=True)
+    date = models.DateTimeField()
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return ' on '.join([self.player.user.username, str(self.date)])
 
 
 class Answer(models.Model):
     submission = models.ForeignKey(Submission, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, help_text="The question that this is an answer to")
     answer = models.TextField(max_length=1000)
-    date = models.DateTimeField(auto_now_add=True)
+    date = models.DateTimeField()
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return ' on '.join([self.question.text, str(self.date)])

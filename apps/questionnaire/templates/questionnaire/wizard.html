@@ -51,7 +51,7 @@
 						</div><!--.panel-heading-->
 						<div class="panel-body">
 
-							<form id="form1" method="post" action="#" class="form-horizontal">
+							<form id="form1" method="post" action="{% url 'questionnaire:submit' questionnaire.slug %}" class="form-horizontal">{% csrf_token %}
 
 								<ul class="hide">
                                     {% for s in questionnaire.section_set.all|dictsort:"sort"  %}
@@ -71,7 +71,7 @@
                                                     <div class="input-wrapper">
                                                         <input
                                                             type="text"
-                                                            name="birthday"
+                                                            name="date"
                                                             class="js-datepicker form-control bootstrap-daterangepicker-basic valid active"
                                                             value="{% now 'd/m/Y' %}">
                                                     </div>
@@ -169,7 +169,7 @@
                                                                 <div class="nouislider nouislider-step"></div>
                                                                 <ul class="questionnaire-slider-numbers"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li></ul>
                                                                 <p class="help-block">{{ q.footer|default_if_none:"" }}</p>
-                                                                <input name="{{ q.slug }}" class="form-control example-val nouislider-step-value" disabled>
+                                                                <input value="5" name="{{ q.slug }}" class="form-control example-val nouislider-step-value">
                                                             </div>
                                                         </div>
                                                     </div>
