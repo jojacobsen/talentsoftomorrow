@@ -1,11 +1,17 @@
-from django.views import generic
-from django.core.exceptions import PermissionDenied
 
 from questionnaire.models import Questionnaire, Submission, Question
-from player_dashboard.utils import get_questionnaire_list
 from .forms import SubmissionCreateForm
+from .filters import SubmissionFilter
+from .serializers import SubmissionSerializer, QuestionnaireSerializer
+
 from django.shortcuts import redirect
 from django.contrib import messages
+from django.views import generic
+from django.core.exceptions import PermissionDenied
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.parsers import JSONParser
+from rest_framework import generics, exceptions
+from rest_framework import filters
 
 
 class QuestionnaireFormView(generic.DetailView):
@@ -14,7 +20,6 @@ class QuestionnaireFormView(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(QuestionnaireFormView, self).get_context_data(**kwargs)
-        context['link_questionnaire'] = get_questionnaire_list(self.request.user)
         context['menu_item'] = kwargs['object'].slug
         return context
 
@@ -75,3 +80,47 @@ class SubmissionCreateView(generic.base.View):
             messages.add_message(request, messages.INFO, 'Your Questionnaire has been saved!')
             return redirect('questionnaire:history', slug=slug)
         return redirect('questionnaire:wizard', slug=slug)
+
+
+class SubmissionListView(generics.ListAPIView):
+    """
+    List all Submissions of players in club.
+    """
+    permission_classes = (IsAuthenticated,)
+    serializer_class = SubmissionSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    filter_class = SubmissionFilter
+    # Parse JSON
+    parser_classes = (JSONParser,)
+
+    def get_queryset(self):
+        group = self.request.user.groups.values_list('name', flat=True)
+
+        if 'Club' in group:
+            queryset = Submission.objects.filter(player__club=self.request.user.club).order_by('-created')
+        elif 'Coach' in group:
+            queryset = Submission.objects.filter(player__club=self.request.user.coach.club).order_by('-created')
+        else:
+            raise exceptions.PermissionDenied('User has no permission to access user data of player.')
+        return queryset
+
+
+class QuestionnaireListView(generics.ListAPIView):
+    """
+    List all Questionnaires in a club.
+    """
+    permission_classes = (IsAuthenticated,)
+    serializer_class = QuestionnaireSerializer
+    # Parse JSON
+    parser_classes = (JSONParser,)
+
+    def get_queryset(self):
+        group = self.request.user.groups.values_list('name', flat=True)
+
+        if 'Club' in group:
+            queryset = Questionnaire.objects.filter(club=self.request.user.club).order_by('name')
+        elif 'Coach' in group:
+            queryset = Questionnaire.objects.filter(club=self.request.user.coach.club).order_by('name')
+        else:
+            raise exceptions.PermissionDenied('User has no permission to access user data of player.')
+        return queryset

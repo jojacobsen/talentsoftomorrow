@@ -2,14 +2,15 @@ from questionnaire.models import Questionnaire, Answer, Submission
 from django.core.exceptions import PermissionDenied
 import datetime
 
-def get_questionnaire_list(user):
+
+def get_questionnaire_list(player):
     group = user.groups.values_list('name', flat=True)
     if 'Club' in group:
-        return Questionnaire.objects.filter(club=user.club).values_list('name', 'id', 'slug')
+        return Questionnaire.objects.filter(club=player.user.club).values_list('name', 'id', 'slug')
     elif 'Coach' in group:
-        return Questionnaire.objects.filter(club=user.coach.club).values_list('name', 'id', 'slug')
+        return Questionnaire.objects.filter(club=player.user.coach.club).values_list('name', 'id', 'slug')
     elif 'Player' in group:
-        return Questionnaire.objects.filter(club=user.player.club).values_list('name', 'id', 'slug')
+        return Questionnaire.objects.filter(club=player.user.player.club).values_list('name', 'id', 'slug')
     else:
         raise PermissionDenied('User has no permission to access user data of player.')
 
