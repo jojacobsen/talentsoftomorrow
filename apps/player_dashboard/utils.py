@@ -4,7 +4,7 @@ import datetime
 
 
 def get_questionnaire_list(player):
-    group = user.groups.values_list('name', flat=True)
+    group = player.user.groups.values_list('name', flat=True)
     if 'Club' in group:
         return Questionnaire.objects.filter(club=player.user.club).values_list('name', 'id', 'slug')
     elif 'Coach' in group:
