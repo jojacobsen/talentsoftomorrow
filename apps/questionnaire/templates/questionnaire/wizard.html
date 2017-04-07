@@ -24,29 +24,34 @@
 					<h1>{{ questionnaire.name }} <small>{{ questionnaire.short_description }}</small></h1>
 				</div><!--.col-->
 				<div class="col-sm-6">
-					<ol class="breadcrumb">
-						<li><a href="{% url 'player_dashboard:dashboard' %}"><i class="ion-home"></i></a></li>
-						<li><a href="#">Questionnaires</a></li>
-						<li><a href="#" class="active">{{ questionnaire.name }}</a></li>
-					</ol>
+
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="{% url 'player_dashboard:dashboard' %}">
+                                <i class="ion-home"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="active">
+                                {{ questionnaire.name }}
+                            </a>
+                        </li>
+                    </ol>
 				</div><!--.col-->
 			</div><!--.row-->
 		</div><!--.page-header-->
 
 		<div class="row">
 			<div class="col-md-12">
-				<div class="panel bs-wizard bs-wizard-progress">
+				<div class="panel questionnaire bs-wizard bs-wizard-progress">
 						<div class="panel-heading">
 							<div class="panel-title">
-								<h4>{{ questionnaire.name }}</h4>
-								<div class="progress progress-striped active">
-									<div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-								</div><!--.progress-->
+								<h2>{{ questionnaire.name }}</h2>
 							</div><!--.panel-title-->
 						</div><!--.panel-heading-->
 						<div class="panel-body">
 
-							<form id="form1" method="post" action="#" class="form-horizontal">
+							<form id="form1" method="post" action="{% url 'questionnaire:submit' questionnaire.slug %}" class="form-horizontal">{% csrf_token %}
 
 								<ul class="hide">
                                     {% for s in questionnaire.section_set.all|dictsort:"sort"  %}
@@ -57,6 +62,24 @@
 								<div class="tab-content">
                                     {% for s in questionnaire.section_set.all|dictsort:"sort"  %}
 									<div class="tab-pane" id="tab{{ forloop.counter }}">
+
+
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4">Date</label>
+                                            <div class="col-md-6">
+                                                <div class="inputer">
+                                                    <div class="input-wrapper">
+                                                        <input
+                                                            type="text"
+                                                            name="date"
+                                                            class="js-datepicker form-control bootstrap-daterangepicker-basic valid active"
+                                                            value="{% now 'd/m/Y' %}">
+                                                    </div>
+                                                    <p class="help-block">Pick a date</p>
+                                                </div>
+                                            </div>
+                                        </div><!--.form-group-->
+
                                         {% for q in s.question_set.all|dictsort:"sort" %}
                                             {% if q.question_type == 'choice-yesno' %}
                                                 <div class="form-group">
@@ -142,10 +165,11 @@
                                                     <label class="control-label col-md-4">{{ q.text }}</label>
                                                     <div class="col-md-6">
                                                         <div class="inputer">
-                                                            <div class="input-wrapper-no-line">
+                                                            <div class="input-wrapper-no-line js-slider-wrapper questionnaire-slider-wrapper">
                                                                 <div class="nouislider nouislider-step"></div>
+                                                                <ul class="questionnaire-slider-numbers"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li></ul>
                                                                 <p class="help-block">{{ q.footer|default_if_none:"" }}</p>
-                                                                <input name="{{ q.slug }}" class="form-control example-val nouislider-step-value" disabled>
+                                                                <input value="5" name="{{ q.slug }}" class="form-control example-val nouislider-step-value">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -153,7 +177,7 @@
                                             {% elif q.question_type == 'number' %}
                                                 <div class="form-group">
                                                     <label class="control-label col-md-4">{{ q.text }}</label>
-                                                    <div class="col-md-2">
+                                                    <div class="col-md-6">
                                                         <div class="inputer">
                                                             <div class="input-wrapper">
                                                                 <input type="number" name="{{ q.slug }}" class="form-control" placeholder="{{ q.input_placeholder|default_if_none:"" }}"
@@ -181,16 +205,19 @@
 									</div><!--.tab-pane-->
                                     {% endfor %}
 								</div><!--.tab-content-->
+
+                                <div class="panel-footer">
+                                    <ul class="wizard clearfix">
+                                        <li class="bs-wizard-prev pull-left"><button class="btn btn-flat btn-default">Previous</button></li>
+                                        <li class="bs-wizard-next pull-right"><button class="btn btn-blue">Next</button></li>
+                                        <li class="bs-wizard-submit pull-right">
+                                            <button type="submit" class="btn btn-success btn-lg">SAVE</button>
+                                        </li>
+                                    </ul>
+                                </div><!--.panel-foter-->
 							</form>
 
 						</div><!--.panel-body-->
-						<div class="panel-footer">
-							<ul class="wizard clearfix">
-								<li class="bs-wizard-prev pull-left"><button class="btn btn-flat btn-default">Previous</button></li>
-								<li class="bs-wizard-next pull-right"><button class="btn btn-blue">Next</button></li>
-								<li class="bs-wizard-submit pull-right"><button type="submit" class="btn btn-blue">Complete setup</button></li>
-							</ul>
-						</div><!--.panel-foter-->
 				</div><!--.panel-->
 			</div><!--.col-md-12-->
 		</div><!--.row-->
@@ -206,6 +233,8 @@
     <script src="{% static "plugins/twitter-bootstrap-wizard/jquery.bootstrap.wizard.min.js" %}"></script>
     <script src="{% static "plugins/bootstrap-switch/dist/js/bootstrap-switch.min.js" %}"></script>
     <script src="{% static "plugins/switchery/dist/switchery.min.js" %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css" rel="stylesheet">
 	<!-- END PLUGINS AREA -->
 
 	<!-- PLUGINS INITIALIZATION AND SETTINGS -->
@@ -213,6 +242,7 @@
 	<script src="{% static "js/forms-switch.js" %}"></script>
 	<script src="{% static "js/forms-switchery.js" %}"></script>
     <script src="{% static "js/forms-wizard.js" %}"></script>
+    <script src="{% static "js/bs-datepicker.js" %}"></script>
     <!-- END PLUGINS INITIALIZATION AND SETTINGS -->
 
     <!-- BEGIN INITIALIZATION-->
@@ -224,6 +254,7 @@
 		FormsSwitchery.init();
 		FormsNoUISlider.init();
 		Pleasure.init();
+        BsDatepicker.init();
     });
     </script>
     <!-- END INITIALIZATION-->

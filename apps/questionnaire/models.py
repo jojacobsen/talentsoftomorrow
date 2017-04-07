@@ -13,32 +13,6 @@ class Questionnaire(models.Model):
     language = models.CharField(max_length=2, default=settings.LANGUAGE_CODE,
                                 verbose_name=_('Language'), choices=settings.LANGUAGES)
 
-    def get_questionnaire(self):
-        s = self.section_set.filter()
-        sections = list()
-        for section in s:
-            q = section.question_set.filter()
-            questions = list()
-            for question in q:
-                questions.append({
-                    'id': question.id,
-                    'text': question.text,
-                    'type': question.question_type,
-                    'extra': question.extra,
-                    'footer': question.footer
-                })
-            sections.append({
-                'id': section.id,
-                'questions': questions,
-                'heading': section.heading,
-                'sort': section.sort
-            })
-        return {
-            'name': self.name,
-            'slug': self.slug,
-            'sections': sections
-        }
-
     def __str__(self):
         return self.name
 
@@ -58,15 +32,15 @@ class Question(models.Model):
     sort = models.IntegerField()
     slug = models.SlugField(max_length=100, unique=True)
     TYPE_CHOICES = (
-        ('choice-yesno', _('Choice: Yes or No')),
-        ('choice-yesnocomment', _('Choice & Comment: Yes or No with a chance to comment on the answer')),
+        #('choice-yesno', _('Choice: Yes or No')),
+        #('choice-yesnocomment', _('Choice & Comment: Yes or No with a chance to comment on the answer')),
         ('open', _('Open: A simple one line input box')),
         ('open-textfield', _('Textfield: A box for lengthy answers')),
-        ('choice', _('Choice: A list of choices to choose from')),
-        ('choice-freeform', _('Choice & Free Form: A list of choices with a chance to enter something else')),
-        ('choice-multiple', _('Multiple Choice: A list of choices with multiple answers')),
-        ('choice-multiple-freeform', _('Multiple Choice & Free Form: '
-                                       'Multiple Answers with multiple user defined answers')),
+        #('choice', _('Choice: A list of choices to choose from')),
+        #('choice-freeform', _('Choice & Free Form: A list of choices with a chance to enter something else')),
+        #('choice-multiple', _('Multiple Choice: A list of choices with multiple answers')),
+        #('choice-multiple-freeform', _('Multiple Choice & Free Form: '
+        #                               'Multiple Answers with multiple user defined answers')),
         ('range', _('Range: A range of options from which can be chosen')),
         ('number', _('Number: A number')),
         ('comment', _('Comment: Not a question, but only a comment displayed to the user')),
@@ -92,8 +66,22 @@ class Choice(models.Model):
         return u'(%s) %d. %s' % (self.question.number, self.sortid, self.text)
 
 
-class Answer(models.Model):
-    question = models.ForeignKey(Question, help_text="The question that this is an answer to")
+class Submission(models.Model):
     player = models.ForeignKey(Player, help_text="The player who supplied this answer")
+    questionnaire = models.ForeignKey(Questionnaire, on_delete=models.CASCADE)
+    date = models.DateTimeField()
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return ' on '.join([self.player.user.username, str(self.date)])
+
+
+class Answer(models.Model):
+    submission = models.ForeignKey(Submission, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, help_text="The question that this is an answer to")
     answer = models.TextField(max_length=1000)
-    date = models.DateTimeField(auto_now_add=True)
+    date = models.DateTimeField()
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return ' on '.join([self.question.text, str(self.date)])
