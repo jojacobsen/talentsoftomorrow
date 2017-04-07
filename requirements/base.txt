@@ -7,7 +7,7 @@ celery==3.1.20
 certifi==2016.9.26
 cffi==1.6.0
 coverage==4.3.1
-Django==1.10.5
+Django==1.11
 django-appconf==1.0.2
 https://github.com/celery/django-celery/archive/v3.2.0.tar.gz
 django-cleanup==0.4.2
@@ -17,7 +17,7 @@ django-encrypted-fields==1.1.2
 django-environ==0.4.1
 django-extensions==1.7.5
 django-fernet-fields==0.4
-django-filter==1.0.1
+django-filter==1.0.2
 django-measurement==2.4.0
 django-modeltranslation==0.12
 django-storages==1.5.1
