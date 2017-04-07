@@ -13,7 +13,7 @@
 
     {% include 'player_dashboard/sidebar.html' %}
 
-    <div class="content history-{ questionnaire.slug }}">
+    <div class="content history-{{ questionnaire.slug }}">
         <div class="page-header full-content">
             <div class="row">
                 <div class="col-sm-6">
@@ -96,7 +96,7 @@
         {% endfor %}
 
         {% for s in submission_list %}
-            var dataRow = ["{{ s.date }}"];
+            var dataRow = ['{{ s.date|date:"SHORT_DATE_FORMAT" }}'];
 
             {% for a in s.answer_set.all|dictsort:"question.sort" %}
                 dataRow.push("{{ a.answer }}");

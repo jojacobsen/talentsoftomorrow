@@ -2,13 +2,14 @@
   margin-bottom: 35px;
   padding: 25px;
   background-color: #fff;
-  min-width: 500px;
+  min-width: 800px;
 }
 
 .history-table {
   padding: 25px;
   background-color: #fff;
   font-size: 0.8em;
+  table-layout: fixed;
 
   thead {
     font-size: 0.7em;
@@ -25,6 +26,18 @@
 
 .history-daily-wellbeing-u15 {
   .history-table {
-    min-width: 1000px;
+    min-width: 1200px;
+  }
+}
+
+.history-training-session {
+  td, th {
+    &:last-child {
+      text-align: left;
+    }
+  }
+
+  td:last-child {
+    font-size: 0.9em;
   }
 }

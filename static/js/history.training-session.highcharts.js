@@ -24,21 +24,21 @@ var HighchartsConfig = {
       data: []
     };
 
-    console.log(labels)
-
     for (i = 0; i < data.length; i++) {
       dates.push(data[i][0])
 
       duration.data.push({
         x: i,
         y: parseFloat(data[i][1]), // duration column
-        description: data[i][3]
+        description: data[i][3],
+        name: labels[1]
       })
 
       rpe.data.push({
         x: i,
         y: parseFloat(data[i][2]), // rpe column
-        description: data[i][3]
+        description: data[i][3],
+        name: labels[2]
       })
     }
 
@@ -57,7 +57,13 @@ var HighchartsConfig = {
         },
       ],
       credits: { enabled: false },
-      series: [rpe, duration]
+      series: [rpe, duration],
+      tooltip: {
+        useHTML: true,
+        headerFormat: '<div class="history-chart-tooltip">',
+        pointFormat: '<div><strong>{point.name}</strong>: {point.y}</div>',
+        followPointer: true
+      }
     });
   }
 

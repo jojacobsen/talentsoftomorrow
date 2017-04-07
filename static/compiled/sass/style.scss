@@ -16,6 +16,11 @@ $gray:                   lighten($gray-base, 33.5%) !default; // #555
 $gray-light:             lighten($gray-base, 46.7%) !default; // #777
 $gray-lighter:           lighten($gray-base, 93.5%) !default; // #eee
 
+$break-sm: 768px;
+$break-md: 992px;
+$break-lg: 1280px;
+$break-xl: 1400px;
+
 @import './pleasure.admin';
 @import './pleasure.elements';
 @import './partials/chrome';
@@ -26,4 +31,23 @@ $gray-lighter:           lighten($gray-base, 93.5%) !default; // #eee
 .full-block {
   display: inline-block;
   width: 100%;
+}
+
+#djDebug {
+  display: none !important;
+}
+
+.btn-lg {
+  font-size: 1.2em;
+  max-width: 400px;
+}
+
+.mobile-center {
+  text-align: center;
+}
+
+@media (min-width: $break-md) {
+  .mobile-center {
+    text-align: left;
+  }
 }
