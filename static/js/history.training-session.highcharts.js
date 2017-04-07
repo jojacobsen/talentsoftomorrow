@@ -1,7 +1,15 @@
 var HighchartsConfig = {
   init: function () {
-    var data = window.chartData;
-    var labels = window.chartLabels;
+    var data = window.chartData
+    var labels = window.chartLabels
+
+    if(data.length && labels.length) {
+      this.printChart(data, labels)
+    }
+
+  },
+  printChart: function (data, labels) {
+
     var dates = [];
     var duration = {
       type: 'line',
@@ -16,18 +24,20 @@ var HighchartsConfig = {
       data: []
     };
 
+    console.log(labels)
+
     for (i = 0; i < data.length; i++) {
       dates.push(data[i][0])
 
       duration.data.push({
         x: i,
-        y: parseFloat(data[i][4]),
+        y: parseFloat(data[i][1]), // duration column
         description: data[i][3]
       })
 
       rpe.data.push({
         x: i,
-        y: parseFloat(data[i][1]),
+        y: parseFloat(data[i][2]), // rpe column
         description: data[i][3]
       })
     }
@@ -37,11 +47,18 @@ var HighchartsConfig = {
       subtitle: { text: '' },
       xAxis: { categories: dates },
       yAxis: [
-        { title: { text: labels[1] }},
-        { title: { text: labels[3] }, opposite: true},
+        {
+          title: { text: labels[2] },
+          tickInterval:1
+        },
+        {
+          title: { text: labels[1] },
+          opposite: true
+        },
       ],
       credits: { enabled: false },
       series: [rpe, duration]
     });
   }
+
 }

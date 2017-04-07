@@ -8,4 +8,23 @@
 .history-table {
   padding: 25px;
   background-color: #fff;
+  font-size: 0.8em;
+
+  thead {
+    font-size: 0.7em;
+  }
+
+  td, th {
+    text-align: center;
+
+    &:first-child {
+      text-align: left;
+    }
+  }
+}
+
+.history-daily-wellbeing-u15 {
+  .history-table {
+    min-width: 1000px;
+  }
 }

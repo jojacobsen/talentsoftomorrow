@@ -165,7 +165,7 @@
                                                     <label class="control-label col-md-4">{{ q.text }}</label>
                                                     <div class="col-md-6">
                                                         <div class="inputer">
-                                                            <div class="input-wrapper-no-line questionnaire-slider-wrapper">
+                                                            <div class="input-wrapper-no-line js-slider-wrapper questionnaire-slider-wrapper">
                                                                 <div class="nouislider nouislider-step"></div>
                                                                 <ul class="questionnaire-slider-numbers"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li><li>7</li><li>8</li><li>9</li><li>10</li></ul>
                                                                 <p class="help-block">{{ q.footer|default_if_none:"" }}</p>
@@ -205,18 +205,19 @@
 									</div><!--.tab-pane-->
                                     {% endfor %}
 								</div><!--.tab-content-->
+
+                                <div class="panel-footer">
+                                    <ul class="wizard clearfix">
+                                        <li class="bs-wizard-prev pull-left"><button class="btn btn-flat btn-default">Previous</button></li>
+                                        <li class="bs-wizard-next pull-right"><button class="btn btn-blue">Next</button></li>
+                                        <li class="bs-wizard-submit pull-right">
+                                            <button type="submit" class="btn btn-success btn-lg">SAVE</button>
+                                        </li>
+                                    </ul>
+                                </div><!--.panel-foter-->
 							</form>
 
 						</div><!--.panel-body-->
-						<div class="panel-footer">
-							<ul class="wizard clearfix">
-								<li class="bs-wizard-prev pull-left"><button class="btn btn-flat btn-default">Previous</button></li>
-								<li class="bs-wizard-next pull-right"><button class="btn btn-blue">Next</button></li>
-								<li class="bs-wizard-submit pull-right">
-                                    <button type="submit" class="btn btn-success btn-lg">SAVE</button>
-                                </li>
-							</ul>
-						</div><!--.panel-foter-->
 				</div><!--.panel-->
 			</div><!--.col-md-12-->
 		</div><!--.row-->

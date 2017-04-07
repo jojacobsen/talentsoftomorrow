@@ -1,7 +1,7 @@
 var FormsNoUISlider = {
 
-	basic: function () {
-		$('.nouislider-basic').noUiSlider({
+	basic: function ($slider) {
+		$slider.find('.nouislider-basic').noUiSlider({
 			start: [25, 75],
 			connect: true,
 			range: {
@@ -11,19 +11,19 @@ var FormsNoUISlider = {
 		});
 	},
 
-	range: function () {
-		$('.nouislider-range').noUiSlider({
+	range: function ($slider) {
+		$slider.find('.nouislider-range').noUiSlider({
 			start: [4000],
 			range: {
 				'min': 2000,
 				'max': 10000
 			}
 		});
-		$('.nouislider-range').Link('lower').to($('.nouislider-range-value'));
+		$slider.find('.nouislider-range').Link('lower').to($slider.find('.nouislider-range-value'));
 	},
 
-	step: function () {
-		$('.nouislider-step').noUiSlider({
+	step: function ($slider) {
+		$slider.find('.nouislider-step').noUiSlider({
 			start: [5],
 			step: 1,
 			range: {
@@ -31,11 +31,11 @@ var FormsNoUISlider = {
 				'max': 10
 			}
 		});
-		$('.nouislider-step').Link('lower').to($('.nouislider-step-value'));
+		$slider.find('.nouislider-step').Link('lower').to($slider.find('.nouislider-step-value'));
 	},
 
-	handle: function () {
-		$('.nouislider-handle').noUiSlider({
+	handle: function ($slider) {
+		$slider.find('.nouislider-handle').noUiSlider({
 			start: [80],
 			range: {
 				'min': 0,
@@ -43,18 +43,18 @@ var FormsNoUISlider = {
 			}
 		});
 		// Set the slider value to 20
-		$('#nouislider-handle-set').click(function(){
+		$slider.find('#nouislider-handle-set').click(function(){
 			$('.nouislider-handle').val( 20 );
 		});
 
 		// Read the slider value.
-		$('#nouislider-handle-read').click(function(){
+		$slider.find('#nouislider-handle-read').click(function(){
 			alert( $('.nouislider-handle').val() );
 		});
 	},
 
-	formatting: function () {
-		$('.nouislider-formatting').noUiSlider({
+	formatting: function ($slider) {
+		$slider.find('.nouislider-formatting').noUiSlider({
 			start: [ 45750 ],
 			step: 250,
 			range: {
@@ -67,11 +67,11 @@ var FormsNoUISlider = {
 				postfix: ' (US $)',
 			})
 		});
-		$('.nouislider-formatting').Link('lower').to($('.nouislider-formatting-value'));
+		$slider.find('.nouislider-formatting').Link('lower').to($slider.find('.nouislider-formatting-value'));
 	},
 
-	limits: function () {
-		$('.nouislider-limit').noUiSlider({
+	limits: function ($slider) {
+		$slider.find('.nouislider-limit').noUiSlider({
 			start: [ 10, 120 ],
 			limit: 40,
 			behaviour: 'drag-fixed',
@@ -81,12 +81,12 @@ var FormsNoUISlider = {
 				'max': 100
 			}
 		});
-		$('.nouislider-limit').Link('lower').to( $('.nouislider-limit-value-min') )
-		$('.nouislider-limit').Link('upper').to( $('.nouislider-limit-value-max') );
+		$slider.find('.nouislider-limit').Link('lower').to($slider.find('.nouislider-limit-value-min') )
+		$slider.find('.nouislider-limit').Link('upper').to($slider.find('.nouislider-limit-value-max') );
 	},
 
-	rtl: function () {
-		$('.nouislider-rtl').noUiSlider({
+	rtl: function ($slider) {
+		$slider.find('.nouislider-rtl').noUiSlider({
 			start: 20,
 			direction: "rtl",
 			range: {
@@ -94,14 +94,14 @@ var FormsNoUISlider = {
 				'max': 100
 			}
 		});
-		$('.nouislider-rtl').Link('lower').to($('.nouislider-rtl-value'));
+		$slider.find('.nouislider-rtl').Link('lower').to($slider.find('.nouislider-rtl-value'));
 	},
 
-	toggle: function () {
+	toggle: function ($slider) {
 		function toggle( value ){
 			$(this).toggleClass('off', value === '0');
 		}
-		$('.nouislider-toggle').noUiSlider({
+		$slider.find('.nouislider-toggle').noUiSlider({
 			orientation: 'vertical',
 			start: 0,
 			range: {
@@ -112,13 +112,13 @@ var FormsNoUISlider = {
 				decimals: 0
 			})
 		})
-		$('.nouislider-toggle').addClass('nouiToggle');
-		$('.nouislider-toggle').Link('lower').to(toggle);
-		$('.nouislider-toggle').Link('lower').to($('.nouislider-toggle-value'));
+		$slider.find('.nouislider-toggle').addClass('nouiToggle');
+		$slider.find('.nouislider-toggle').Link('lower').to(toggle);
+		$slider.find('.nouislider-toggle').Link('lower').to($slider.find('.nouislider-toggle-value'));
 	},
 
-	vertical: function () {
-		$('.nouislider-vertical').noUiSlider({
+	vertical: function ($slider) {
+		$slider.find('.nouislider-vertical').noUiSlider({
 			start: 40,
 			orientation: 'vertical',
 			range: {
@@ -126,10 +126,10 @@ var FormsNoUISlider = {
 				'max': 100
 			}
 		});
-		$('.nouislider-vertical').Link('lower').to($('.nouislider-vertical-value'));
+		$slider.find('.nouislider-vertical').Link('lower').to($slider.find('.nouislider-vertical-value'));
 	},
 
-	date: function () {
+	date: function ($slider) {
 		// Create a new date from a string, return as a timestamp.
 		function timestamp(str){
 			return new Date(str).getTime();
@@ -171,11 +171,11 @@ var FormsNoUISlider = {
 
 		// Write a date as a pretty value.
 		function setDate( value ){
-			$(this).html(formatDate(new Date(+value)));
+			$slider.html(formatDate(new Date(+value)));
 		}
 
 		// Setup
-		$('.nouislider-date').noUiSlider({
+		$slider.find('.nouislider-date').noUiSlider({
 			// Create two timestamps to define a range.
 			range: {
 				min: timestamp('2013'),
@@ -194,11 +194,11 @@ var FormsNoUISlider = {
 			})
 		});
 		// Slider Control
-		$('.nouislider-date').Link('lower').to($('.nouislider-date-value-min'), setDate);
-		$('.nouislider-date').Link('upper').to($('.nouislider-date-value-max'), setDate);
+		$slider.find('.nouislider-date').Link('lower').to($slider.find('.nouislider-date-value-min'), setDate);
+		$slider.find('.nouislider-date').Link('upper').to($slider.find('.nouislider-date-value-max'), setDate);
 	},
 
-	getPipsRange: function () {
+	getPipsRange: function ($slider) {
 		var rangeAllSliders = {
 			'min': [     0 ],
 			'10%': [   500,  500 ],
@@ -208,23 +208,23 @@ var FormsNoUISlider = {
 		return rangeAllSliders;
 	},
 
-	setPipsRange: function () {
-		$('.nouislider-pips-range').noUiSlider_pips({
+	setPipsRange: function ($slider) {
+		$slider.find('.nouislider-pips-range').noUiSlider_pips({
 			mode: 'range',
 			density: 3
 		});
 	},
 
-	pips: function () {
-		$('.nouislider-pips-range-basic').noUiSlider({
+	pips: function ($slider) {
+		$slider.find('.nouislider-pips-range-basic').noUiSlider({
 			range: FormsNoUISlider.getPipsRange(),
 			start: 1500
 		});
 		// FormsNoUISlider.setPipsRange(); // Called on init() function
 	},
 
-	pipsRtl: function () {
-		$('.nouislider-pips-range-rtl').noUiSlider({
+	pipsRtl: function ($slider) {
+		$slider.find('.nouislider-pips-range-rtl').noUiSlider({
 			range: FormsNoUISlider.getPipsRange(),
 			start: 1500,
 			direction: 'rtl'
@@ -232,8 +232,8 @@ var FormsNoUISlider = {
 		// FormsNoUISlider.setPipsRange(); // Called on init() function
 	},
 
-	pipsVertical: function () {
-		$('.nouislider-pips-range-vertical').noUiSlider({
+	pipsVertical: function ($slider) {
+		$slider.find('.nouislider-pips-range-vertical').noUiSlider({
 			range: FormsNoUISlider.getPipsRange(),
 			start: 1500,
 			orientation: 'vertical'
@@ -241,8 +241,8 @@ var FormsNoUISlider = {
 		// FormsNoUISlider.setPipsRange(); // Called on init() function
 	},
 
-	pipsRtlVertical: function () {
-		$('.nouislider-pips-range-vertical-rtl').noUiSlider({
+	pipsRtlVertical: function ($slider) {
+		$slider.find('.nouislider-pips-range-vertical-rtl').noUiSlider({
 			range: FormsNoUISlider.getPipsRange(),
 			start: 1500,
 			orientation: 'vertical',
@@ -251,12 +251,12 @@ var FormsNoUISlider = {
 		// FormsNoUISlider.setPipsRange(); // Called on init() function
 	},
 
-	pipsValues: function () {
-		$('.nouislider-pips-value-basic').noUiSlider({
+	pipsValues: function ($slider) {
+		$slider.find('.nouislider-pips-value-basic').noUiSlider({
 			range: FormsNoUISlider.getPipsRange(),
 			start: 2500
 		});
-		$('.nouislider-pips-value').noUiSlider_pips({
+		$slider.find('.nouislider-pips-value').noUiSlider_pips({
 			mode: 'values',
 			values: [50, 552, 2651, 3952, 5000, 7080, 9000],
 			density: 4,
@@ -264,12 +264,12 @@ var FormsNoUISlider = {
 		});
 	},
 
-	pipsPositions: function () {
-		$('.nouislider-pips-positions-basic').noUiSlider({
+	pipsPositions: function ($slider) {
+		$slider.find('.nouislider-pips-positions-basic').noUiSlider({
 			range: FormsNoUISlider.getPipsRange(),
 			start: 3500
 		});
-		$('.nouislider-pips-positions').noUiSlider_pips({
+		$slider.find('.nouislider-pips-positions').noUiSlider_pips({
 			mode: 'positions',
 			values: [0,25,50,75,100],
 			density: 4,
@@ -278,24 +278,31 @@ var FormsNoUISlider = {
 	},
 
 	init: function () {
-		this.basic();
-		this.range();
-		this.step();
-		this.handle();
-		this.formatting();
-		this.limits();
-		this.rtl();
-		this.toggle();
-		this.vertical();
-		this.date();
-		this.pips();
-		this.pipsRtl();
-		this.pipsVertical();
-		this.pipsRtlVertical();
-		this.pipsValues();
-		this.pipsPositions();
+		var $sliders = $('.js-slider-wrapper');
+		var self = this;
 
-		this.setPipsRange(); // initilized for all Pips functions
+		$sliders.each(function(){
+			var $slider = $(this)
+
+			self.basic($slider);
+			self.range($slider);
+			self.step($slider);
+			self.handle($slider);
+			self.formatting($slider);
+			self.limits($slider);
+			self.rtl($slider);
+			self.toggle($slider);
+			self.vertical($slider);
+			self.date($slider);
+			self.pips($slider);
+			self.pipsRtl($slider);
+			self.pipsVertical($slider);
+			self.pipsRtlVertical($slider);
+			self.pipsValues($slider);
+			self.pipsPositions($slider);
+			self.setPipsRange($slider); // initilized for all Pips functions
+		});
+
 	}
 }
 
