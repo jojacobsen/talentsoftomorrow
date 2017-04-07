@@ -29,8 +29,8 @@ def get_latest_rpe(player):
 
 def get_date_first_submission(player, questionnaire_slug):
     try:
-        first_submission = Submission.objects.values_list('date', flat=True).get(
-            player=player, questionnaire__slug=questionnaire_slug)
+        first_submission = Submission.objects.values_list('date', flat=True).filter(
+            player=player, questionnaire__slug=questionnaire_slug).earliest('date')
     except Submission.DoesNotExist:
         return datetime.date.today() - datetime.timedelta(days=1)
     if first_submission == datetime.date.today():
