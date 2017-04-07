@@ -44,10 +44,10 @@
         <div class="hidden-xs hidden-sm col-md-8 material-animate material-animated" style="animation-delay: 0.8s;">
           <div class="row">
             <div class="col-md-6">
-              <div id="ts-chart-rpe"></div>
+              <div id="ts-chart-rpe">{{ latest_rpe }}</div>
             </div>
             <div class="col-md-6">
-              <div id="ts-chart-total"></div>
+              <div id="ts-chart-total">{{ count_training_session }}</div>
             </div>
           </div>
         </div>
@@ -75,10 +75,10 @@
       <div class="hidden-xs hidden-sm col-md-8 material-animate material-animated" style="animation-delay: 0.8s;">
           <div class="row">
             <div class="col-md-6">
-              <div id="dw-chart-completion"></div>
+              <div id="dw-chart-completion">{{ completion_daily_wellbeing }}</div>
             </div>
             <div class="col-md-6">
-              <div id="dw-chart-total"></div>
+              <div id="dw-chart-total">{{ count_daily_wellbeing }}</div>
             </div>
           </div>
       </div>

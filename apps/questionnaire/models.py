@@ -14,7 +14,7 @@ class Questionnaire(models.Model):
                                 verbose_name=_('Language'), choices=settings.LANGUAGES)
 
     def __str__(self):
-        return self.name
+        return self.name + ' (' + self.language + ')'
 
 
 class Section(models.Model):
@@ -23,7 +23,7 @@ class Section(models.Model):
     sort = models.IntegerField()
 
     def __str__(self):
-        return self.heading
+        return self.heading + ' of ' + self.questionnaire.name
 
 
 class Question(models.Model):
@@ -69,7 +69,7 @@ class Choice(models.Model):
 class Submission(models.Model):
     player = models.ForeignKey(Player, help_text="The player who supplied this answer")
     questionnaire = models.ForeignKey(Questionnaire, on_delete=models.CASCADE)
-    date = models.DateTimeField()
+    date = models.DateField()
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -80,7 +80,7 @@ class Answer(models.Model):
     submission = models.ForeignKey(Submission, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, help_text="The question that this is an answer to")
     answer = models.TextField(max_length=1000)
-    date = models.DateTimeField()
+    date = models.DateField()
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
