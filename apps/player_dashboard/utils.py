@@ -21,8 +21,8 @@ def get_number_of_submissions(player, questionnaire_slug):
 
 def get_latest_rpe(player):
     try:
-        return Answer.objects.values_list('answer', flat=True).get(submission__player=player,
-                                                                   question__slug='rpe').latest('date')
+        return Answer.objects.values_list('answer', flat=True).filter(submission__player=player,
+                                                                      question__slug='rpe').latest('date')
     except Answer.DoesNotExist:
         return None
 
