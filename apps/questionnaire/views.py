@@ -1,4 +1,3 @@
-
 from questionnaire.models import Questionnaire, Submission, Question
 from .forms import SubmissionCreateForm
 from .filters import SubmissionFilter
@@ -12,6 +11,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.parsers import JSONParser
 from rest_framework import generics, exceptions
 from rest_framework import filters
+from django.utils.translation import ugettext as _
 
 
 class QuestionnaireFormView(generic.DetailView):
@@ -77,7 +77,7 @@ class SubmissionCreateView(generic.base.View):
         form = SubmissionCreateForm(request.POST or None, extra=questions)
         if form.is_valid():
             form.save(player=self.request.user.player, questionnaire=questions[0].section.questionnaire)
-            messages.add_message(request, messages.INFO, 'Your Questionnaire has been saved!')
+            messages.add_message(request, messages.INFO, _('Your Questionnaire has been saved!'))
             return redirect('questionnaire:history', slug=slug)
         return redirect('questionnaire:wizard', slug=slug)
 

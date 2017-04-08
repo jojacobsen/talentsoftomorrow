@@ -39,6 +39,15 @@
         <script src="{% static "plugins/modernizr/modernizr.min.js" %}"></script>
     </head>
     <body>
+        {% if messages %}
+          {% for message in messages %}
+            <div{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>
+              <a class="close" data-dismiss="alert" href="#">&times;</a>
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+
         {% block body %}{% endblock body %}
 
         <!-- BEGIN GLOBAL AND THEME VENDORS -->
