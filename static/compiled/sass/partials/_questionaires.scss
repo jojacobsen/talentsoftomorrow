@@ -25,6 +25,12 @@
     display: block;
     margin-top: 5px;
   }
+
+  .input-wrapper {
+    &:after {
+      background-color: $brand-secondary !important;
+    }
+  }
 }
 
 .questionnaire-slider-wrapper {
