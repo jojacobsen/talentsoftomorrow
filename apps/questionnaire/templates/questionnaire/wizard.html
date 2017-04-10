@@ -21,7 +21,7 @@
 		<div class="page-header full-content bg-brown">
 			<div class="row">
 				<div class="col-sm-6">
-					<h1>{{ questionnaire.name }} <small>{{ questionnaire.short_description }}</small></h1>
+					<h1>{{ questionnaire.name }} <small>{{ questionnaire.short_description|default_if_none:""  }}</small></h1>
 				</div><!--.col-->
 				<div class="col-sm-6 hidden-xs">
 
