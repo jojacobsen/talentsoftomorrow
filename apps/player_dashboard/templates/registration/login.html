@@ -15,27 +15,37 @@
   Your username and password didn't match. Please try again.
 </div>
 {% endif %}
-    <div class="container">
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-4">
 
-        <form class="form-signin" method="post" action="{% url 'player_dashboard:login' %}">
-            {% csrf_token %}
-            <h3 class="form-signin-heading">Please sign in</h3>
+            <img src="{% static "img/logo.png" %}" alt="Logo" class="login-logo">
 
-            <div class="fieldWrapper">
-                {{ form.username.errors }}
-                <label for="id_username" class="sr-only">Username</label>
-                <input class="form-control" id="id_username" maxlength="30" name="username" type="text" placeholder="Username" required autofocus/>
-            </div>
-            <div class="fieldWrapper">
-                {{ form.password.errors }}
-                <label for="id_password" class="sr-only">Password</label>
-                <input class="form-control" id="id_password" maxlength="30" name="password" type="password" placeholder="Password" required/>
-            </div>
+            <form class="form-signin login-form" method="post" action="{% url 'player_dashboard:login' %}">
+                {% csrf_token %}
 
-            <input class="btn btn-lg btn-primary btn-block" type="submit" value="Login" />
-            <input type="hidden" name="next" value="{{ next }}" />
-        </form>
+                <div class="fieldWrapper">
+                    {{ form.username.errors }}
+                    <label for="id_username" class="sr-only">Username</label>
+                    <input class="form-control" id="id_username" maxlength="30" name="username" type="text" placeholder="Username" required autofocus/>
+                </div>
+                <div class="fieldWrapper">
+                    {{ form.password.errors }}
+                    <label for="id_password" class="sr-only">Password</label>
+                    <input class="form-control" id="id_password" maxlength="30" name="password" type="password" placeholder="Password" required/>
+                </div>
 
-    </div> <!-- /container -->
+                <input class="btn btn-lg btn-primary btn-block login-btn" type="submit" value="Login" />
+                <input type="hidden" name="next" value="{{ next }}" />
+            </form>
+        </div>
+    </div>
+</div> <!-- /container -->
 
+{% endblock %}
+
+{% block extra_body %}
+    <script>
+        $('body').addClass('is-login');
+    </script>
 {% endblock %}

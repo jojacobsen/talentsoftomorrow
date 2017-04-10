@@ -76,14 +76,15 @@ var HighchartsConfig = {
   },
 
   config: function (l) {
-    var labels = l.slice()
-    var splitIndex = 4
+    // TODO: get indexes dynamically
+    var splitIndex = 8
+    var labels = l.slice(0, splitIndex)
     var ratingRows = []
 
-    labels.splice(splitIndex).forEach(function(label, i){
+    labels.forEach(function(label, i){
       ratingRows.push({
         key: label,
-        index: splitIndex + i,
+        index: i,
         yAxis: 0,
         color: '#666'
       })
@@ -92,19 +93,19 @@ var HighchartsConfig = {
     var specialRows = [
       {
         key: 'weight',
-        index: 1,
+        index: 8,
         yAxis: 1,
         color: '#f5cb5c'
       },
       {
         key: 'rhr',
-        index: 2,
+        index: 9,
         yAxis: 2,
         color: '#469648'
       },
       {
         key: 'sleepHours',
-        index: 3,
+        index: 10,
         yAxis: 3,
         color: '#64b4ff'
       }

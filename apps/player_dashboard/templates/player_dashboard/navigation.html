@@ -1,5 +1,4 @@
-    <div class="layer-container">
-
+  <div class="layer-container">
 		<!-- BEGIN MENU LAYER -->
 		<div class="menu-layer">
 			<ul>
@@ -7,16 +6,16 @@
 					<a href="{% url 'player_dashboard:dashboard' %}">Dashboard</a>
 				</li>
 				<li>
-					<a href="javascript:;">Training sessions</a>
+					<a href="javascript:;">Exercise Diary</a>
 
 					<ul class="child-menu">
 						<li>
-							<a href="{% url 'questionnaire:wizard' 'training-session' %}">
-								Enter training session
+							<a href="{% url 'questionnaire:wizard' 'exercise-diary' %}">
+								Enter new session
 							</a>
 						</li>
 						<li>
-							<a href="{% url 'questionnaire:history' 'training-session' %}">
+							<a href="{% url 'questionnaire:history' 'exercise-diary' %}">
 								View history
 							</a>
 						</li>
@@ -24,7 +23,7 @@
 				</li>
 
 				<li>
-					<a href="javascript:;">Daily wellbeing</a>
+					<a href="javascript:;">Daily Wellbeing</a>
 
 					<ul class="child-menu">
 						<li>

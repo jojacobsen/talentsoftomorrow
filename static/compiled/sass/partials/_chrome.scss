@@ -9,9 +9,35 @@
   letter-spacing: 4px;
 }
 
+.alert.alert-info {
+  background-color: $brand-success !important;
+  border: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+
+  .close {
+    text-decoration: none !important;
+  }
+}
+
 /* ================ */
 /* === SIDE NAV === */
 /* ================ */
+
+.menu-mobile-home {
+  position: absolute;
+  right: 13px;
+  top: 10px;
+  z-index: 5;
+  font-size: 25px;
+
+
+  a {
+    &, &:visited {
+      color: $gray-dark;
+    }
+  }
+}
 
 .menu-layer {
   li {
