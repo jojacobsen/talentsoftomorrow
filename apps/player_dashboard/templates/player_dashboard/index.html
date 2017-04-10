@@ -14,7 +14,7 @@
 				<div class="col-sm-6">
 					<h1>Dashboard <small>Activity Summary</small></h1>
 				</div><!--.col-->
-				<div class="col-sm-6">
+				<div class="col-sm-6 hidden-xs">
 					<ol class="breadcrumb">
 						<li><a href="#" class="active"><i class="ion-home"></i> Home</a></li>
 					</ol>
@@ -24,19 +24,51 @@
 
     <div class="full-content mobile-center margin-top-40 margin-bottom-40 bg-white">
       <div class="row">
-        <div class="col-md-4 material-animate padding-right-40 material-animated" style="animation-delay: 0.66s;">
-          <h3>Training sessions</h3>
+        <div class="col-md-4 material-animate material-animated" style="animation-delay: 0.66s;">
+          <h3>Daily well being</h3>
           <p class="text-grey">
-            Track your training sessions, to bla bla lorem ipsum
+            Track your daily wellbeing
           </p>
 
-          <a href="{% url 'questionnaire:wizard' 'training-session' %}"
+          <a href="{% url 'questionnaire:wizard' 'daily-wellbeing-u15' %}"
             class="btn btn-lg btn-success btn-ripple dashboard-btn">
-            Enter training session
+            Enter Daily Wellbeing
           </a>
 
           <div class="dashboard-history-link">
-            <a href="{% url 'questionnaire:history' 'training-session' %}">
+            <a href="{% url 'questionnaire:history' 'daily-wellbeing-u15' %}">
+              View history
+            </a>
+          </div>
+        </div>
+        <div class="hidden-xs hidden-sm col-md-8 material-animate material-animated" style="animation-delay: 0.8s;">
+            <div class="row">
+              <div class="col-md-6">
+                <div id="dw-chart-completion" data-value="{{ completion_daily_wellbeing }}"></div>
+              </div>
+              <div class="col-md-6">
+                <div id="dw-chart-total" data-value="{{ count_daily_wellbeing }}"></div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="full-content mobile-center margin-top-40 margin-bottom-40 bg-black text-white">
+      <div class="row">
+        <div class="col-md-4 material-animate material-animated" style="animation-delay: 0.66s;">
+          <h3 class="text-white">Exercise Diary</h3>
+          <p class="text-white">
+            Track exercises and matches
+          </p>
+
+          <a href="{% url 'questionnaire:wizard' 'exercise-diary' %}"
+            class="btn btn-lg btn-success btn-ripple dashboard-btn">
+            Enter New Session
+          </a>
+
+          <div class="dashboard-history-link">
+            <a href="{% url 'questionnaire:history' 'exercise-diary' %}">
               View history
             </a>
           </div>
@@ -44,43 +76,13 @@
         <div class="hidden-xs hidden-sm col-md-8 material-animate material-animated" style="animation-delay: 0.8s;">
           <div class="row">
             <div class="col-md-6">
-              <div id="ts-chart-rpe">{{ latest_rpe }}</div>
+              <div id="ts-chart-rpe" data-value="{{ latest_rpe }}"></div>
             </div>
             <div class="col-md-6">
-              <div id="ts-chart-total">{{ count_training_session }}</div>
+              <div id="ts-chart-total" data-value="{{ count_training_session }}"></div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-
-    <div class="full-content mobile-center margin-top-40 margin-bottom-40 bg-black text-white">
-      <div class="row">
-      <div class="col-md-4 material-animate padding-right-40 material-animated" style="animation-delay: 0.66s;">
-        <h3 class="text-white">Daily well being</h3>
-        <p class="text-white">
-          Daily well being, bla bla lorem ipsum
-        </p>
-
-        <button type="button" class="btn btn-lg btn-success btn-ripple full-block">
-          Enter daily well being
-        </button>
-
-        <div class="dashboard-history-link">
-          <a href="#">
-            View history
-          </a>
-        </div>
-      </div>
-      <div class="hidden-xs hidden-sm col-md-8 material-animate material-animated" style="animation-delay: 0.8s;">
-          <div class="row">
-            <div class="col-md-6">
-              <div id="dw-chart-completion">{{ completion_daily_wellbeing }}</div>
-            </div>
-            <div class="col-md-6">
-              <div id="dw-chart-total">{{ count_daily_wellbeing }}</div>
-            </div>
-          </div>
       </div>
     </div>
   </div><!--.content-->

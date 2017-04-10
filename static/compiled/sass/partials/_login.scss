@@ -1,0 +1,30 @@
+body.is-login {
+  margin: 0 !important;
+  background-color: #fff;
+}
+
+.login-logo {
+  max-width: 300px;
+  margin: 25px auto 10px;
+  display: block;
+}
+
+.login-btn {
+  text-transform: uppercase;
+  margin-top: 20px;
+  background-color: $brand-primary;
+  border-color: $brand-primary;
+}
+
+.login-form {
+  input {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .form-control {
+    &:focus {
+      border-color: $brand-secondary;
+    }
+  }
+}

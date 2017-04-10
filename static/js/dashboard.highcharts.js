@@ -1,24 +1,50 @@
 var HighchartsConfig = {
+  handles: {
+    tsTotal: 'ts-chart-total',
+    tsRpe: 'ts-chart-rpe',
+    dwCompletion: 'dw-chart-completion',
+    dwTotal: 'dw-chart-total'
+  },
+
   init: function () {
+    var tsTotal = this.getValue('tsTotal')
+    var dwTotal = this.getValue('dwTotal')
+
     Highcharts.chart(
-      'ts-chart-total',
-      this.donutChart(74, 100, 'Sessions', '#F5CB5C', false )
+      this.handles.tsTotal,
+      this.donutChart(tsTotal, this.getTotalCap(tsTotal), 'Sessions', '#F5CB5C', true )
     );
 
     Highcharts.chart(
-      'ts-chart-rpe',
-      this.donutChart(7, 10, 'Latest RPE', '#F5CB5C', false )
+      this.handles.tsRpe,
+      this.donutChart(this.getValue('tsRpe'), 10, 'Latest RPE', '#F5CB5C', true )
     );
 
     Highcharts.chart(
-      'dw-chart-completion',
-      this.donutChart(8, 10, 'Completion %', '#F5CB5C', true )
+      this.handles.dwCompletion,
+      this.donutChart(this.getValue('dwCompletion'), 100, 'Completion %', '#F5CB5C', false )
     );
 
     Highcharts.chart(
-      'dw-chart-total',
-      this.donutChart(31, 310, 'Total count', '#F5CB5C', true )
+      this.handles.dwTotal,
+      this.donutChart(dwTotal, this.getTotalCap(dwTotal), 'Total count', '#F5CB5C', false )
     );
+  },
+
+  getValue: function(handle) {
+    var value = $('#' + this.handles[handle]).data('value')
+
+    return value > 0 ? value : 0
+  },
+
+  getTotalCap: function (count) {
+    if (count > 52 && count <= 260) {
+      return 260
+    } else if (count > 260) {
+      return 366
+    }
+
+    return 52
   },
 
   donutChart: function (value, potential, label, color, inverted) {
@@ -41,7 +67,7 @@ var HighchartsConfig = {
         }
       },
       title: {
-          text: value,
+          text: String(value),
           align: 'center',
           verticalAlign: 'middle',
           floating: true,
