@@ -12,7 +12,7 @@
 		<div class="page-header full-content dashboard-page-header">
 			<div class="row">
 				<div class="col-sm-6">
-					<h1>Dashboard</h1>
+					<h1>Athlete Dashboard</h1>
 				</div><!--.col-->
 				<div class="col-sm-6 hidden-xs">
 					<ol class="breadcrumb">
@@ -30,7 +30,7 @@
       </div>
 
       <p class="dashboard-description">
-        Welcome to the Talents of Tomorrow athlete dashboard. <br />
+        Welcome to the Athlete Dashboard. <br />
         Use this to track your daily wellbeing and exercises.
       </p>
 
@@ -49,13 +49,13 @@
         Fill this out every evening to track your wellbeing
       </p>
 
-      <a href="{% url 'questionnaire:wizard' 'daily-wellbeing-u15' %}"
+      <a href="{% url 'questionnaire:wizard' 'daily-wellbeing-o15' %}"
         class="dashboard-btn">
         Enter Daily Wellbeing
       </a>
 
       <div class="dashboard-history-link">
-        <a href="{% url 'questionnaire:history' 'daily-wellbeing-u15' %}">
+        <a href="{% url 'questionnaire:history' 'daily-wellbeing-o15' %}">
           View history
         </a>
       </div>

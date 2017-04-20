@@ -51,7 +51,7 @@ class DashboardView(generic.TemplateView):
             context['menu_item'] = 'index'
             context['latest_rpe'] = get_latest_rpe(self.request.user.player)
             context['count_training_session'] = get_number_of_submissions(self.request.user.player, 'training-session')
-            context['count_daily_wellbeing'] = get_number_of_submissions(self.request.user.player, 'daily-wellbeing-u15')
+            context['count_daily_wellbeing'] = get_number_of_submissions(self.request.user.player, 'daily-wellbeing-o15')
             context['completion_daily_wellbeing'] = int((context['count_daily_wellbeing'] / (
                 datetime.date.today() - get_date_first_submission(self.request.user.player, 'exercise-diary')
             ).days) * 100)
