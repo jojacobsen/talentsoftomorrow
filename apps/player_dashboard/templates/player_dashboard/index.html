@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load i18n %}
 {% load staticfiles %}
 
 {% block head %}
@@ -12,11 +12,11 @@
 		<div class="page-header full-content dashboard-page-header">
 			<div class="row">
 				<div class="col-sm-6">
-					<h1>Athlete Dashboard</h1>
+					<h1>{% trans "Athlete Dashboard" %}</h1>
 				</div><!--.col-->
 				<div class="col-sm-6 hidden-xs">
 					<ol class="breadcrumb">
-						<li><a href="#" class="active"><i class="ion-home"></i> Home</a></li>
+						<li><a href="#" class="active"><i class="ion-home"></i> {% trans "Home" %}</a></li>
 					</ol>
 				</div><!--.col-->
 			</div><!--.row-->
@@ -26,12 +26,13 @@
   <div class="dashboard-content">
     <div class="dashboard-hero js-dashboard-hero is-hidden">
       <div class="dashboard-logo">
-        <img src={% static "img/logo_inv.png" %} alt="logo">
+        <img src='{% static "img/logo_inv.png" %}' alt="logo">
       </div>
 
       <p class="dashboard-description">
-        Welcome to the Athlete Dashboard. <br />
-        Use this to track your daily wellbeing and exercises.
+        {% trans "Welcome to the Athlete Dashboard." %}
+        <br />
+        {% trans "Use this to track your daily wellbeing and exercises" %}
       </p>
 
       <div class="dashboard-hero-close js-close-hero">
@@ -44,19 +45,22 @@
         <img src={% static "img/icon-apple.svg" %} alt="icon">
       </div>
 
-      <h3 class="dashboard-tile-title">Daily Wellbeing</h3>
+      <h3 class="dashboard-tile-title">
+        {% trans "Daily Wellbeing" %}
+      </h3>
       <p class="dashboard-tile-text">
-        Fill this out every evening to track your wellbeing
+        {% trans "Fill this out every evening to track your wellbeing" %}
+
       </p>
 
       <a href="{% url 'questionnaire:wizard' 'daily-wellbeing-o15' %}"
         class="dashboard-btn">
-        Enter Daily Wellbeing
+        {% trans "Enter Daily Wellbeing" %}
       </a>
 
       <div class="dashboard-history-link">
         <a href="{% url 'questionnaire:history' 'daily-wellbeing-o15' %}">
-          View history
+          {% trans "View history" %}
         </a>
       </div>
     </div>
@@ -66,90 +70,26 @@
         <img src={% static "img/icon-ball.svg" %} alt="icon">
       </div>
 
-      <h3 class="dashboard-tile-title">Exercise Diary</h3>
+      <h3 class="dashboard-tile-title">
+        {% trans "Exercise Diary" %}
+      </h3>
       <p class="dashboard-tile-text">
-        Fill this out every time you have exercised and after every match
+        {% trans "Fill this out every time you have exercised and after every match" %}
       </p>
 
       <a href="{% url 'questionnaire:wizard' 'exercise-diary' %}"
         class="dashboard-btn">
-        Enter New Session
+        {% trans "Enter New Session" %}
       </a>
 
       <div class="dashboard-history-link">
         <a href="{% url 'questionnaire:history' 'exercise-diary' %}">
-          View history
+          {% trans "View history" %}
         </a>
       </div>
     </div>
-</div>
+  </div>
 
-
-<!--
-    <div class="full-content mobile-center margin-top-40 margin-bottom-40 bg-white">
-      <div class="row">
-        <div class="col-md-4 material-animate material-animated" style="animation-delay: 0.66s;">
-          <h3>Daily Wellbeing</h3>
-          <p class="text-grey">
-            Fill this out every evening to track your wellbeing
-          </p>
-
-          <a href="{% url 'questionnaire:wizard' 'daily-wellbeing-u15' %}"
-            class="btn btn-lg btn-success btn-ripple dashboard-btn">
-            Enter Daily Wellbeing
-          </a>
-
-          <div class="dashboard-history-link">
-            <a href="{% url 'questionnaire:history' 'daily-wellbeing-u15' %}">
-              View history
-            </a>
-          </div>
-        </div>
-        <div class="hidden-xs hidden-sm col-md-8 material-animate material-animated" style="animation-delay: 0.8s;">
-            <div class="row">
-              <div class="col-md-6">
-                <div id="dw-chart-completion" data-value="{{ completion_daily_wellbeing }}"></div>
-              </div>
-              <div class="col-md-6">
-                <div id="dw-chart-total" data-value="{{ count_daily_wellbeing }}"></div>
-              </div>
-            </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="full-content dashboard-cell margin-top-40 margin-bottom-40 bg-black text-white">
-      <div class="row">
-        <div class="col-md-4 material-animate material-animated" style="animation-delay: 0.66s;">
-          <h3 class="text-white">Exercise Diary</h3>
-          <p class="text-white">
-            Fill this out every time you have exercised and after every match
-          </p>
-
-          <a href="{% url 'questionnaire:wizard' 'exercise-diary' %}"
-            class="btn btn-lg btn-success btn-ripple dashboard-btn">
-            Enter New Session
-          </a>
-
-          <div class="dashboard-history-link">
-            <a href="{% url 'questionnaire:history' 'exercise-diary' %}">
-              View history
-            </a>
-          </div>
-        </div>
-        <div class="hidden-xs hidden-sm col-md-8 material-animate material-animated" style="animation-delay: 0.8s;">
-          <div class="row">
-            <div class="col-md-6">
-              <div id="ts-chart-rpe" data-value="{{ latest_rpe }}"></div>
-            </div>
-            <div class="col-md-6">
-              <div id="ts-chart-total" data-value="{{ count_training_session }}"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div> -->
   {% include 'player_dashboard/navigation.html' %}
 
 {% endblock %}

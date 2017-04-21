@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load i18n %}
 {% load staticfiles %}
 {% load static %}
 
@@ -17,7 +17,7 @@
         <div class="page-header full-content">
             <div class="row">
                 <div class="col-sm-6">
-                    <h1>History <small>{{ questionnaire.name }}</small></h1>
+                    <h1>{% trans "History" %} <small>{{ questionnaire.name }}</small></h1>
                 </div><!--.col-->
                 <div class="col-sm-6 hidden-xs">
                     <ol class="breadcrumb">
@@ -28,7 +28,7 @@
                         </li>
                         <li>
                             <a href="#" class="active">
-                                History
+                                {% trans "History" %}
                             </a>
                         </li>
                     </ol>
@@ -38,13 +38,15 @@
 
         {% if not submission_list %}
             <h4><em>
-                No records yet
+                {% trans "No records yet" %}
             </em></h4>
         {% endif %}
 
         {% if submission_list %}
 
-            <h3 class="full-block">Latest record</h3>
+            <h3 class="full-block">
+                {% trans "Latest record" %}
+            </h3>
 
             <!-- DW over 15 Latest -->
             <div class="row history-latest-dw-o15">
@@ -97,7 +99,7 @@
                         <div>
                             <ul class="history-likerts js-history-likerts"></ul>
                             <div class="history-latest-description">
-                                <strong>Description:</strong>
+                                <strong>{% trans "Description" %}:</strong>
                                 <p class="js-history-latest-description"></p>
                             </div>
                         </div>
@@ -106,13 +108,15 @@
             </div>
 
 
-            <h3 class="full-block">All records</h3>
+            <h3 class="full-block">
+                {% trans "All records" %}
+            </h3>
 
             <div class="table-responsive">
                 <table class="table table-striped history-table">
                     <thead>
                         <tr>
-                            <th>Date</th>
+                            <th>{% trans "Date" %}</th>
                             {% for a in submission_list.0.answer_set.all|dictsort:"question.sort"  %}
                                 <th>{{ a.question.text  }}</th>
                             {% endfor %}
@@ -142,7 +146,7 @@
 	<!-- END PLUGINS AREA -->
 
 	<!-- PLUGINS INITIALIZATION AND SETTINGS -->
-        <script src="{% get_static_prefix %}/js/history.js"></script>
+        <script src="{% get_static_prefix %}js/history.js"></script>
 <!--         <script src="{% get_static_prefix %}/js/history.{{questionnaire.slug}}.highcharts.js"></script> -->
     <!-- END PLUGINS INITIALIZATION AND SETTINGS -->
 

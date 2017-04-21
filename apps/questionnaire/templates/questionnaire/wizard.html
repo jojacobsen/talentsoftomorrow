@@ -1,9 +1,9 @@
 {% extends "base.html" %}
-
+{% load i18n %}
 {% load staticfiles %}
 
 {% block head %}
-    <title>Questionnaire</title>
+    <title>{% trans "Athlete Dashboard" %}</title>
     <!-- BEGIN PLUGINS CSS -->
     <link rel="stylesheet" href="{% static "plugins/components-summernote/dist/summernote.css" %}">
     <link rel="stylesheet" href="{% static "plugins/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.min.css" %}">
@@ -70,7 +70,7 @@
                                                             class="js-datepicker form-control bootstrap-daterangepicker-basic valid active"
                                                             value="{% now 'Y-m-d' %}">
                                                     </div>
-                                                    <p class="help-block">Pick a date</p>
+                                                    <p class="help-block">{% trans "Pick a date" %}</p>
                                                 </div>
                                             </div>
                                         </div><!--.form-group-->
@@ -99,7 +99,7 @@
                                                             <p class="help-block">{{ q.footer|default_if_none:"" }}</p>
                                                         </div>
                                                     </div>
-                                                    <label class="control-label col-md-4">Comments:</label>
+                                                    <label class="control-label col-md-4">{% trans "Comments" %}:</label>
                                                     <div class="col-md-6">
                                                         <div class="inputer">
                                                             <div class="input-wrapper">
@@ -203,10 +203,10 @@
 
                                 <div class="panel-footer">
                                     <ul class="wizard clearfix">
-                                        <li class="bs-wizard-prev pull-left"><button class="btn btn-flat btn-default">Previous</button></li>
-                                        <li class="bs-wizard-next pull-right"><button class="btn btn-blue">Next</button></li>
+                                        <li class="bs-wizard-prev pull-left"><button class="btn btn-flat btn-default">{% trans "Previous" %}</button></li>
+                                        <li class="bs-wizard-next pull-right"><button class="btn btn-blue">{% trans "Next" %}</button></li>
                                         <li class="bs-wizard-submit pull-right">
-                                            <button type="submit" class="btn btn-success btn-lg">SAVE</button>
+                                            <button type="submit" class="btn btn-success btn-lg">{% trans "SAVE" %}</button>
                                         </li>
                                     </ul>
                                 </div><!--.panel-foter-->
