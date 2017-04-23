@@ -1,45 +1,64 @@
+{% load i18n %}
+
   <div class="layer-container">
 		<!-- BEGIN MENU LAYER -->
 		<div class="menu-layer">
 			<ul>
 				<li {% if menu_item == 'index' %}data-open-after="true"{% endif %}>
-					<a href="{% url 'player_dashboard:dashboard' %}">Dashboard</a>
+					<a href="{% url 'player_dashboard:dashboard' %}">
+						{% trans "Home" %}
+					</a>
 				</li>
+
 				<li>
-					<a href="javascript:;">Exercise Diary</a>
+					<a href="javascript:;">
+						{% trans "Daily Wellbeing" %}
+					</a>
+
+					<ul class="child-menu">
+						<li>
+							<a href="{% url 'questionnaire:wizard' 'daily-wellbeing-o15' %}">
+								{% trans "Enter daily wellbeing" %}
+							</a>
+						</li>
+						<li>
+							<a href="{% url 'questionnaire:history' 'daily-wellbeing-o15' %}">
+								{% trans "View history" %}
+							</a>
+						</li>
+					</ul>
+				</li>
+
+				<li>
+					<a href="javascript:;">
+						{% trans "Exercise Diary" %}
+					</a>
 
 					<ul class="child-menu">
 						<li>
 							<a href="{% url 'questionnaire:wizard' 'exercise-diary' %}">
-								Enter new session
+								{% trans "Enter new session" %}
 							</a>
 						</li>
 						<li>
 							<a href="{% url 'questionnaire:history' 'exercise-diary' %}">
-								View history
+								{% trans "View history" %}
 							</a>
 						</li>
 					</ul>
 				</li>
 
-				<li>
-					<a href="javascript:;">Daily Wellbeing</a>
-
-					<ul class="child-menu">
-						<li>
-							<a href="{% url 'questionnaire:wizard' 'daily-wellbeing-u15' %}">
-								Enter daily wellbeing
-							</a>
-						</li>
-						<li>
-							<a href="{% url 'questionnaire:history' 'daily-wellbeing-u15' %}">
-								View history
-							</a>
-						</li>
-					</ul>
-				</li>
         <li>
-					<a href="{% url 'player_dashboard:logout' %}">Logout</a>
+					<a href="https://talentstomorrow.com/athlete-dashboard/" target="_blank">
+						{% trans "How it works" %}
+					</a>
+				</li>
+
+
+        <li>
+					<a href="{% url 'player_dashboard:logout' %}">
+						{% trans "Logout" %}
+					</a>
 				</li>
 			</ul>
 		</div><!--.menu-layer-->

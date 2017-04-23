@@ -1,7 +1,7 @@
 var HighchartsConfig = {
   init: function () {
-    var data = window.chartData
-    var labels = window.chartLabels
+    var data = window.chartData.reverse()
+    var labels = window.chartLabels.reverse()
 
     if(data.length && labels.length) {
       this.printChart(data, labels)

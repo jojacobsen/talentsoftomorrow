@@ -24,13 +24,125 @@
   }
 }
 
-.history-daily-wellbeing-u15 {
-  .history-table {
-    min-width: 1200px;
+.history-latest {
+  padding: 15px 0;
+  display: flex;
+  align-items: center;
+  margin-bottom: 25px;
+  background-color: #fff;
+  width: 100%;
+
+  & > div {
+    width: 100%; // IE fallback
   }
 }
 
-.history-training-session {
+.history-highlight {
+  padding: 25px;
+  width: 100%;
+}
+
+.history-highlight-item {
+  text-align: center;
+  width: 33.333%;
+  float: left;
+}
+
+.history-highlight-item-icon {
+  display: inline-block;
+  font-size: 2.2em;
+}
+
+.history-highlight-item-result {
+  display: block;
+  line-height: 1;
+  font-size: 1.4em;
+  padding-top: 5px;
+  margin-left: 5px;
+  font-weight: 300;
+}
+
+.history-highlight-item-label {
+  font-size: 0.8em;
+  text-transform: uppercase;
+  line-height: 1.1;
+  display: inline-block;
+  width: 100%;
+  margin-top: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 3px;
+}
+
+.history-likerts {
+  padding: 25px;
+  margin-bottom: 0;
+  width: 100%;
+
+  li {
+    display: inline-block;
+    width: 100%;
+    background-color: #eee;
+    padding: 5px;
+    margin-bottom: 15px;
+    text-align: center;
+    height: 30px;
+    position: relative;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  @for $i from 0 through 10 {
+    li:nth-child(#{$i + 1}) {
+      $color: adjust-hue($brand-secondary, -15 * $i);
+      $darkened: darken($color, 25%);
+
+      background-color: $color;
+
+      .tpl-answer {
+        background-color: rgba($darkened, 0.7);
+        background: linear-gradient(to right, $color 0%,rgba($darkened, 1) 100%);
+      }
+    }
+  }
+
+  .tpl-answer {
+    top: 0;
+    left: 0;
+    position: absolute;
+    height: 100%;
+    opacity: 0.5;
+  }
+
+  .tpl-label {
+    font-size: 0.7em;
+    font-weight: bold;
+    text-transform: uppercase;
+    position: absolute;
+    width: 100%;
+  }
+}
+
+// Overwrites for specific templates
+.history-latest-ed,
+.history-latest-dw-o15 {
+  display: none;
+}
+
+.history-daily-wellbeing-o15 {
+  .history-table {
+    min-width: 1200px;
+  }
+
+  .history-latest-dw-o15 {
+    display: block;
+  }
+}
+
+.history-exercise-diary {
   td, th {
     &:last-child {
       text-align: left;
@@ -39,5 +151,61 @@
 
   td:last-child {
     font-size: 0.9em;
+  }
+
+  .history-likerts {
+    padding: 25px 25px 10px;
+  }
+
+  .history-highlight-item {
+    width: 100%;
+  }
+
+  .history-latest-ed {
+    display: block;
+  }
+}
+
+.history-latest-description {
+  padding: 10px 25px;
+  font-size: 0.8em;
+
+  strong, p {
+    display: inline;
+  }
+}
+
+@media (min-width: $break-sm) {
+  .history-daily-wellbeing-o15 {
+    .history-latest {
+      height: 420px;
+    }
+  }
+
+  .history-exercise-diary {
+    .history-latest {
+      height: 250px;
+    }
+  }
+
+  .history-highlight-item {
+    padding: 25px 0;
+    float: none;
+    width: 100%;
+  }
+
+  .history-highlight-item-icon {
+    font-size: 2em;
+  }
+
+  .history-highlight-item-result {
+    display: inline-block;
+    font-size: 1.8em;
+    padding-top: 5px;
+    margin-left: 12px;
+  }
+
+  .history-highlight-item-label {
+    font-size: 0.8em;
   }
 }

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load i18n %}
 {% load staticfiles %}
 {% load static %}
 
@@ -17,7 +17,7 @@
         <div class="page-header full-content">
             <div class="row">
                 <div class="col-sm-6">
-                    <h1>History <small>{{ questionnaire.name }}</small></h1>
+                    <h1>{% trans "History" %} <small>{{ questionnaire.name }}</small></h1>
                 </div><!--.col-->
                 <div class="col-sm-6 hidden-xs">
                     <ol class="breadcrumb">
@@ -28,7 +28,7 @@
                         </li>
                         <li>
                             <a href="#" class="active">
-                                History
+                                {% trans "History" %}
                             </a>
                         </li>
                     </ol>
@@ -38,20 +38,85 @@
 
         {% if not submission_list %}
             <h4><em>
-                No records yet
+                {% trans "No records yet" %}
             </em></h4>
         {% endif %}
 
         {% if submission_list %}
-            <div class="table-responsive">
-                <div id="history-container"></div>
+
+            <h3 class="full-block">
+                {% trans "Latest record" %}
+            </h3>
+
+            <!-- DW over 15 Latest -->
+            <div class="row history-latest-dw-o15">
+                <div class="col-sm-4">
+                    <div class="history-latest">
+                        <div class="history-highlight">
+                            <div class="history-highlight-item">
+                                <i class="fa fa-heart-o history-highlight-item-icon" aria-hidden="true"></i>
+                                <div class="history-highlight-item-result js-heart-rate-result"></div>
+                                <div class="history-highlight-item-label js-heart-rate-label"></div>
+                            </div>
+                            <div class="history-highlight-item">
+                                <i class="fa fa-tachometer history-highlight-item-icon" aria-hidden="true"></i>
+                                <div class="history-highlight-item-result js-weight-result"></div>
+                                <div class="history-highlight-item-label js-weight-label"></div>
+                            </div>
+
+                            <div class="history-highlight-item">
+                                <i class="fa fa-moon-o history-highlight-item-icon" aria-hidden="true"></i>
+                                <div class="history-highlight-item-result js-sleep-hours-result"></div>
+                                <div class="history-highlight-item-label js-sleep-hours-label"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-8">
+                    <div class="history-latest">
+                        <ul class="history-likerts js-history-likerts"></ul>
+                    </div>
+                </div>
             </div>
+
+            <!-- ED Latest -->
+            <div class="row history-latest-ed">
+                <div class="col-sm-4">
+                    <div class="history-latest">
+                        <div class="history-highlight">
+                            <div class="history-highlight-item">
+                                <i class="fa fa-clock-o history-highlight-item-icon" aria-hidden="true"></i>
+                                <div class="history-highlight-item-result js-duration-result"></div>
+                                <div class="history-highlight-item-label js-duration-label"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-8">
+                    <div class="history-latest">
+                        <div>
+                            <ul class="history-likerts js-history-likerts"></ul>
+                            <div class="history-latest-description">
+                                <strong>{% trans "Description" %}:</strong>
+                                <p class="js-history-latest-description"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <h3 class="full-block">
+                {% trans "All records" %}
+            </h3>
 
             <div class="table-responsive">
                 <table class="table table-striped history-table">
                     <thead>
                         <tr>
-                            <th>Date</th>
+                            <th>{% trans "Date" %}</th>
                             {% for a in submission_list.0.answer_set.all|dictsort:"question.sort"  %}
                                 <th>{{ a.question.text  }}</th>
                             {% endfor %}
@@ -81,25 +146,29 @@
 	<!-- END PLUGINS AREA -->
 
 	<!-- PLUGINS INITIALIZATION AND SETTINGS -->
-        <script src="{% get_static_prefix %}/js/history.{{questionnaire.slug}}.highcharts.js"></script>
+        <script src="{% get_static_prefix %}js/history.js"></script>
+<!--         <script src="{% get_static_prefix %}/js/history.{{questionnaire.slug}}.highcharts.js"></script> -->
     <!-- END PLUGINS INITIALIZATION AND SETTINGS -->
 
     <!-- BEGIN INITIALIZATION-->
     <script>
     $(document).ready(function () {
         window.chartTitle = "{{ questionnaire.name }} history";
-        window.chartLabels = ["Date"]
         window.chartData = []
 
-        {% for a in submission_list.0.answer_set.all|dictsort:"question.sort" %}
-            window.chartLabels.push("{{ a.question.text }}");
-        {% endfor %}
-
         {% for s in submission_list %}
-            var dataRow = ['{{ s.date|date:"SHORT_DATE_FORMAT" }}'];
+            var dataRow = {
+                date: "{{ s.date|date:'SHORT_DATE_FORMAT' }}",
+                questions: []
+            };
 
             {% for a in s.answer_set.all|dictsort:"question.sort" %}
-                dataRow.push("{{ a.answer }}");
+                dataRow.questions.push({
+                    slug: "{{ a.question.slug }}",
+                    label: "{{ a.question.text }}",
+                    answer: "{{ a.answer }}",
+                    date: "{{ s.date|date:'SHORT_DATE_FORMAT' }}"
+                });
             {% endfor %}
 
             window.chartData.push(dataRow);
@@ -107,7 +176,7 @@
 
 		Layout.init();
 		Pleasure.init();
-        HighchartsConfig.init();
+        History.init();
     });
     </script>
     <!-- END INITIALIZATION-->
