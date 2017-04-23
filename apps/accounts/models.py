@@ -54,6 +54,7 @@ class Player(models.Model):
     last_name = EncryptedTextField()
     active = models.BooleanField(default=True)
     archived = models.BooleanField(default=False)
+    invited = models.DateTimeField(null=True, blank=True)
     GENDER_CHOICES = (
         ('M', 'Male'),
         ('F', 'Female'),

@@ -1,0 +1,8 @@
+{% load i18n %}
+{% blocktrans %}Dear {{ user.player.first_name }},{% endblocktrans %}
+
+{% blocktrans with domain=site.domain %}You are invited on {{ domain }}.{% endblocktrans %}
+
+{% trans "You can set your new password by following this link:" %}
+
+https{% if secure %}s{% endif %}://{{ site.domain }}{% url "password_reset_reset" token %}
