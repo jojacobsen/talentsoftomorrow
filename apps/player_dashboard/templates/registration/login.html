@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load staticfiles %}
-
+{% load i18n %}
 {% block head %}
 <title>Login</title>
 <!-- Custom styles for this template -->
@@ -40,6 +40,11 @@
             </form>
         </div>
     </div>
+    {% url "password_reset_recover" as password_reset_url %}
+    {% blocktrans %}
+        If you forgot your password please reset it <a href="{{ password_reset_url }}">here</a>
+    {% endblocktrans %}
+
 </div> <!-- /container -->
 
 {% endblock %}

@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'modeltranslation',
     'django_measurement',
     'storages',
+    'password_reset',
 
     # Apps
     'accounts',
@@ -224,12 +225,12 @@ AWS_AUTO_CREATE_BUCKET = True
 # Host for sending e-mail.
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'asmtp.unoeuro.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'johann@googlemail.com'
-DEFAULT_FROM_EMAIL = 'johann@googlemail.com'
-SERVER_EMAIL = 'johann@googlemail.com'
-EMAIL_HOST_PASSWORD = 'password'
+EMAIL_HOST_USER = 'info@talentstomorrow.com'
+DEFAULT_FROM_EMAIL = 'info@talentstomorrow.com'
+SERVER_EMAIL = 'info@talentstomorrow.com'
+EMAIL_HOST_PASSWORD = 'Taltal2016'
 
 """
 # Host for sending e-mail.
