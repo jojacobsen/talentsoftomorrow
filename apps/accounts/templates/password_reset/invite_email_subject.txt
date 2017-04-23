@@ -1,0 +1,1 @@
+{% load i18n %}{% blocktrans with domain=site.domain %}Invite to {{ domain }}{% endblocktrans %}
