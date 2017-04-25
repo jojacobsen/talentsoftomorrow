@@ -21,6 +21,42 @@
   }
 }
 
+.language-selector select {
+  position: absolute;
+  z-index: 10;
+  padding: 5px;
+  height: 30px;
+  font-size: 0.8em;
+  background: transparent;
+  color: #fff;
+  bottom: 0;
+  border-radius: 0;
+  margin: 35px 5% 15px;
+  width: 90%;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1s linear;
+}
+
+.menu-layer.active {
+  .language-selector select {
+    visibility: visible;
+    opacity: 0.8;
+  }
+}
+
+body.is-login {
+  .language-selector {
+    select {
+      visibility: visible;
+      opacity: 1;
+      color: #000;
+      bottom: 0;
+      position: absolute;
+    }
+  }
+}
+
 /* ================ */
 /* === SIDE NAV === */
 /* ================ */
@@ -64,4 +100,22 @@
       background-color: $brand-darker;
     }
   }
+}
+
+@media (min-width: $break-sm) {
+  .language-selector select {
+    width: 260px;
+    margin: 35px 35px 15px;
+  }
+
+  body.is-login {
+    .language-selector select {
+      top: 0;
+      right: 0;
+      width: 120px;
+      margin: 25px 35px 15px;
+      position: absolute;
+    }
+  }
+
 }

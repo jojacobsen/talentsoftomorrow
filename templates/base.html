@@ -47,7 +47,8 @@
             </div>
           {% endfor %}
         {% endif %}
-        <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+        <form action="{% url 'set_language' %}" method="post" class="language-selector js-language-selector">
+            {% csrf_token %}
             <input name="next" type="hidden" value="{{ redirect_to }}" />
             <select name="language">
                 {% get_current_language as LANGUAGE_CODE %}
@@ -59,8 +60,8 @@
                     </option>
                 {% endfor %}
             </select>
-            <input type="submit" value="Go" />
         </form>
+
 
         {% block body %}{% endblock body %}
         {% block content %}{% endblock content %}
@@ -73,6 +74,29 @@
         <script src="{% static "js/pleasure.js" %}"></script>
         <!-- ADMIN 1 -->
         <script src="{% static "js/layout.js" %}"></script>
+
+        <script>
+            (function($) {
+                // language selector
+                $('.js-language-selector select').on('change', function(){
+                    $('.js-language-selector').submit()
+                })
+
+                if (!$('body').hasClass('is-login')) {
+                    $('.js-language-selector').appendTo('.js-language-selector-wrapper');
+                }
+
+                // system views
+                $('form').each(function(){
+                    var action = $(this).attr('action')
+
+                    if (action.indexOf('/password/') > -1) {
+                        $(this).addClass('system-form')
+                    }
+                })
+
+            })(jQuery)
+        </script>
 
         <!-- BEGIN Google Analytics -->
         <script>

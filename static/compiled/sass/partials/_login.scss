@@ -1,6 +1,8 @@
 body.is-login {
   margin: 0 !important;
   background-color: #fff;
+  min-height: 380px;
+  position: relative;
 }
 
 .login-logo {
@@ -27,4 +29,11 @@ body.is-login {
       border-color: $brand-secondary;
     }
   }
+}
+
+.login-password-reset {
+  text-align: center;
+  display: block;
+  padding: 15px 0 50px;
+  font-size: 0.8em;
 }
