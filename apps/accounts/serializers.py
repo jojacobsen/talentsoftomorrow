@@ -77,12 +77,21 @@ class PlayersSerializer(serializers.ModelSerializer):
 class PlayerSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     club = ClubSerializer(read_only=True)
-    email = serializers.EmailField(max_length=None, min_length=5, allow_blank=True, write_only=True, required=False)
+    email = serializers.EmailField(write_only=True)
 
     class Meta:
         model = Player
         fields = ('id', 'user', 'lab_key', 'gender', 'birthday', 'club', 'first_name', 'last_name', 'active',
                   'archived', 'email')
+
+    def update(self, instance, validated_data):
+        for attr, value in validated_data.items():
+            if attr == 'email':
+                setattr(instance.user, attr, value)
+            else:
+                setattr(instance, attr, value)
+        instance.save()
+        return instance
 
 
 class CurrentClubSerializer(serializers.ModelSerializer):
