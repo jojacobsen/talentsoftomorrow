@@ -108,6 +108,7 @@ class PlayerProfileSerializer(serializers.BaseSerializer):
             'player': obj.id,
             'player_name': obj.first_name + ' ' + obj.last_name,
             'invited': obj.invited,
+            'email': obj.user.email,
             'teams': teams_s,
             'lab_key': obj.lab_key,
             'gender': obj.gender,
