@@ -5,4 +5,4 @@
 
 {% trans "You can set your new password by following this link:" %}
 
-https{% if secure %}s{% endif %}://{{ site.domain }}{% url "password_reset_reset" token %}
+http{% if secure %}s{% endif %}://{{ site.domain }}{% url "password_reset_reset" token %}

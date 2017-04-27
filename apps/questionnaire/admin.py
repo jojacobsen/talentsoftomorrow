@@ -3,8 +3,8 @@ from questionnaire.models import Questionnaire, Question, Section, Answer, Submi
 
 
 class QuestionnaireAdmin(admin.ModelAdmin):
-    list_display = ['name', 'slug', 'language']
-    list_filter = ['club', 'language']
+    list_display = ['name', 'slug']
+    list_filter = ['club']
     search_fields = ['name', 'slug']
 
 

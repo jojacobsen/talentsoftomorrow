@@ -10,11 +10,9 @@ class Questionnaire(models.Model):
     slug = models.CharField(max_length=200)
     short_description = models.CharField(max_length=200, blank=True, null=True)
     club = models.ManyToManyField(Club, blank=True)
-    language = models.CharField(max_length=2, default=settings.LANGUAGE_CODE,
-                                verbose_name=_('Language'), choices=settings.LANGUAGES)
 
     def __str__(self):
-        return self.name + ' (' + self.language + ')'
+        return self.name
 
 
 class Section(models.Model):

@@ -19,7 +19,7 @@ django-extensions==1.7.5
 django-fernet-fields==0.4
 django-filter==1.0.2
 django-measurement==2.4.0
-django-modeltranslation==0.12
+django-modeltranslation==0.12.1
 django-storages==1.5.1
 django-password-reset==0.9
 djangorestframework==3.6.2
