@@ -88,6 +88,7 @@ class PlayerSerializer(serializers.ModelSerializer):
         for attr, value in validated_data.items():
             if attr == 'email':
                 setattr(instance.user, attr, value)
+                instance.user.save()
             else:
                 setattr(instance, attr, value)
         instance.save()
