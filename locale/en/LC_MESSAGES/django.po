@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-27 10:12+0200\n"
-"PO-Revision-Date: 2017-04-21 14:52+0000\n"
+"POT-Creation-Date: 2017-04-27 12:34+0200\n"
+"PO-Revision-Date: 2017-04-27 10:32+0000\n"
 "Last-Translator: b'  <>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -85,16 +85,19 @@ msgstr ""
 #, python-format
 msgid "You are invited on %(domain)s."
 msgstr ""
+"Your coach has invited you to %(domain)s. Talents of Tomorrow is a system "
+"that helps your coach prevent overuse injuries by tracking the talents' "
+"daily wellbeing and training load."
 
 #: apps/accounts/templates/password_reset/invite_email.txt:6
 #: apps/accounts/templates/password_reset/recovery_email.txt:6
 msgid "You can set your new password by following this link:"
-msgstr ""
+msgstr "To get started, please select a password following this link: "
 
 #: apps/accounts/templates/password_reset/invite_email_subject.txt:1
 #, python-format
 msgid "Invite to %(domain)s"
-msgstr ""
+msgstr "Invitation to %(domain)s"
 
 #: apps/accounts/templates/password_reset/recovery_email.txt:4
 #, python-format
@@ -110,7 +113,7 @@ msgstr ""
 #: apps/accounts/templates/password_reset/recovery_email_subject.txt:1
 #, python-format
 msgid "Password recovery on %(domain)s"
-msgstr ""
+msgstr "Password recovery for your account at %(domain)s"
 
 #: apps/player_dashboard/templates/player_dashboard/index.html:15
 #: apps/questionnaire/templates/questionnaire/wizard.html:6
@@ -179,7 +182,15 @@ msgstr "How it works"
 msgid "Logout"
 msgstr "Logout"
 
-#: apps/player_dashboard/templates/registration/login.html:46
+#: apps/player_dashboard/templates/registration/login.html:30
+msgid "Username"
+msgstr ""
+
+#: apps/player_dashboard/templates/registration/login.html:37
+msgid "Password"
+msgstr ""
+
+#: apps/player_dashboard/templates/registration/login.html:50
 #, python-format
 msgid ""
 "\n"
@@ -191,7 +202,7 @@ msgstr ""
 #: apps/player_dashboard/views.py:27 apps/player_dashboard/views.py:30
 #: apps/player_dashboard/views.py:35
 msgid "Please login with your Player Account."
-msgstr "Please login with your Player Account."
+msgstr "Please login with your Athlete account."
 
 #: apps/questionnaire/models.py:14
 msgid "Language"
@@ -243,26 +254,27 @@ msgid "All records"
 msgstr "All records"
 
 #: apps/questionnaire/templates/questionnaire/history.html:119
+#: apps/questionnaire/templates/questionnaire/wizard.html:64
 msgid "Date"
 msgstr "Date"
 
-#: apps/questionnaire/templates/questionnaire/wizard.html:73
+#: apps/questionnaire/templates/questionnaire/wizard.html:75
 msgid "Pick a date"
 msgstr "Pick a date"
 
-#: apps/questionnaire/templates/questionnaire/wizard.html:102
+#: apps/questionnaire/templates/questionnaire/wizard.html:104
 msgid "Comments"
 msgstr "Comments"
 
-#: apps/questionnaire/templates/questionnaire/wizard.html:206
+#: apps/questionnaire/templates/questionnaire/wizard.html:208
 msgid "Previous"
 msgstr "Previous"
 
-#: apps/questionnaire/templates/questionnaire/wizard.html:207
+#: apps/questionnaire/templates/questionnaire/wizard.html:209
 msgid "Next"
 msgstr "Next"
 
-#: apps/questionnaire/templates/questionnaire/wizard.html:209
+#: apps/questionnaire/templates/questionnaire/wizard.html:211
 msgid "SAVE"
 msgstr "SAVE"
 
