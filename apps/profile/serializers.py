@@ -107,6 +107,7 @@ class PlayerProfileSerializer(serializers.BaseSerializer):
         return {
             'player': obj.id,
             'player_name': obj.first_name + ' ' + obj.last_name,
+            'invited': obj.invited,
             'teams': teams_s,
             'lab_key': obj.lab_key,
             'gender': obj.gender,
