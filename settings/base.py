@@ -40,13 +40,6 @@ INSTALLED_APPS = [
     'djcelery',
     'opbeat.contrib.django',
     'django.contrib.humanize',
-    'corsheaders',
-    'rest_framework_docs',
-    'django_cleanup',
-    'modeltranslation',
-    'django_measurement',
-    'storages',
-    'password_reset',
 
     # Apps
     'accounts',
@@ -58,6 +51,14 @@ INSTALLED_APPS = [
     'profile',
     'player_dashboard',
     'questionnaire',
+
+    'corsheaders',
+    'rest_framework_docs',
+    'django_cleanup',
+    'modeltranslation',
+    'django_measurement',
+    'storages',
+    'password_reset',
 ]
 
 REST_FRAMEWORK = {
