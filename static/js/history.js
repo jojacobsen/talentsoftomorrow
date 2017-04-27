@@ -9,7 +9,7 @@ var History = {
         case 'weight':
           self.writeHighlights('weight', item)
           break;
-        case 'sleep':
+        case 'sleep-hours':
           self.writeHighlights('sleep-hours', item)
           break;
         case 'resting-heart-rate':
