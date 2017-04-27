@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-27 12:34+0200\n"
+"POT-Creation-Date: 2017-04-27 15:17+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -95,6 +95,20 @@ msgstr ""
 msgid "Invite to %(domain)s"
 msgstr ""
 
+#: apps/accounts/templates/password_reset/recovery_done.html:4
+msgid "New password set"
+msgstr ""
+
+#: apps/accounts/templates/password_reset/recovery_done.html:8
+msgid ""
+"Your password has successfully been reset. You can use it right now on the "
+"login page."
+msgstr ""
+
+#: apps/accounts/templates/password_reset/recovery_done.html:9
+msgid "Go to login"
+msgstr ""
+
 #: apps/accounts/templates/password_reset/recovery_email.txt:4
 #, python-format
 msgid "You have requested a password reset on %(domain)s."
@@ -109,6 +123,41 @@ msgstr ""
 #: apps/accounts/templates/password_reset/recovery_email_subject.txt:1
 #, python-format
 msgid "Password recovery on %(domain)s"
+msgstr ""
+
+#: apps/accounts/templates/password_reset/recovery_form.html:5
+msgid "Password recovery"
+msgstr ""
+
+#: apps/accounts/templates/password_reset/recovery_form.html:12
+msgid "Recover my password"
+msgstr ""
+
+#: apps/accounts/templates/password_reset/reset.html:6
+#, python-format
+msgid ""
+"Sorry, this password reset link is invalid. You can still <a href="
+"\"%(recovery_url)s\">request a new one</a>."
+msgstr ""
+
+#: apps/accounts/templates/password_reset/reset.html:8
+#, python-format
+msgid "Hi, <strong>%(username)s</strong>. Please choose your new password."
+msgstr ""
+
+#: apps/accounts/templates/password_reset/reset.html:12
+msgid "Set new password"
+msgstr ""
+
+#: apps/accounts/templates/password_reset/reset_sent.html:4
+msgid "Password recovery sent"
+msgstr ""
+
+#: apps/accounts/templates/password_reset/reset_sent.html:9
+#, python-format
+msgid ""
+"An email was sent to <strong>%(email)s</strong> %(ago)s ago. Use the link in "
+"it to set a new password."
 msgstr ""
 
 #: apps/player_dashboard/templates/player_dashboard/index.html:15
@@ -179,10 +228,12 @@ msgid "Logout"
 msgstr ""
 
 #: apps/player_dashboard/templates/registration/login.html:30
+#: apps/player_dashboard/templates/registration/login.html:32
 msgid "Username"
 msgstr ""
 
 #: apps/player_dashboard/templates/registration/login.html:37
+#: apps/player_dashboard/templates/registration/login.html:39
 msgid "Password"
 msgstr ""
 
@@ -200,31 +251,27 @@ msgstr ""
 msgid "Please login with your Player Account."
 msgstr ""
 
-#: apps/questionnaire/models.py:14
-msgid "Language"
-msgstr ""
-
-#: apps/questionnaire/models.py:30
+#: apps/questionnaire/models.py:28
 msgid "Text"
 msgstr ""
 
-#: apps/questionnaire/models.py:37
+#: apps/questionnaire/models.py:35
 msgid "Open: A simple one line input box"
 msgstr ""
 
-#: apps/questionnaire/models.py:38
+#: apps/questionnaire/models.py:36
 msgid "Textfield: A box for lengthy answers"
 msgstr ""
 
-#: apps/questionnaire/models.py:44
+#: apps/questionnaire/models.py:42
 msgid "Range: A range of options from which can be chosen"
 msgstr ""
 
-#: apps/questionnaire/models.py:45
+#: apps/questionnaire/models.py:43
 msgid "Number: A number"
 msgstr ""
 
-#: apps/questionnaire/models.py:46
+#: apps/questionnaire/models.py:44
 msgid "Comment: Not a question, but only a comment displayed to the user"
 msgstr ""
 
