@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-27 12:34+0200\n"
+"POT-Creation-Date: 2017-04-27 15:17+0200\n"
 "PO-Revision-Date: 2017-04-27 10:32+0000\n"
 "Last-Translator: b'  <>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -99,6 +99,20 @@ msgstr "To get started, please select a password following this link: "
 msgid "Invite to %(domain)s"
 msgstr "Invitation to %(domain)s"
 
+#: apps/accounts/templates/password_reset/recovery_done.html:4
+msgid "New password set"
+msgstr ""
+
+#: apps/accounts/templates/password_reset/recovery_done.html:8
+msgid ""
+"Your password has successfully been reset. You can use it right now on the "
+"login page."
+msgstr ""
+
+#: apps/accounts/templates/password_reset/recovery_done.html:9
+msgid "Go to login"
+msgstr ""
+
 #: apps/accounts/templates/password_reset/recovery_email.txt:4
 #, python-format
 msgid "You have requested a password reset on %(domain)s."
@@ -114,6 +128,45 @@ msgstr ""
 #, python-format
 msgid "Password recovery on %(domain)s"
 msgstr "Password recovery for your account at %(domain)s"
+
+#: apps/accounts/templates/password_reset/recovery_form.html:5
+#, fuzzy
+#| msgid "Password recovery on %(domain)s"
+msgid "Password recovery"
+msgstr "Password recovery for your account at %(domain)s"
+
+#: apps/accounts/templates/password_reset/recovery_form.html:12
+msgid "Recover my password"
+msgstr ""
+
+#: apps/accounts/templates/password_reset/reset.html:6
+#, python-format
+msgid ""
+"Sorry, this password reset link is invalid. You can still <a href="
+"\"%(recovery_url)s\">request a new one</a>."
+msgstr ""
+
+#: apps/accounts/templates/password_reset/reset.html:8
+#, python-format
+msgid "Hi, <strong>%(username)s</strong>. Please choose your new password."
+msgstr ""
+
+#: apps/accounts/templates/password_reset/reset.html:12
+msgid "Set new password"
+msgstr ""
+
+#: apps/accounts/templates/password_reset/reset_sent.html:4
+#, fuzzy
+#| msgid "Password recovery on %(domain)s"
+msgid "Password recovery sent"
+msgstr "Password recovery for your account at %(domain)s"
+
+#: apps/accounts/templates/password_reset/reset_sent.html:9
+#, python-format
+msgid ""
+"An email was sent to <strong>%(email)s</strong> %(ago)s ago. Use the link in "
+"it to set a new password."
+msgstr ""
 
 #: apps/player_dashboard/templates/player_dashboard/index.html:15
 #: apps/questionnaire/templates/questionnaire/wizard.html:6
@@ -183,10 +236,12 @@ msgid "Logout"
 msgstr "Logout"
 
 #: apps/player_dashboard/templates/registration/login.html:30
+#: apps/player_dashboard/templates/registration/login.html:32
 msgid "Username"
 msgstr ""
 
 #: apps/player_dashboard/templates/registration/login.html:37
+#: apps/player_dashboard/templates/registration/login.html:39
 msgid "Password"
 msgstr ""
 
@@ -204,31 +259,27 @@ msgstr ""
 msgid "Please login with your Player Account."
 msgstr "Please login with your Athlete account."
 
-#: apps/questionnaire/models.py:14
-msgid "Language"
-msgstr "Language"
-
-#: apps/questionnaire/models.py:30
+#: apps/questionnaire/models.py:28
 msgid "Text"
 msgstr "Text"
 
-#: apps/questionnaire/models.py:37
+#: apps/questionnaire/models.py:35
 msgid "Open: A simple one line input box"
 msgstr "Open: A simple one line input box"
 
-#: apps/questionnaire/models.py:38
+#: apps/questionnaire/models.py:36
 msgid "Textfield: A box for lengthy answers"
 msgstr "Textfield: A box for lengthy answers"
 
-#: apps/questionnaire/models.py:44
+#: apps/questionnaire/models.py:42
 msgid "Range: A range of options from which can be chosen"
 msgstr "Range: A range of options from which can be chosen"
 
-#: apps/questionnaire/models.py:45
+#: apps/questionnaire/models.py:43
 msgid "Number: A number"
 msgstr "Number: A number"
 
-#: apps/questionnaire/models.py:46
+#: apps/questionnaire/models.py:44
 msgid "Comment: Not a question, but only a comment displayed to the user"
 msgstr "Comment: Not a question, but only a comment displayed to the user"
 
@@ -281,3 +332,6 @@ msgstr "SAVE"
 #: apps/questionnaire/views.py:80
 msgid "Your Questionnaire has been saved!"
 msgstr "Your submission has been saved!"
+
+#~ msgid "Language"
+#~ msgstr "Language"
