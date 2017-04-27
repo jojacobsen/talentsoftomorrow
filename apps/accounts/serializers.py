@@ -59,22 +59,30 @@ class CoachSerializer(serializers.ModelSerializer):
 
 
 class PlayersSerializer(serializers.ModelSerializer):
-    user = UserSerializer(read_only=True)
+    username = serializers.SerializerMethodField()
+    email = serializers.SerializerMethodField()
 
     class Meta:
         model = Player
-        fields = ('id', 'user', 'lab_key', 'gender', 'birthday', 'first_name',
+        fields = ('id', 'username', 'email', 'lab_key', 'gender', 'birthday', 'first_name',
                   'last_name', 'active', 'archived', 'invited')
+
+    def get_username(self, obj):
+        return obj.user.username
+
+    def get_email(self, obj):
+        return obj.user.email
 
 
 class PlayerSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
     club = ClubSerializer(read_only=True)
+    email = serializers.EmailField(max_length=None, min_length=5, allow_blank=True, write_only=True, required=False)
 
     class Meta:
         model = Player
         fields = ('id', 'user', 'lab_key', 'gender', 'birthday', 'club', 'first_name', 'last_name', 'active',
-                  'archived')
+                  'archived', 'email')
 
 
 class CurrentClubSerializer(serializers.ModelSerializer):
