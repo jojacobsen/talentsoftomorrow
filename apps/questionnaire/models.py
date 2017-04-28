@@ -77,7 +77,7 @@ class Submission(models.Model):
 class Answer(models.Model):
     submission = models.ForeignKey(Submission, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, help_text="The question that this is an answer to")
-    answer = models.TextField(max_length=1000)
+    answer = models.TextField(max_length=1000, blank=True, null=True)
     date = models.DateField()
     created = models.DateTimeField(auto_now_add=True)
 
