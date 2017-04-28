@@ -1,1 +1,1 @@
-{% load i18n %}{% blocktrans with domain=site.domain %}Invite to {{ domain }}{% endblocktrans %}
+{% load i18n %}{% blocktrans %}Welcome to the Talents of Tomorrow athlete app{% endblocktrans %}
