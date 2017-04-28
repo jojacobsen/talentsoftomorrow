@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-27 15:17+0200\n"
+"POT-Creation-Date: 2017-04-28 14:13+0200\n"
 "PO-Revision-Date: 2017-04-27 10:32+0000\n"
 "Last-Translator: b'  <>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -164,8 +164,8 @@ msgstr "Password recovery for your account at %(domain)s"
 #: apps/accounts/templates/password_reset/reset_sent.html:9
 #, python-format
 msgid ""
-"An email was sent to <strong>%(email)s</strong> %(ago)s ago. Use the link in "
-"it to set a new password."
+"An email was sent to <strong>%(email)s</strong>. Use the link in it to set a "
+"new password."
 msgstr ""
 
 #: apps/player_dashboard/templates/player_dashboard/index.html:15

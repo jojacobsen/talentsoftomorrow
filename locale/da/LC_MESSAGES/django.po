@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-27 15:17+0200\n"
-"PO-Revision-Date: 2017-04-27 13:16+0000\n"
+"POT-Creation-Date: 2017-04-28 14:13+0200\n"
+"PO-Revision-Date: 2017-04-28 12:14+0000\n"
 "Last-Translator: b'  <>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -107,7 +107,8 @@ msgstr "Kodeordet er gemt"
 msgid ""
 "Your password has successfully been reset. You can use it right now on the "
 "login page."
-msgstr "Dit kodeord er blevet nulstillet, og er klar til brug på login-siden. "
+msgstr ""
+"Dit kodeord er blevet nulstillet, og er klar til brug på login-siden. "
 
 #: apps/accounts/templates/password_reset/recovery_done.html:9
 msgid "Go to login"
@@ -142,11 +143,11 @@ msgstr "Nulstil mit kodeord"
 #: apps/accounts/templates/password_reset/reset.html:6
 #, python-format
 msgid ""
-"Sorry, this password reset link is invalid. You can still <a href="
-"\"%(recovery_url)s\">request a new one</a>."
+"Sorry, this password reset link is invalid. You can still <a "
+"href=\"%(recovery_url)s\">request a new one</a>."
 msgstr ""
-"Beklager, linket er udløbet. Du kan få et nyt link <a href=\"%(recovery_url)s"
-"\">her</a>."
+"Beklager, linket er udløbet. Du kan få et nyt link <a "
+"href=\"%(recovery_url)s\">her</a>."
 
 #: apps/accounts/templates/password_reset/reset.html:8
 #, python-format
@@ -163,12 +164,15 @@ msgstr "Nulstillingsmail sendt "
 
 #: apps/accounts/templates/password_reset/reset_sent.html:9
 #, python-format
+#| msgid ""
+#| "An email was sent to <strong>%(email)s</strong> %(ago)s ago. Use the link in"
+#| " it to set a new password."
 msgid ""
-"An email was sent to <strong>%(email)s</strong> %(ago)s ago. Use the link in "
-"it to set a new password."
+"An email was sent to <strong>%(email)s</strong>. Use the link in it to set a"
+" new password."
 msgstr ""
-"Vi har sendt en email til <strong>%(email)s</strong> for %(ago)s siden. Brug "
-"linket til at vælge et nyt kodeord."
+"Vi har sendt en email til <strong>%(email)s</strong>. Brug linket til at "
+"vælge et nyt kodeord."
 
 #: apps/player_dashboard/templates/player_dashboard/index.html:15
 #: apps/questionnaire/templates/questionnaire/wizard.html:6
@@ -251,13 +255,11 @@ msgstr "Kodeord"
 #, python-format
 msgid ""
 "\n"
-"            If you forgot your password please reset it <a href="
-"\"%(password_reset_url)s\">here</a>\n"
+"            If you forgot your password please reset it <a href=\"%(password_reset_url)s\">here</a>\n"
 "        "
 msgstr ""
 "\n"
-"Har du glemt dit kodeord? Få et nyt <a href=\"%(password_reset_url)s\">her</"
-"a>"
+"Har du glemt dit kodeord? Få et nyt <a href=\"%(password_reset_url)s\">her</a>"
 
 #: apps/player_dashboard/views.py:27 apps/player_dashboard/views.py:30
 #: apps/player_dashboard/views.py:35
