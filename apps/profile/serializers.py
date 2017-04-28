@@ -89,9 +89,7 @@ class PlayerProfileSerializer(serializers.BaseSerializer):
             growth_position = None
 
         # Which method was used?
-        if prediction_method and bioage_method:
-            method = prediction_method
-        elif bioage_method:
+        if bioage_method:
             method = bioage_method
         else:
             method = None
