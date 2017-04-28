@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-27 15:17+0200\n"
+"POT-Creation-Date: 2017-04-28 14:24+0200\n"
 "PO-Revision-Date: 2017-04-27 10:32+0000\n"
 "Last-Translator: b'  <>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -83,15 +83,16 @@ msgstr ""
 
 #: apps/accounts/templates/password_reset/invite_email.txt:4
 #, python-format
-msgid "You are invited on %(domain)s."
-msgstr ""
+msgid ""
 "Your coach has invited you to %(domain)s. Talents of Tomorrow is a system "
 "that helps your coach prevent overuse injuries by tracking the talents' "
 "daily wellbeing and training load."
+msgstr ""
 
 #: apps/accounts/templates/password_reset/invite_email.txt:6
-#: apps/accounts/templates/password_reset/recovery_email.txt:6
-msgid "You can set your new password by following this link:"
+#, fuzzy
+#| msgid "You can set your new password by following this link:"
+msgid "To get started, please set a password by following this link:"
 msgstr "To get started, please select a password following this link: "
 
 #: apps/accounts/templates/password_reset/invite_email_subject.txt:1
@@ -105,8 +106,8 @@ msgstr ""
 
 #: apps/accounts/templates/password_reset/recovery_done.html:8
 msgid ""
-"Your password has successfully been reset. You can use it right now on the "
-"login page."
+"Your password was successfully saved. You can use it right now on the login "
+"page."
 msgstr ""
 
 #: apps/accounts/templates/password_reset/recovery_done.html:9
@@ -117,6 +118,10 @@ msgstr ""
 #, python-format
 msgid "You have requested a password reset on %(domain)s."
 msgstr ""
+
+#: apps/accounts/templates/password_reset/recovery_email.txt:6
+msgid "You can set your new password by following this link:"
+msgstr "To get started, please select a password following this link: "
 
 #: apps/accounts/templates/password_reset/recovery_email.txt:10
 msgid ""
@@ -142,13 +147,13 @@ msgstr ""
 #: apps/accounts/templates/password_reset/reset.html:6
 #, python-format
 msgid ""
-"Sorry, this password reset link is invalid. You can still <a href="
-"\"%(recovery_url)s\">request a new one</a>."
+"Sorry, this password link is invalid. Please <a href=\"%(recovery_url)s"
+"\">request a new one</a>."
 msgstr ""
 
 #: apps/accounts/templates/password_reset/reset.html:8
 #, python-format
-msgid "Hi, <strong>%(username)s</strong>. Please choose your new password."
+msgid "Hi, <strong>%(username)s</strong>. Please choose your password."
 msgstr ""
 
 #: apps/accounts/templates/password_reset/reset.html:12
@@ -164,8 +169,8 @@ msgstr "Password recovery for your account at %(domain)s"
 #: apps/accounts/templates/password_reset/reset_sent.html:9
 #, python-format
 msgid ""
-"An email was sent to <strong>%(email)s</strong> %(ago)s ago. Use the link in "
-"it to set a new password."
+"An email was sent to <strong>%(email)s</strong>. Use the link in it to set a "
+"new password."
 msgstr ""
 
 #: apps/player_dashboard/templates/player_dashboard/index.html:15
@@ -332,6 +337,12 @@ msgstr "SAVE"
 #: apps/questionnaire/views.py:80
 msgid "Your Questionnaire has been saved!"
 msgstr "Your submission has been saved!"
+
+#~ msgid "You are invited on %(domain)s."
+#~ msgstr ""
+#~ "Your coach has invited you to %(domain)s. Talents of Tomorrow is a system "
+#~ "that helps your coach prevent overuse injuries by tracking the talents' "
+#~ "daily wellbeing and training load."
 
 #~ msgid "Language"
 #~ msgstr "Language"

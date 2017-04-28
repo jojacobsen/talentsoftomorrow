@@ -63,7 +63,7 @@ class TestSerializers(unittest.TestCase):
         self.assertEquals(validated_data['current_height'], current_height)
         self.assertEquals(validated_data['height_expired'], False)
         self.assertEquals(validated_data['bio_age'], bio_age)
-        self.assertEquals(validated_data['method'], method)
+        self.assertEquals(validated_data['method'], bio_age_method)
 
     def test_heightserializervalidate(self):
         from apps.profile.serializers import HeightSerializer
