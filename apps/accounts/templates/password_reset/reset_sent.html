@@ -6,7 +6,7 @@
 
 {% block content %}
   <div class="system-form">
-	  <p>{% blocktrans with ago=timestamp|timesince %}An email was sent to <strong>{{ email }}</strong> {{ ago }} ago. Use the link in it to set a new password.{% endblocktrans %}</p>
+	  <p>{% blocktrans with ago=timestamp|timesince %}An email was sent to <strong>{{ email }}</strong>. Use the link in it to set a new password.{% endblocktrans %}</p>
   </div>
 {% endblock %}
 

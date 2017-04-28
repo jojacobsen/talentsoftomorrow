@@ -3,9 +3,9 @@
 {% block content %}
 	<div class="system-form">
 			{% if invalid %}{% url "password_reset_recover" as recovery_url %}
-				<p>{% blocktrans %}Sorry, this password reset link is invalid. You can still <a href="{{ recovery_url }}">request a new one</a>.{% endblocktrans %}</p>
+				<p>{% blocktrans %}Sorry, this password link is invalid. Please <a href="{{ recovery_url }}">request a new one</a>.{% endblocktrans %}</p>
 			{% else %}
-				<p>{% blocktrans %}Hi, <strong>{{ username }}</strong>. Please choose your new password.{% endblocktrans %}</p>
+				<p>{% blocktrans %}Hi, <strong>{{ username }}</strong>. Please choose your password.{% endblocktrans %}</p>
 				<form method="post" action="{% url "password_reset_reset" token %}">
 					{% csrf_token %}
 					{{ form.as_p }}
