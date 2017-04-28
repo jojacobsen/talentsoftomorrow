@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-28 14:24+0200\n"
-"PO-Revision-Date: 2017-04-28 12:28+0000\n"
+"POT-Creation-Date: 2017-04-28 16:54+0200\n"
+"PO-Revision-Date: 2017-04-28 14:54+0000\n"
 "Last-Translator: b'  <>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -77,43 +77,57 @@ msgstr "2011"
 
 #: apps/accounts/templates/password_reset/invite_email.txt:2
 #: apps/accounts/templates/password_reset/recovery_email.txt:2
-#, python-format
-msgid "Dear %(user.player.first_name)s,"
-msgstr "Kære %(user.player.first_name)s,"
+msgid "Dear"
+msgstr "Kære"
 
 #: apps/accounts/templates/password_reset/invite_email.txt:4
-#, python-format
+#| msgid ""
+#| "Your coach has invited you to the Talents of Tomorrow athlete app. It's a "
+#| "system that helps your coach prevent overuse injuries by tracking the "
+#| "talents' daily wellbeing and training load."
 msgid ""
-"Your coach has invited you to %(domain)s. Talents of Tomorrow is a system "
-"that helps your coach prevent overuse injuries by tracking the talents' "
-"daily wellbeing and training load."
+"Your coach has invited you to the Talents of Tomorrow athlete app. It's a "
+"system that helps your coach prevent overuse injuries by tracking your daily"
+" wellbeing and training load."
 msgstr ""
-"Din træner har inviteret dig til %(domain)s. Talents of Tomorrow er et "
+"Din træner har inviteret dig til Talents of Tomorrow's atlet app. Det er et "
 "system, der hjælper din træner med at forebygge overbelastningsskader ved at"
-" følge talentets sundhed og træningsbelastning. "
+" følge din sundhed og træningsbelastning. "
 
 #: apps/accounts/templates/password_reset/invite_email.txt:6
-#| msgid "You can set your new password by following this link:"
 msgid "To get started, please set a password by following this link:"
 msgstr "For at komme igang, vælg venligst et kodeord på via dette link:"
 
+#: apps/accounts/templates/password_reset/invite_email.txt:10
+#: apps/accounts/templates/password_reset/recovery_email.txt:10
+msgid "Afterwards you are ready to login here:"
+msgstr "Når det er gjort, kan du logge ind her:"
+
+#: apps/accounts/templates/password_reset/invite_email.txt:12
+#: apps/accounts/templates/password_reset/recovery_email.txt:12
+msgid "Link:"
+msgstr "Link:"
+
+#: apps/accounts/templates/password_reset/invite_email.txt:13
+#: apps/accounts/templates/password_reset/recovery_email.txt:13
+msgid "Username:"
+msgstr "Brugernavn"
+
 #: apps/accounts/templates/password_reset/invite_email_subject.txt:1
-#, python-format
-msgid "Invite to %(domain)s"
-msgstr "Invitation til %(domain)s"
+msgid "Welcome to the Talents of Tomorrow athlete app"
+msgstr "Velkommen til Talents of Tomorrow's atlet app"
 
 #: apps/accounts/templates/password_reset/recovery_done.html:4
 msgid "New password set"
 msgstr "Kodeordet er gemt"
 
 #: apps/accounts/templates/password_reset/recovery_done.html:8
-#| msgid ""
-#| "Your password has successfully been reset. You can use it right now on the "
-#| "login page."
 msgid ""
-"Your password was successfully saved. You can use it right now on the login "
-"page."
-msgstr "Dit kodeord er blevet gemt, og er klar til brug på login-siden. "
+"Your password was successfully saved. You can now use it to log into the "
+"system. We have sent you an email with your username."
+msgstr ""
+"Dit kodeord er blevet gemt, og kan nu bruges til at logge ind i systemet. Vi"
+" har sendt dig en email med dit brugernavn."
 
 #: apps/accounts/templates/password_reset/recovery_done.html:9
 msgid "Go to login"
@@ -128,7 +142,7 @@ msgstr "Du har bedt om at genskabe dit kodeord til %(domain)s."
 msgid "You can set your new password by following this link:"
 msgstr "Vælg et kodeord på dette link: "
 
-#: apps/accounts/templates/password_reset/recovery_email.txt:10
+#: apps/accounts/templates/password_reset/recovery_email.txt:15
 msgid ""
 "If you don't want to reset your password, simply ignore this email and it "
 "will stay unchanged."
@@ -137,9 +151,8 @@ msgstr ""
 "mail, og kodeordet vil forblive det samme."
 
 #: apps/accounts/templates/password_reset/recovery_email_subject.txt:1
-#, python-format
-msgid "Password recovery on %(domain)s"
-msgstr "Genskabelse af kodeord til %(domain)s"
+msgid "Password recovery on Talents of Tomorrow"
+msgstr "Nyt kodeord til Talents of Tomorrow"
 
 #: apps/accounts/templates/password_reset/recovery_form.html:5
 msgid "Password recovery"
@@ -151,9 +164,6 @@ msgstr "Nulstil mit kodeord"
 
 #: apps/accounts/templates/password_reset/reset.html:6
 #, python-format
-#| msgid ""
-#| "Sorry, this password reset link is invalid. You can still <a "
-#| "href=\"%(recovery_url)s\">request a new one</a>."
 msgid ""
 "Sorry, this password link is invalid. Please <a "
 "href=\"%(recovery_url)s\">request a new one</a>."
@@ -163,8 +173,6 @@ msgstr ""
 
 #: apps/accounts/templates/password_reset/reset.html:8
 #, python-format
-#| msgid ""
-#| "Hi, <strong>%(username)s</strong>. Please choose your new password."
 msgid "Hi, <strong>%(username)s</strong>. Please choose your password."
 msgstr "Hej, <strong>%(username)s</strong>. Vælg venligst dit kodeord."
 
@@ -350,6 +358,15 @@ msgstr "GEM"
 #: apps/questionnaire/views.py:80
 msgid "Your Questionnaire has been saved!"
 msgstr "Tak. Formularen er gemt!"
+
+#~ msgid "Dear %(user.player.first_name)s,"
+#~ msgstr "Kære %(user.player.first_name)s,"
+
+#~ msgid "Invite to %(domain)s"
+#~ msgstr "Invitation til %(domain)s"
+
+#~ msgid "Password recovery on %(domain)s"
+#~ msgstr "Genskabelse af kodeord til %(domain)s"
 
 #~ msgid "You are invited on %(domain)s."
 #~ msgstr ""
