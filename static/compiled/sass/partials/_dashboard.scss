@@ -1,0 +1,165 @@
+.dashboard-page-header {
+  margin-bottom: 0;
+}
+
+.dashboard-content {
+  background-color: #fff;
+  width: 100%;
+  display: inline-block;
+}
+
+.dashboard-hero {
+  background-image: url('../img/soccer-pitch.jpg');
+  background-size: cover;
+  background-position: center center;
+  min-height: 200px;
+  padding: 75px 30px;
+  width: 100%;
+  text-align: center;
+  position: relative;
+
+  &.is-hidden {
+    display: none;
+  }
+}
+
+.dashboard-hero-close {
+  position: absolute;
+  color: #fff;
+  right: 30px;
+  top: 20px;
+  line-height: 1;
+  cursor: pointer;
+
+  &:hover {
+    color: $brand-secondary;
+  }
+}
+
+.dashboard-logo {
+  padding: 0 0 15px;
+  width: 100%;
+
+  img {
+    width: 300px;
+    max-width: 100%;
+    display: inline-block;
+  }
+}
+
+.dashboard-description {
+  max-width: 500px;
+  color: #fff;
+  display: inline-block;
+  line-height: 1.2;
+  margin-bottom: 0;
+}
+
+.dashboard-btn {
+  width: 100%;
+  max-width: 350px;
+  display: inline-block;
+  background-color: $brand-secondary;
+  padding: 10px;
+  border-radius: 3px;
+  font-weight: bold;
+
+  &, &:visited, &:focus {
+    color: $gray-darker;
+    text-decoration: none;
+  }
+
+  &:hover,
+  &:active {
+    text-decoration: none;
+    background-color: $brand-primary !important;
+    color: #fff !important;
+  }
+}
+
+.dashboard-history-link {
+  font-size: 14px;
+  text-align: center;
+  width: 100%;
+
+  a {
+    display: inline-block;
+    border-bottom: 1px solid #fff;
+    padding: 10px 0 0px;
+    color: #fff;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+.dashboard-tile {
+  width: 100%;
+  padding: 60px 30px;
+  float: left;
+  text-align: center;
+  min-height: 420px;
+}
+
+.dashboard-tile-first {
+  background-color: $gray-darker;
+
+  &, h3 {
+    color: #fff;
+  }
+}
+
+.dashboard-tile-last {
+  background-color: $brand-secondary;
+
+  &, h3 {
+    color: $gray-darker;
+  }
+
+  .dashboard-btn {
+    background-color: $gray-darker;
+
+    &, &:visited, &:focus {
+      color: #fff;
+    }
+  }
+
+  .dashboard-history-link {
+    a {
+      color: $gray-darker;
+      border-bottom: 1px solid $gray-darker;
+    }
+  }
+}
+
+.dashboard-icon {
+  img {
+    width: 75px;
+  }
+}
+
+.dashboard-tile-title {
+  margin: 15px 0;
+  font-weight: bold;
+  text-transform: uppercase;
+
+}
+
+.dashboard-tile-text {
+  font-size: 14px;
+  line-height: 1.2;
+  margin-bottom: 25px;
+  min-height: 35px;
+}
+
+
+@media (min-width: $break-sm) {
+  .dashboard-tile {
+    width: 50%;
+  }
+
+  .dashboard-tile {
+    padding: 60px 70px;
+  }
+}

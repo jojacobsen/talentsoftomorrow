@@ -40,12 +40,6 @@ INSTALLED_APPS = [
     'djcelery',
     'opbeat.contrib.django',
     'django.contrib.humanize',
-    'corsheaders',
-    'rest_framework_docs',
-    'django_cleanup',
-    'modeltranslation',
-    'django_measurement',
-    'storages',
 
     # Apps
     'accounts',
@@ -55,6 +49,16 @@ INSTALLED_APPS = [
     'graphs',
     'performance',
     'profile',
+    'player_dashboard',
+    'questionnaire',
+
+    'corsheaders',
+    'rest_framework_docs',
+    'django_cleanup',
+    'modeltranslation',
+    'django_measurement',
+    'storages',
+    'password_reset',
 ]
 
 REST_FRAMEWORK = {
@@ -80,6 +84,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -195,7 +200,7 @@ USE_TZ = True
 LANGUAGES = (
     ('en', 'English'),
     ('da', 'Danish'),
-    ('de', 'German'),
+    #('de', 'German'),
 )
 
 EVENT_TRIGGER = 0.2
@@ -222,12 +227,12 @@ AWS_AUTO_CREATE_BUCKET = True
 # Host for sending e-mail.
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'asmtp.unoeuro.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'johann@googlemail.com'
-DEFAULT_FROM_EMAIL = 'johann@googlemail.com'
-SERVER_EMAIL = 'johann@googlemail.com'
-EMAIL_HOST_PASSWORD = 'password'
+EMAIL_HOST_USER = 'info@talentstomorrow.com'
+DEFAULT_FROM_EMAIL = 'info@talentstomorrow.com'
+SERVER_EMAIL = 'info@talentstomorrow.com'
+EMAIL_HOST_PASSWORD = 'Taltal2016'
 
 """
 # Host for sending e-mail.

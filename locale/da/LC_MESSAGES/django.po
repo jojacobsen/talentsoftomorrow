@@ -1,0 +1,384 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-05-04 10:33+0200\n"
+"PO-Revision-Date: 2017-05-04 08:33+0000\n"
+"Last-Translator: b'  <>'\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Translated-Using: django-rosetta 0.7.13\n"
+
+#: apps/accounts/admin.py:11
+msgid "born year"
+msgstr "Fødselsdag"
+
+#: apps/accounts/admin.py:25
+msgid "1999"
+msgstr "1999"
+
+#: apps/accounts/admin.py:26
+msgid "2000"
+msgstr "2000"
+
+#: apps/accounts/admin.py:27
+msgid "2001"
+msgstr "2001"
+
+#: apps/accounts/admin.py:28
+msgid "2002"
+msgstr "2002"
+
+#: apps/accounts/admin.py:29
+msgid "2003"
+msgstr "2003"
+
+#: apps/accounts/admin.py:30
+msgid "2004"
+msgstr "2004"
+
+#: apps/accounts/admin.py:31
+msgid "2005"
+msgstr "2005"
+
+#: apps/accounts/admin.py:32
+msgid "2006"
+msgstr "2006"
+
+#: apps/accounts/admin.py:33
+msgid "2007"
+msgstr "2007"
+
+#: apps/accounts/admin.py:34
+msgid "2008"
+msgstr "2008"
+
+#: apps/accounts/admin.py:35
+msgid "2009"
+msgstr "2009"
+
+#: apps/accounts/admin.py:36
+msgid "2010"
+msgstr "2010"
+
+#: apps/accounts/admin.py:37
+msgid "2011"
+msgstr "2011"
+
+#: apps/accounts/templates/password_reset/invite_email.txt:2
+#: apps/accounts/templates/password_reset/recovery_email.txt:2
+msgid "Dear"
+msgstr "Kære"
+
+#: apps/accounts/templates/password_reset/invite_email.txt:4
+msgid ""
+"Your coach has invited you to the Talents of Tomorrow athlete app. It's a "
+"system that helps your coach prevent overuse injuries by tracking your daily"
+" wellbeing and training load."
+msgstr ""
+"Din træner har inviteret dig til Talents of Tomorrow's atlet app. Det er et "
+"system, der hjælper din træner med at forebygge overbelastningsskader ved at"
+" følge din sundhed og træningsbelastning. "
+
+#: apps/accounts/templates/password_reset/invite_email.txt:6
+msgid "To get started, please set a password by following this link:"
+msgstr "For at komme igang, vælg venligst et kodeord på via dette link:"
+
+#: apps/accounts/templates/password_reset/invite_email.txt:10
+#: apps/accounts/templates/password_reset/recovery_email.txt:10
+msgid "Afterwards you are ready to login here:"
+msgstr "Når det er gjort, kan du logge ind her:"
+
+#: apps/accounts/templates/password_reset/invite_email.txt:12
+#: apps/accounts/templates/password_reset/recovery_email.txt:12
+msgid "Link:"
+msgstr "Link:"
+
+#: apps/accounts/templates/password_reset/invite_email.txt:13
+#: apps/accounts/templates/password_reset/recovery_email.txt:13
+msgid "Username:"
+msgstr "Brugernavn"
+
+#: apps/accounts/templates/password_reset/invite_email_subject.txt:1
+msgid "Welcome to the Talents of Tomorrow athlete app"
+msgstr "Velkommen til Talents of Tomorrow's atlet app"
+
+#: apps/accounts/templates/password_reset/recovery_done.html:4
+msgid "New password set"
+msgstr "Kodeordet er gemt"
+
+#: apps/accounts/templates/password_reset/recovery_done.html:8
+#| msgid ""
+#| "Your password was successfully saved. You can now use it to log into the "
+#| "system. We have sent you an email with your username."
+msgid ""
+"Your password was successfully saved. You can now use it to log into the "
+"system. Please find your username in the email we sent you."
+msgstr ""
+"Dit kodeord er blevet gemt, og kan nu bruges til at logge ind i systemet. "
+"Find venligst dit brugernavn i den email, vi sendte dig."
+
+#: apps/accounts/templates/password_reset/recovery_done.html:9
+msgid "Go to login"
+msgstr "Gå til login"
+
+#: apps/accounts/templates/password_reset/recovery_email.txt:4
+#, python-format
+msgid "You have requested a password reset on %(domain)s."
+msgstr "Du har bedt om at genskabe dit kodeord til %(domain)s."
+
+#: apps/accounts/templates/password_reset/recovery_email.txt:6
+msgid "You can set your new password by following this link:"
+msgstr "Vælg et kodeord på dette link: "
+
+#: apps/accounts/templates/password_reset/recovery_email.txt:15
+msgid ""
+"If you don't want to reset your password, simply ignore this email and it "
+"will stay unchanged."
+msgstr ""
+"Hvis du ikke ønsker at genskabe dit kodeord alligevel, så ignorer denne "
+"mail, og kodeordet vil forblive det samme."
+
+#: apps/accounts/templates/password_reset/recovery_email_subject.txt:1
+msgid "Password recovery on Talents of Tomorrow"
+msgstr "Nyt kodeord til Talents of Tomorrow"
+
+#: apps/accounts/templates/password_reset/recovery_form.html:5
+msgid "Password recovery"
+msgstr "Nulstilling af kodeord"
+
+#: apps/accounts/templates/password_reset/recovery_form.html:12
+msgid "Recover my password"
+msgstr "Nulstil mit kodeord"
+
+#: apps/accounts/templates/password_reset/reset.html:6
+#, python-format
+msgid ""
+"Sorry, this password link is invalid. Please <a "
+"href=\"%(recovery_url)s\">request a new one</a>."
+msgstr ""
+"Beklager, linket er udløbet. Du kan få et nyt link <a "
+"href=\"%(recovery_url)s\">her</a>."
+
+#: apps/accounts/templates/password_reset/reset.html:8
+#, python-format
+msgid "Hi, <strong>%(username)s</strong>. Please choose your password."
+msgstr "Hej, <strong>%(username)s</strong>. Vælg venligst dit kodeord."
+
+#: apps/accounts/templates/password_reset/reset.html:12
+msgid "Set new password"
+msgstr "Vælg kodeord"
+
+#: apps/accounts/templates/password_reset/reset_sent.html:4
+msgid "Password recovery sent"
+msgstr "Nulstillingsmail sendt "
+
+#: apps/accounts/templates/password_reset/reset_sent.html:9
+#, python-format
+msgid ""
+"An email was sent to <strong>%(email)s</strong>. Use the link in it to set a"
+" new password."
+msgstr ""
+"Vi har sendt en email til <strong>%(email)s</strong>. Brug linket til at "
+"vælge et nyt kodeord."
+
+#: apps/player_dashboard/templates/player_dashboard/index.html:15
+#: apps/questionnaire/templates/questionnaire/wizard.html:6
+msgid "Athlete Dashboard"
+msgstr "Athlete Dashboard"
+
+#: apps/player_dashboard/templates/player_dashboard/index.html:19
+#: apps/player_dashboard/templates/player_dashboard/navigation.html:9
+msgid "Home"
+msgstr "Hjem"
+
+#: apps/player_dashboard/templates/player_dashboard/index.html:33
+msgid "Welcome to the Athlete Dashboard."
+msgstr "Velkommen til dit Athlete Dashboard"
+
+#: apps/player_dashboard/templates/player_dashboard/index.html:35
+msgid "Use this to track your daily wellbeing and exercises"
+msgstr "Her kan du tracke motion og sundhed "
+
+#: apps/player_dashboard/templates/player_dashboard/index.html:49
+#: apps/player_dashboard/templates/player_dashboard/navigation.html:15
+msgid "Daily Wellbeing"
+msgstr "Sundhed"
+
+#: apps/player_dashboard/templates/player_dashboard/index.html:52
+msgid "Fill this out every evening to track your wellbeing"
+msgstr "Sundhedsstatus udfyldes hver aften "
+
+#: apps/player_dashboard/templates/player_dashboard/index.html:58
+msgid "Enter Daily Wellbeing"
+msgstr "Udfyld sundhedsstatus"
+
+#: apps/player_dashboard/templates/player_dashboard/index.html:63
+#: apps/player_dashboard/templates/player_dashboard/index.html:87
+#: apps/player_dashboard/templates/player_dashboard/navigation.html:26
+#: apps/player_dashboard/templates/player_dashboard/navigation.html:45
+msgid "View history"
+msgstr "Se historik"
+
+#: apps/player_dashboard/templates/player_dashboard/index.html:74
+#: apps/player_dashboard/templates/player_dashboard/navigation.html:34
+msgid "Exercise Diary"
+msgstr "Motion"
+
+#: apps/player_dashboard/templates/player_dashboard/index.html:77
+msgid "Fill this out every time you have exercised and after every match"
+msgstr "Udfyldes efter hver træning og kamp"
+
+#: apps/player_dashboard/templates/player_dashboard/index.html:82
+msgid "Enter New Session"
+msgstr "Udfyld motionslog"
+
+#: apps/player_dashboard/templates/player_dashboard/navigation.html:21
+msgid "Enter daily wellbeing"
+msgstr "Udfyld sundhedsstatus"
+
+#: apps/player_dashboard/templates/player_dashboard/navigation.html:40
+msgid "Enter new session"
+msgstr "Udfyld motionslog"
+
+#: apps/player_dashboard/templates/player_dashboard/navigation.html:53
+msgid "How it works"
+msgstr "Sådan virker det"
+
+#: apps/player_dashboard/templates/player_dashboard/navigation.html:60
+msgid "Logout"
+msgstr "Log af"
+
+#: apps/player_dashboard/templates/registration/login.html:30
+#: apps/player_dashboard/templates/registration/login.html:32
+msgid "Username"
+msgstr "Brugernavn"
+
+#: apps/player_dashboard/templates/registration/login.html:37
+#: apps/player_dashboard/templates/registration/login.html:39
+msgid "Password"
+msgstr "Kodeord"
+
+#: apps/player_dashboard/templates/registration/login.html:50
+#, python-format
+msgid ""
+"\n"
+"            If you forgot your password please reset it <a href=\"%(password_reset_url)s\">here</a>\n"
+"        "
+msgstr ""
+"\n"
+"Har du glemt dit kodeord? Få et nyt <a href=\"%(password_reset_url)s\">her</a>"
+
+#: apps/player_dashboard/views.py:27 apps/player_dashboard/views.py:30
+#: apps/player_dashboard/views.py:35
+msgid "Please login with your Player Account."
+msgstr "Log venligst ind med din konto."
+
+#: apps/questionnaire/models.py:27
+msgid "Text"
+msgstr "Tekst"
+
+#: apps/questionnaire/models.py:34
+msgid "Open: A simple one line input box"
+msgstr "Åben: en simpel one-liner"
+
+#: apps/questionnaire/models.py:35
+msgid "Textfield: A box for lengthy answers"
+msgstr "Tekstfelt: en boks til lange svar"
+
+#: apps/questionnaire/models.py:36
+msgid "Choice: A list of choices to choose from"
+msgstr "Valg: En liste over valg at vælge imellem"
+
+#: apps/questionnaire/models.py:41
+msgid "Range: A range of options from which can be chosen"
+msgstr "Range: en række af muligheder"
+
+#: apps/questionnaire/models.py:42
+msgid "Number: A number"
+msgstr "Nummer"
+
+#: apps/questionnaire/models.py:43
+msgid "Comment: Not a question, but only a comment displayed to the user"
+msgstr "Kommentar."
+
+#: apps/questionnaire/templates/questionnaire/history.html:20
+#: apps/questionnaire/templates/questionnaire/history.html:31
+msgid "History"
+msgstr "Historik"
+
+#: apps/questionnaire/templates/questionnaire/history.html:41
+msgid "No records yet"
+msgstr "Loggen er tom"
+
+#: apps/questionnaire/templates/questionnaire/history.html:48
+msgid "Latest record"
+msgstr "Seneste"
+
+#: apps/questionnaire/templates/questionnaire/history.html:102
+msgid "Description"
+msgstr "Beskrivelse"
+
+#: apps/questionnaire/templates/questionnaire/history.html:112
+msgid "All records"
+msgstr "Alle"
+
+#: apps/questionnaire/templates/questionnaire/history.html:119
+#: apps/questionnaire/templates/questionnaire/wizard.html:64
+msgid "Date"
+msgstr "Dato"
+
+#: apps/questionnaire/templates/questionnaire/wizard.html:75
+msgid "Pick a date"
+msgstr "Vælg dato"
+
+#: apps/questionnaire/templates/questionnaire/wizard.html:103
+msgid "Comments"
+msgstr "Kommentarer"
+
+#: apps/questionnaire/templates/questionnaire/wizard.html:225
+msgid "Previous"
+msgstr "Forrige"
+
+#: apps/questionnaire/templates/questionnaire/wizard.html:226
+msgid "Next"
+msgstr "Næste"
+
+#: apps/questionnaire/templates/questionnaire/wizard.html:228
+msgid "SAVE"
+msgstr "GEM"
+
+#: apps/questionnaire/views.py:80
+msgid "Your answers are saved. Good job!"
+msgstr "Dine svar er gemt. Godt klaret!"
+
+#~ msgid "Your Questionnaire has been saved!"
+#~ msgstr "Tak. Formularen er gemt!"
+
+#~ msgid "Dear %(user.player.first_name)s,"
+#~ msgstr "Kære %(user.player.first_name)s,"
+
+#~ msgid "Invite to %(domain)s"
+#~ msgstr "Invitation til %(domain)s"
+
+#~ msgid "Password recovery on %(domain)s"
+#~ msgstr "Genskabelse af kodeord til %(domain)s"
+
+#~ msgid "You are invited on %(domain)s."
+#~ msgstr ""
+#~ "Din træner har inviteret dig til %(domain)s. Talents of Tomorrow er et "
+#~ "system der hjælper din træner med at forebygge overbelastningsskader gennem "
+#~ "logning af talentets sundhed og træningsstress. "
+
+#~ msgid "Language"
+#~ msgstr "Sprog"

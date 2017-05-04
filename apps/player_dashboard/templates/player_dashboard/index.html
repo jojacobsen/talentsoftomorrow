@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block head %}
+{% endblock %}
+
+{% block body %}
+    {% include 'player_dashboard/sidebar.html' %}
+
+	<div class="content">
+		<div class="page-header full-content dashboard-page-header">
+			<div class="row">
+				<div class="col-sm-6">
+					<h1>{% trans "Athlete Dashboard" %}</h1>
+				</div><!--.col-->
+				<div class="col-sm-6 hidden-xs">
+					<ol class="breadcrumb">
+						<li><a href="#" class="active"><i class="ion-home"></i> {% trans "Home" %}</a></li>
+					</ol>
+				</div><!--.col-->
+			</div><!--.row-->
+		</div><!--.page-header-->
+  </div>
+
+  <div class="dashboard-content">
+    <div class="dashboard-hero js-dashboard-hero is-hidden">
+      <div class="dashboard-logo">
+        <img src='{% static "img/logo_inv.png" %}' alt="logo">
+      </div>
+
+      <p class="dashboard-description">
+        {% trans "Welcome to the Athlete Dashboard." %}
+        <br />
+        {% trans "Use this to track your daily wellbeing and exercises" %}
+      </p>
+
+      <div class="dashboard-hero-close js-close-hero">
+        <i class="ion-close"></i>
+      </div>
+    </div>
+
+    <div class="dashboard-tile dashboard-tile-first">
+      <div class="dashboard-icon">
+        <img src={% static "img/icon-apple.svg" %} alt="icon">
+      </div>
+
+      <h3 class="dashboard-tile-title">
+        {% trans "Daily Wellbeing" %}
+      </h3>
+      <p class="dashboard-tile-text">
+        {% trans "Fill this out every evening to track your wellbeing" %}
+
+      </p>
+
+      <a href="{% url 'questionnaire:wizard' 'daily-wellbeing-o15' %}"
+        class="dashboard-btn">
+        {% trans "Enter Daily Wellbeing" %}
+      </a>
+
+      <div class="dashboard-history-link">
+        <a href="{% url 'questionnaire:history' 'daily-wellbeing-o15' %}">
+          {% trans "View history" %}
+        </a>
+      </div>
+    </div>
+
+    <div class="dashboard-tile dashboard-tile-last">
+      <div class="dashboard-icon">
+        <img src={% static "img/icon-ball.svg" %} alt="icon">
+      </div>
+
+      <h3 class="dashboard-tile-title">
+        {% trans "Exercise Diary" %}
+      </h3>
+      <p class="dashboard-tile-text">
+        {% trans "Fill this out every time you have exercised and after every match" %}
+      </p>
+
+      <a href="{% url 'questionnaire:wizard' 'exercise-diary' %}"
+        class="dashboard-btn">
+        {% trans "Enter New Session" %}
+      </a>
+
+      <div class="dashboard-history-link">
+        <a href="{% url 'questionnaire:history' 'exercise-diary' %}">
+          {% trans "View history" %}
+        </a>
+      </div>
+    </div>
+  </div>
+
+  {% include 'player_dashboard/navigation.html' %}
+
+{% endblock %}
+
+{% block extra_body %}
+    <!-- BEGIN PLUGINS AREA -->
+        <script src="{% static "bower_components/highcharts/highcharts.src.js" %}"></script>
+        <script src="{% static "bower_components/js-cookie/src/js.cookie.js" %}"></script>
+  <!-- END PLUGINS AREA -->
+
+  <!-- PLUGINS INITIALIZATION AND SETTINGS -->
+        <script src="{% static "js/dashboard.js" %}"></script>
+    <!-- END PLUGINS INITIALIZATION AND SETTINGS -->
+
+    <!-- BEGIN INITIALIZATION-->
+    <script>
+    $(document).ready(function () {
+        Pleasure.init();
+        Layout.init();
+        Dashboard.init();
+    });
+    </script>
+    <!-- END INITIALIZATION-->
+{% endblock %}

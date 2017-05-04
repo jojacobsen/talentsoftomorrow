@@ -1,0 +1,1 @@
+{% load i18n %}{% blocktrans %}Password recovery on Talents of Tomorrow{% endblocktrans %}

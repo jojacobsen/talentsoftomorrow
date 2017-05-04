@@ -3,12 +3,17 @@ from accounts.filters import PlayerFilter
 from accounts.serializers import NewPlayerSerializer, PlayerSerializer, PlayersSerializer, CurrentPlayerSerializer, \
     CurrentClubSerializer, CurrentCoachSerializer, CoachSerializer, TeamSerializer, TeamCreateSerializer
 
+from django.utils import translation
+from django.utils import timezone
+from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
 from rest_framework import generics, exceptions
 from rest_framework import filters
 from django.http import HttpResponse
+from password_reset.views import Recover
+from password_reset.forms import PasswordRecoveryForm
 
 
 class JSONResponse(HttpResponse):
@@ -173,3 +178,49 @@ class TeamView(generics.RetrieveUpdateDestroyAPIView):
         else:
             raise exceptions.PermissionDenied('User has no permission to access user data of player.')
         return queryset
+
+
+class PlayerInviteView(APIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = TeamSerializer
+    # Parse JSON
+    parser_classes = (JSONParser,)
+
+    def get_queryset(self, pk):
+        group = self.request.user.groups.values_list('name', flat=True)
+
+        if 'Club' in group:
+            try:
+                queryset = Player.objects.get(pk=pk, club=self.request.user.club, archived=False)
+            except Player.DoesNotExist:
+                raise exceptions.NotFound('Player not found.')
+        elif 'Coach' in group:
+            try:
+                queryset = Player.objects.get(pk=pk, club=self.request.user.coach.club, archived=False)
+            except Player.DoesNotExist:
+                raise exceptions.NotFound('Player not found.')
+        else:
+            raise exceptions.PermissionDenied('User has no permission to access user data of player.')
+        return queryset
+
+    def post(self, request, pk):
+        player = self.get_queryset(pk)
+        if not player.user.email:
+            raise exceptions.NotAcceptable('No email address')
+        form_data = {
+            'username_or_email': player.user.email
+        }
+        user_language = player.club.language
+        translation.activate(user_language)
+        request.session[translation.LANGUAGE_SESSION_KEY] = user_language
+        invite_form = PasswordRecoveryForm(form_data)
+        if invite_form.is_valid():
+            r = Recover(request=request,
+                        email_template_name='password_reset/invite_email.txt',
+                        email_subject_template_name='password_reset/invite_email_subject.txt')
+            r.form_valid(invite_form)
+            player.invited = timezone.now()
+            player.save()
+            return HttpResponse(status=200)
+        else:
+            return HttpResponse(status=400)

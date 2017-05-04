@@ -1,0 +1,71 @@
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+
+  <div class="layer-container">
+		<!-- BEGIN MENU LAYER -->
+		<div class="menu-layer">
+			<ul>
+				<li {% if menu_item == 'index' %}data-open-after="true"{% endif %}>
+					<a href="{% url 'player_dashboard:dashboard' %}">
+						{% trans "Home" %}
+					</a>
+				</li>
+
+				<li>
+					<a href="javascript:;">
+						{% trans "Daily Wellbeing" %}
+					</a>
+
+					<ul class="child-menu">
+						<li>
+							<a href="{% url 'questionnaire:wizard' 'daily-wellbeing-o15' %}">
+								{% trans "Enter daily wellbeing" %}
+							</a>
+						</li>
+						<li>
+							<a href="{% url 'questionnaire:history' 'daily-wellbeing-o15' %}">
+								{% trans "View history" %}
+							</a>
+						</li>
+					</ul>
+				</li>
+
+				<li>
+					<a href="javascript:;">
+						{% trans "Exercise Diary" %}
+					</a>
+
+					<ul class="child-menu">
+						<li>
+							<a href="{% url 'questionnaire:wizard' 'exercise-diary' %}">
+								{% trans "Enter new session" %}
+							</a>
+						</li>
+						<li>
+							<a href="{% url 'questionnaire:history' 'exercise-diary' %}">
+								{% trans "View history" %}
+							</a>
+						</li>
+					</ul>
+				</li>
+
+        <li>
+					<a href="https://talentstomorrow.com/athlete-dashboard-{{ LANGUAGE_CODE }}/" target="_blank">
+						{% trans "How it works" %}
+
+					</a>
+				</li>
+
+
+        <li>
+					<a href="{% url 'player_dashboard:logout' %}">
+						{% trans "Logout" %}
+					</a>
+				</li>
+			</ul>
+
+			<div class="language-selector-wrapper js-language-selector-wrapper">
+			</div>
+		</div><!--.menu-layer-->
+		<!-- END OF MENU LAYER -->
+	</div><!--.layer-container-->

@@ -2,6 +2,9 @@ from accounts.models import ProfilePicture, Club, Coach, Player, Team
 from rest_framework import serializers, exceptions
 from django.contrib.auth.models import User, Group
 from .utils import create_username, lab_key_generator
+from collections import OrderedDict
+from rest_framework.fields import SkipField
+from rest_framework.relations import PKOnlyObject
 
 
 class GroupSerializer(serializers.ModelSerializer):
@@ -59,21 +62,59 @@ class CoachSerializer(serializers.ModelSerializer):
 
 
 class PlayersSerializer(serializers.ModelSerializer):
-    user = UserSerializer(read_only=True)
+    username = serializers.SerializerMethodField()
+    email = serializers.SerializerMethodField()
 
     class Meta:
         model = Player
-        fields = ('id', 'user', 'lab_key', 'gender', 'birthday', 'first_name', 'last_name', 'active', 'archived')
+        fields = ('id', 'username', 'email', 'lab_key', 'gender', 'birthday', 'first_name',
+                  'last_name', 'active', 'archived', 'invited')
+
+    def get_username(self, obj):
+        return obj.user.username
+
+    def get_email(self, obj):
+        return obj.user.email
 
 
 class PlayerSerializer(serializers.ModelSerializer):
-    user = UserSerializer(read_only=True)
     club = ClubSerializer(read_only=True)
+    email = serializers.EmailField()
 
     class Meta:
         model = Player
-        fields = ('id', 'user', 'lab_key', 'gender', 'birthday', 'club', 'first_name', 'last_name', 'active',
-                  'archived')
+        fields = ('id', 'lab_key', 'gender', 'birthday', 'club', 'first_name', 'last_name', 'active',
+                  'archived', 'email')
+
+    def to_representation(self, instance):
+        ret = OrderedDict()
+        fields = self._readable_fields
+
+        for field in fields:
+            try:
+                if field.field_name == 'email':
+                    attribute = field.get_attribute(instance.user)
+                else:
+                    attribute = field.get_attribute(instance)
+            except SkipField:
+                continue
+            check_for_none = attribute.pk if isinstance(attribute, PKOnlyObject) else attribute
+            if check_for_none is None:
+                ret[field.field_name] = None
+            else:
+                ret[field.field_name] = field.to_representation(attribute)
+
+        return ret
+
+    def update(self, instance, validated_data):
+        for attr, value in validated_data.items():
+            if attr == 'email':
+                setattr(instance.user, attr, value)
+                instance.user.save()
+            else:
+                setattr(instance, attr, value)
+        instance.save()
+        return instance
 
 
 class CurrentClubSerializer(serializers.ModelSerializer):

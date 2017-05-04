@@ -80,7 +80,7 @@ class PlayerProfileSerializer(serializers.BaseSerializer):
             # Latest PHV is always the best
             phv_date = obj.phv_set.values_list('phv_date', flat=True).latest('date')
             phv_days = (phv_date - datetime.date.today()).days
-            growth_spurt_start = phv_date - datetime.timedelta(days=90)  # 3 Month before PHV
+            growth_spurt_start = phv_date - datetime.timedelta(days=270)  # 9 Month before PHV
             growth_position = 10 - phv_days / 365.25  # To display it in graph (10 is fixed value)
         except PHV.DoesNotExist:
             phv_date = None
@@ -89,9 +89,7 @@ class PlayerProfileSerializer(serializers.BaseSerializer):
             growth_position = None
 
         # Which method was used?
-        if prediction_method and bioage_method:
-            method = prediction_method
-        elif bioage_method:
+        if bioage_method:
             method = bioage_method
         else:
             method = None
@@ -107,6 +105,8 @@ class PlayerProfileSerializer(serializers.BaseSerializer):
         return {
             'player': obj.id,
             'player_name': obj.first_name + ' ' + obj.last_name,
+            'invited': obj.invited,
+            'email': obj.user.email,
             'teams': teams_s,
             'lab_key': obj.lab_key,
             'gender': obj.gender,

@@ -16,6 +16,7 @@ CORS_ORIGIN_WHITELIST = (
     'https://demo.talentstomorrow.com'
 )
 
+AWS_STORAGE_BUCKET_NAME = 'static-files-asdf324fqsadkn1109fsadfbvmb64adf4af4142cknkj'
 ALLOWED_HOSTS = ['*']
 JWT_AUTH['JWT_EXPIRATION_DELTA'] = datetime.timedelta(days=7)
 

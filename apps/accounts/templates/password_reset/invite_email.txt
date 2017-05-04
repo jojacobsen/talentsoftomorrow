@@ -1,0 +1,13 @@
+{% load i18n %}
+{% trans "Dear" %} {{ user.player.first_name }},
+
+{% blocktrans with domain=site.domain %}Your coach has invited you to the Talents of Tomorrow athlete app. It's a system that helps your coach prevent overuse injuries by tracking your daily wellbeing and training load.{% endblocktrans %}
+
+{% trans "To get started, please set a password by following this link:" %}
+
+https://athlete.talentstomorrow.com{% url "password_reset_reset" token %}
+
+{% trans "Afterwards you are ready to login here:" %}
+
+{% trans "Link:" %} https://athlete.talentstomorrow.com
+{% trans "Username:" %} {{ username }}

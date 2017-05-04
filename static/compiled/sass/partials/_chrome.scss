@@ -1,0 +1,121 @@
+.page-header {
+  background-color: $brand-darker;
+  border-bottom: 4px solid $brand-warning;
+}
+
+.overlay .logo {
+  bottom: 125px;
+  left: -80px;
+  letter-spacing: 4px;
+}
+
+.alert.alert-info {
+  background-color: $brand-success !important;
+  border: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  margin-bottom: 0 !important;
+
+  .close {
+    text-decoration: none !important;
+  }
+}
+
+.language-selector select {
+  position: absolute;
+  z-index: 10;
+  padding: 5px;
+  height: 30px;
+  font-size: 0.8em;
+  background: transparent;
+  color: #fff;
+  bottom: 0;
+  border-radius: 0;
+  margin: 35px 5% 15px;
+  width: 90%;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1s linear;
+}
+
+.menu-layer.active {
+  .language-selector select {
+    visibility: visible;
+    opacity: 0.8;
+  }
+}
+
+body.is-login {
+  .language-selector {
+    select {
+      visibility: visible;
+      opacity: 1;
+      color: #000;
+      bottom: 0;
+      position: absolute;
+    }
+  }
+}
+
+/* ================ */
+/* === SIDE NAV === */
+/* ================ */
+
+.menu-mobile-home {
+  position: fixed;
+  right: 13px;
+  top: 10px;
+  z-index: 5;
+  font-size: 25px;
+
+
+  a {
+    &, &:visited {
+      color: $gray-dark;
+    }
+  }
+}
+
+.menu-layer {
+  li {
+    &.open {
+      background-color: $gray-darker;
+
+    }
+
+    &:before {
+      color: #fff;
+    }
+
+    a {
+      color: #fff !important;
+
+      &:hover {
+        background-color: $brand-secondary;
+        color: $gray-darker !important;
+      }
+    }
+
+    .hover-bg {
+      background-color: $brand-darker;
+    }
+  }
+}
+
+@media (min-width: $break-sm) {
+  .language-selector select {
+    width: 260px;
+    margin: 35px 35px 15px;
+  }
+
+  body.is-login {
+    .language-selector select {
+      top: 0;
+      right: 0;
+      width: 120px;
+      margin: 25px 35px 15px;
+      position: absolute;
+    }
+  }
+
+}

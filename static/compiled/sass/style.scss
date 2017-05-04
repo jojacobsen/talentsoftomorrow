@@ -1,0 +1,55 @@
+$brand-primary: #469648;
+$brand-success: $brand-primary;
+$brand-secondary:  #F5CB5C;
+$brand-danger: #bd1c2d;
+$brand-warning: $brand-secondary;
+$brand-info: #1e94e3;
+$brand-light: #CFDBD5;
+$brand-lighter: #E8EDDF;
+$brand-darker: #242423;
+$brand-dark: #333333;
+
+$gray-base:              #000 !default;
+$gray-darker:            lighten($gray-base, 13.5%) !default; // #222
+$gray-dark:              lighten($gray-base, 20%) !default;   // #333
+$gray:                   lighten($gray-base, 33.5%) !default; // #555
+$gray-light:             lighten($gray-base, 46.7%) !default; // #777
+$gray-lighter:           lighten($gray-base, 93.5%) !default; // #eee
+
+$break-sm: 768px;
+$break-md: 992px;
+$break-lg: 1280px;
+$break-xl: 1400px;
+
+@import './pleasure.admin';
+@import './pleasure.elements';
+@import './partials/chrome';
+@import './partials/login';
+@import './partials/dashboard';
+@import './partials/questionaires';
+@import './partials/history';
+@import './partials/system';
+
+.full-block {
+  display: inline-block;
+  width: 100%;
+}
+
+#djDebug {
+  display: none !important;
+}
+
+.btn-lg {
+  font-size: 1.2em;
+  max-width: 400px;
+}
+
+.mobile-center {
+  text-align: center;
+}
+
+@media (min-width: $break-md) {
+  .mobile-center {
+    text-align: left;
+  }
+}

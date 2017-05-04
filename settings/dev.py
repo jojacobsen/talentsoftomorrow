@@ -18,6 +18,7 @@ ALLOWED_HOSTS = ['*']
 CORS_ORIGIN_ALLOW_ALL = True
 
 INSTALLED_APPS.append('debug_toolbar')
+INSTALLED_APPS.append('rosetta')
 
 MIDDLEWARE.append('debug_toolbar.middleware.DebugToolbarMiddleware')
 
