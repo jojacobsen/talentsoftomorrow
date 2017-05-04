@@ -200,7 +200,7 @@ USE_TZ = True
 LANGUAGES = (
     ('en', 'English'),
     ('da', 'Danish'),
-    ('de', 'German'),
+    #('de', 'German'),
 )
 
 EVENT_TRIGGER = 0.2
