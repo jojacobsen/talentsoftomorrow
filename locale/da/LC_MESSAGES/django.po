@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-04 14:27+0200\n"
-"PO-Revision-Date: 2017-05-04 12:28+0000\n"
+"POT-Creation-Date: 2017-05-04 15:17+0200\n"
+"PO-Revision-Date: 2017-05-04 13:18+0000\n"
 "Last-Translator: b'  <>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -81,18 +81,22 @@ msgid "Dear"
 msgstr "Kære"
 
 #: apps/accounts/templates/password_reset/invite_email.txt:4
+#| msgid ""
+#| "Your coach has invited you to the Talents of Tomorrow athlete app. It's a "
+#| "system that helps your coach prevent overuse injuries by tracking your daily"
+#| " wellbeing and training load."
 msgid ""
 "Your coach has invited you to the Talents of Tomorrow athlete app. It's a "
-"system that helps your coach prevent overuse injuries by tracking your daily"
-" wellbeing and training load."
+"system that helps your coach avoid injuries by tracking your daily "
+"wellbeing, training, and matches."
 msgstr ""
 "Din træner har inviteret dig til Talents of Tomorrow's Athlete Dashboard. "
-"Det er et system, der hjælper din træner med at forebygge "
-"overbelastningsskader ved at følge din sundhed og træningsbelastning. "
+"Det er et system, der hjælper din træner med at undgå skader ved at følge "
+"din daglige sundhed, træning, og kampe. "
 
 #: apps/accounts/templates/password_reset/invite_email.txt:6
 msgid "To get started, please set a password by following this link:"
-msgstr "For at komme igang, vælg venligst et kodeord på via dette link:"
+msgstr "For at komme igang, vælg venligst et kodeord via dette link:"
 
 #: apps/accounts/templates/password_reset/invite_email.txt:10
 #: apps/accounts/templates/password_reset/recovery_email.txt:10
@@ -107,7 +111,7 @@ msgstr "Link:"
 #: apps/accounts/templates/password_reset/invite_email.txt:13
 #: apps/accounts/templates/password_reset/recovery_email.txt:13
 msgid "Username:"
-msgstr "Brugernavn"
+msgstr "Brugernavn:"
 
 #: apps/accounts/templates/password_reset/invite_email_subject.txt:1
 msgid "Welcome to the Talents of Tomorrow athlete app"
@@ -204,7 +208,6 @@ msgid "Welcome to the Athlete Dashboard."
 msgstr "Velkommen til dit Athlete Dashboard"
 
 #: apps/player_dashboard/templates/player_dashboard/index.html:35
-#| msgid "Use this to track your daily wellbeing and exercises"
 msgid "Use this to track your daily wellbeing and physical activity"
 msgstr "Her kan du tracke motion og sundhed "
 

@@ -8,15 +8,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-04 14:29+0200\n"
-"PO-Revision-Date: 2017-05-04 12:30+0000\n"
+"POT-Creation-Date: 2017-05-04 15:17+0200\n"
+"PO-Revision-Date: 2017-05-04 13:18+0000\n"
 "Last-Translator: b'  <>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Translated-Using: django-rosetta 0.7.13\n"
 
 #: apps/accounts/admin.py:11
@@ -81,14 +81,18 @@ msgid "Dear"
 msgstr "Dear"
 
 #: apps/accounts/templates/password_reset/invite_email.txt:4
+#| msgid ""
+#| "Your coach has invited you to the Talents of Tomorrow athlete app. It's a "
+#| "system that helps your coach prevent overuse injuries by tracking your daily"
+#| " wellbeing and training load."
 msgid ""
 "Your coach has invited you to the Talents of Tomorrow athlete app. It's a "
-"system that helps your coach prevent overuse injuries by tracking your daily"
-" wellbeing and training load."
+"system that helps your coach avoid injuries by tracking your daily "
+"wellbeing, training, and matches."
 msgstr ""
-"Your coach has invited you to the Talents of Tomorrow athlete app. It's a "
-"system that helps your coach prevent overuse injuries by tracking your daily"
-" wellbeing and training load."
+"ORIGINAL\n"
+"ENGELSK\t FUZZY\tOCCURRENCES(S)\n"
+"Your coach has invited you to the Talents of Tomorrow athlete app. It's a system that helps your coach avoid injuries by tracking your daily wellbeing, training, and matches."
 
 #: apps/accounts/templates/password_reset/invite_email.txt:6
 msgid "To get started, please set a password by following this link:"
@@ -118,9 +122,6 @@ msgid "New password set"
 msgstr "New password set"
 
 #: apps/accounts/templates/password_reset/recovery_done.html:8
-#| msgid ""
-#| "Your password was successfully saved. You can now use it to log into the "
-#| "system. We have sent you an email with your username."
 msgid ""
 "Your password was successfully saved. You can now use it to log into the "
 "system. Please find your username in the email we sent you."
@@ -207,7 +208,6 @@ msgid "Welcome to the Athlete Dashboard."
 msgstr "Welcome to the Athlete Dashboard."
 
 #: apps/player_dashboard/templates/player_dashboard/index.html:35
-#| msgid "Use this to track your daily wellbeing and exercises"
 msgid "Use this to track your daily wellbeing and physical activity"
 msgstr "Use this to track your daily wellbeing and physical activity"
 
@@ -299,7 +299,7 @@ msgstr "Textfield: A box for lengthy answers"
 
 #: apps/questionnaire/models.py:36
 msgid "Choice: A list of choices to choose from"
-msgstr ""
+msgstr "Choice: A list of choices to choose from"
 
 #: apps/questionnaire/models.py:41
 msgid "Range: A range of options from which can be chosen"
@@ -361,7 +361,7 @@ msgstr "SAVE"
 
 #: apps/questionnaire/views.py:80
 msgid "Your answers are saved. Good job!"
-msgstr ""
+msgstr "Your answers are saved. Good job!"
 
 #~ msgid "Your Questionnaire has been saved!"
 #~ msgstr "Your submission has been saved!"

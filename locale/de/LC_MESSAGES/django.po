@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-28 16:54+0200\n"
+"POT-Creation-Date: 2017-05-04 15:17+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -82,8 +82,8 @@ msgstr ""
 #: apps/accounts/templates/password_reset/invite_email.txt:4
 msgid ""
 "Your coach has invited you to the Talents of Tomorrow athlete app. It's a "
-"system that helps your coach prevent overuse injuries by tracking your daily "
-"wellbeing and training load."
+"system that helps your coach avoid injuries by tracking your daily "
+"wellbeing, training, and matches."
 msgstr ""
 
 #: apps/accounts/templates/password_reset/invite_email.txt:6
@@ -116,7 +116,7 @@ msgstr ""
 #: apps/accounts/templates/password_reset/recovery_done.html:8
 msgid ""
 "Your password was successfully saved. You can now use it to log into the "
-"system. We have sent you an email with your username."
+"system. Please find your username in the email we sent you."
 msgstr ""
 
 #: apps/accounts/templates/password_reset/recovery_done.html:9
@@ -183,7 +183,7 @@ msgid "Athlete Dashboard"
 msgstr ""
 
 #: apps/player_dashboard/templates/player_dashboard/index.html:19
-#: apps/player_dashboard/templates/player_dashboard/navigation.html:9
+#: apps/player_dashboard/templates/player_dashboard/navigation.html:10
 msgid "Home"
 msgstr ""
 
@@ -192,11 +192,11 @@ msgid "Welcome to the Athlete Dashboard."
 msgstr ""
 
 #: apps/player_dashboard/templates/player_dashboard/index.html:35
-msgid "Use this to track your daily wellbeing and exercises"
+msgid "Use this to track your daily wellbeing and physical activity"
 msgstr ""
 
 #: apps/player_dashboard/templates/player_dashboard/index.html:49
-#: apps/player_dashboard/templates/player_dashboard/navigation.html:15
+#: apps/player_dashboard/templates/player_dashboard/navigation.html:16
 msgid "Daily Wellbeing"
 msgstr ""
 
@@ -210,13 +210,13 @@ msgstr ""
 
 #: apps/player_dashboard/templates/player_dashboard/index.html:63
 #: apps/player_dashboard/templates/player_dashboard/index.html:87
-#: apps/player_dashboard/templates/player_dashboard/navigation.html:26
-#: apps/player_dashboard/templates/player_dashboard/navigation.html:45
+#: apps/player_dashboard/templates/player_dashboard/navigation.html:27
+#: apps/player_dashboard/templates/player_dashboard/navigation.html:46
 msgid "View history"
 msgstr ""
 
 #: apps/player_dashboard/templates/player_dashboard/index.html:74
-#: apps/player_dashboard/templates/player_dashboard/navigation.html:34
+#: apps/player_dashboard/templates/player_dashboard/navigation.html:35
 msgid "Exercise Diary"
 msgstr ""
 
@@ -228,19 +228,19 @@ msgstr ""
 msgid "Enter New Session"
 msgstr ""
 
-#: apps/player_dashboard/templates/player_dashboard/navigation.html:21
+#: apps/player_dashboard/templates/player_dashboard/navigation.html:22
 msgid "Enter daily wellbeing"
 msgstr ""
 
-#: apps/player_dashboard/templates/player_dashboard/navigation.html:40
+#: apps/player_dashboard/templates/player_dashboard/navigation.html:41
 msgid "Enter new session"
 msgstr ""
 
-#: apps/player_dashboard/templates/player_dashboard/navigation.html:53
+#: apps/player_dashboard/templates/player_dashboard/navigation.html:54
 msgid "How it works"
 msgstr ""
 
-#: apps/player_dashboard/templates/player_dashboard/navigation.html:60
+#: apps/player_dashboard/templates/player_dashboard/navigation.html:62
 msgid "Logout"
 msgstr ""
 
@@ -268,27 +268,31 @@ msgstr ""
 msgid "Please login with your Player Account."
 msgstr ""
 
-#: apps/questionnaire/models.py:28
+#: apps/questionnaire/models.py:27
 msgid "Text"
 msgstr ""
 
-#: apps/questionnaire/models.py:35
+#: apps/questionnaire/models.py:34
 msgid "Open: A simple one line input box"
 msgstr ""
 
-#: apps/questionnaire/models.py:36
+#: apps/questionnaire/models.py:35
 msgid "Textfield: A box for lengthy answers"
 msgstr ""
 
-#: apps/questionnaire/models.py:42
+#: apps/questionnaire/models.py:36
+msgid "Choice: A list of choices to choose from"
+msgstr ""
+
+#: apps/questionnaire/models.py:41
 msgid "Range: A range of options from which can be chosen"
 msgstr ""
 
-#: apps/questionnaire/models.py:43
+#: apps/questionnaire/models.py:42
 msgid "Number: A number"
 msgstr ""
 
-#: apps/questionnaire/models.py:44
+#: apps/questionnaire/models.py:43
 msgid "Comment: Not a question, but only a comment displayed to the user"
 msgstr ""
 
@@ -314,30 +318,30 @@ msgid "All records"
 msgstr ""
 
 #: apps/questionnaire/templates/questionnaire/history.html:119
-#: apps/questionnaire/templates/questionnaire/wizard.html:64
+#: apps/questionnaire/templates/questionnaire/wizard.html:71
 msgid "Date"
 msgstr ""
 
-#: apps/questionnaire/templates/questionnaire/wizard.html:75
+#: apps/questionnaire/templates/questionnaire/wizard.html:83
 msgid "Pick a date"
 msgstr ""
 
-#: apps/questionnaire/templates/questionnaire/wizard.html:104
+#: apps/questionnaire/templates/questionnaire/wizard.html:117
 msgid "Comments"
 msgstr ""
 
-#: apps/questionnaire/templates/questionnaire/wizard.html:208
+#: apps/questionnaire/templates/questionnaire/wizard.html:255
 msgid "Previous"
 msgstr ""
 
-#: apps/questionnaire/templates/questionnaire/wizard.html:209
+#: apps/questionnaire/templates/questionnaire/wizard.html:256
 msgid "Next"
 msgstr ""
 
-#: apps/questionnaire/templates/questionnaire/wizard.html:211
+#: apps/questionnaire/templates/questionnaire/wizard.html:258
 msgid "SAVE"
 msgstr ""
 
 #: apps/questionnaire/views.py:80
-msgid "Your Questionnaire has been saved!"
+msgid "Your answers are saved. Good job!"
 msgstr ""
