@@ -152,7 +152,7 @@
                                                             <div class="input-wrapper">
                                                                 <select class="form-control" name="{{ q.slug }}">
                                                                     {% for c in q.choice_set.all|dictsort:"sort" %}
-                                                                    <option value="{{ c.value }}">{{ c.text }}</option>
+                                                                    <option value="{{ c.text }}">{{ c.text }}</option>
                                                                     {% endfor %}
                                                                 </select>
                                                             </div>
