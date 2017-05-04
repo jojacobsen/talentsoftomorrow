@@ -33,6 +33,13 @@
   }
 }
 
+.questionnaire-description {
+  margin: 0 0 35px;
+  font-size: 1.1em;
+  font-style: italic;
+  color: #777;
+}
+
 .questionnaire-slider-wrapper {
   text-align: center;
 
@@ -59,3 +66,8 @@
   }
 }
 
+@media (min-width: $break-sm) {
+  .questionnaire-description {
+    margin: 35px 0;
+  }
+}

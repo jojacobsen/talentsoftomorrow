@@ -21,7 +21,7 @@
 		<div class="page-header full-content bg-brown">
 			<div class="row">
 				<div class="col-sm-6">
-					<h1>{{ questionnaire.name }} <small>{{ questionnaire.short_description|default_if_none:""  }}</small></h1>
+					<h1>{{ questionnaire.name }}</h1>
 				</div><!--.col-->
 				<div class="col-sm-6 hidden-xs">
 
@@ -45,7 +45,6 @@
 			<div class="col-md-12">
 				<div class="panel questionnaire bs-wizard bs-wizard-progress">
 						<div class="panel-body padding-top-40">
-
 							<form id="form1" method="post" action="{% url 'questionnaire:submit' questionnaire.slug %}" class="form-horizontal">{% csrf_token %}
 
 								<ul class="hide">
@@ -55,6 +54,14 @@
 								</ul>
 
 								<div class="tab-content">
+                                    <div class="row">
+                                        <div class="col-md-offset-4 col-md-6">
+                                            <div class="questionnaire-description">
+                                                {{ questionnaire.short_description|default_if_none:""  }}
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     {% for s in questionnaire.section_set.all|dictsort:"sort"  %}
 									<div class="tab-pane" id="tab{{ forloop.counter }}">
 
