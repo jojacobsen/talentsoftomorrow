@@ -1,5 +1,5 @@
 from django.contrib import admin
-from questionnaire.models import Questionnaire, Question, Section, Answer, Submission
+from questionnaire.models import Questionnaire, Question, Choice, Section, Answer, Submission
 
 
 class QuestionnaireAdmin(admin.ModelAdmin):
@@ -24,6 +24,24 @@ class QuestionAdmin(admin.ModelAdmin):
     get_questionnaire.short_description = 'Questionnaire'  # Renames column head
 
 
+class ChoiceAdmin(admin.ModelAdmin):
+    list_display = ['text', 'get_question', 'get_questionnaire', 'get_question_type', 'value', 'sort']
+    list_filter = ['question__section__questionnaire']
+    search_fields = ['text', 'value']
+
+    def get_question(self, obj):
+        return obj.question.text
+    get_question.short_description = 'Question'  # Renames column head
+
+    def get_question_type(self, obj):
+        return obj.question.question_type
+    get_question_type.short_description = 'Question Type'  # Renames column head
+
+    def get_questionnaire(self, obj):
+        return obj.question.section.questionnaire.name
+    get_questionnaire.short_description = 'Questionnaire'  # Renames column head
+
+
 class SubmissionAdmin(admin.ModelAdmin):
     list_display = ['player', 'questionnaire', 'date', 'created']
     list_filter = ['questionnaire', 'player__club__name', 'date', 'created']
@@ -43,6 +61,7 @@ class AnswerAdmin(admin.ModelAdmin):
 admin.site.register(Questionnaire, QuestionnaireAdmin)
 admin.site.register(Section, SectioneAdmin)
 admin.site.register(Question, QuestionAdmin)
+admin.site.register(Choice, ChoiceAdmin)
 admin.site.register(Submission, SubmissionAdmin)
 admin.site.register(Answer, AnswerAdmin)
 
