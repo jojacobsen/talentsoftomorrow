@@ -1,7 +1,7 @@
 {% load i18n %}
 {% trans "Dear" %} {{ user.player.first_name }},
 
-{% blocktrans with domain=site.domain %}Your coach has invited you to the Talents of Tomorrow athlete app. It's a system that helps your coach avoid injuries by tracking your daily wellbeing, training, and matches.{% endblocktrans %}
+{% blocktrans with domain=site.domain %}Your coach has invited you to the Talents of Tomorrow Athlete Dashboard. It's a system that helps your coach avoid injuries when you track your daily wellbeing, training, and matches.{% endblocktrans %}
 
 {% trans "To get started, please set a password by following this link:" %}
 
