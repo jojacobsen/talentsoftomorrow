@@ -10,6 +10,7 @@
   background-color: #fff;
   font-size: 0.8em;
   table-layout: fixed;
+  min-width: 600px;
 
   thead {
     font-size: 0.7em;
@@ -166,13 +167,18 @@
   }
 }
 
-.history-latest-description {
+.history-latest-description,
+.history-latest-type {
   padding: 10px 25px;
   font-size: 0.8em;
 
   strong, p {
     display: inline;
   }
+}
+
+.history-latest-type {
+  padding-bottom: 0;
 }
 
 @media (min-width: $break-sm) {

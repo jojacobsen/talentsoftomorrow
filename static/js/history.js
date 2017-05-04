@@ -5,6 +5,7 @@ var History = {
     var likerts = []
 
     data[0].questions.forEach(function(item) {
+      console.log(item.slug)
       switch(item.slug) {
         case 'weight':
           self.writeHighlights('weight', item)
@@ -20,6 +21,9 @@ var History = {
           break;
         case 'training-description':
           $('.js-history-latest-description').html(item.answer)
+          break;
+        case 'session-type':
+          $('.js-history-latest-type').html(item.answer)
           break;
         default:
           likerts.push(item)
