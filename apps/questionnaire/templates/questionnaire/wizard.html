@@ -77,6 +77,22 @@
                                             </div>
                                         </div><!--.form-group-->
 
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4">
+                                                Training type
+                                            </label>
+                                            <div class="col-md-6">
+                                                <div class="inputer">
+                                                    <div class="input-wrapper">
+                                                        <select class="form-control">
+                                                            <option>Option</option>
+                                                        </select>
+                                                    </div>
+                                                    <p class="help-block">Help text</p>
+                                                </div>
+                                            </div>
+                                        </div><!--.form-group-->
+
                                         {% for q in s.question_set.all|dictsort:"sort" %}
                                             {% if q.question_type == 'choice-yesno' %}
                                                 <div class="form-group">
