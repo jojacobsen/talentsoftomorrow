@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-05-04 10:33+0200\n"
-"PO-Revision-Date: 2017-05-04 08:33+0000\n"
+"PO-Revision-Date: 2017-05-04 11:58+0000\n"
 "Last-Translator: b'  <>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -86,9 +86,9 @@ msgid ""
 "system that helps your coach prevent overuse injuries by tracking your daily"
 " wellbeing and training load."
 msgstr ""
-"Din træner har inviteret dig til Talents of Tomorrow's atlet app. Det er et "
-"system, der hjælper din træner med at forebygge overbelastningsskader ved at"
-" følge din sundhed og træningsbelastning. "
+"Din træner har inviteret dig til Talents of Tomorrow's Athlete Dashboard. "
+"Det er et system, der hjælper din træner med at forebygge "
+"overbelastningsskader ved at følge din sundhed og træningsbelastning. "
 
 #: apps/accounts/templates/password_reset/invite_email.txt:6
 msgid "To get started, please set a password by following this link:"
@@ -111,7 +111,7 @@ msgstr "Brugernavn"
 
 #: apps/accounts/templates/password_reset/invite_email_subject.txt:1
 msgid "Welcome to the Talents of Tomorrow athlete app"
-msgstr "Velkommen til Talents of Tomorrow's atlet app"
+msgstr "Velkommen til Talents of Tomorrow's Athlete Dashboard"
 
 #: apps/accounts/templates/password_reset/recovery_done.html:4
 msgid "New password set"
