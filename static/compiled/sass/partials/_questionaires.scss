@@ -66,6 +66,11 @@
   }
 }
 
+.required-star {
+  color: #777;
+  font-size: 0.8em;
+}
+
 @media (min-width: $break-sm) {
   .questionnaire-description {
     margin: 35px 0;

@@ -69,6 +69,7 @@
                                         <div class="form-group">
                                             <label class="control-label col-md-4">
                                                 {% trans "Date" %}
+                                                <span class="required-star">*</span>
                                             </label>
                                             <div class="col-md-6">
                                                 <div class="inputer">
@@ -86,7 +87,10 @@
                                         {% for q in s.question_set.all|dictsort:"sort" %}
                                             {% if q.question_type == 'choice-yesno' %}
                                                 <div class="form-group">
-                                                    <label class="control-label col-md-4">{{ q.text }}</label>
+                                                    <label class="control-label col-md-4">
+                                                        {{ q.text }}
+                                                        {% if q.required %}<span class="required-star">*</span>{% endif %}
+                                                    </label>
                                                     <div class="col-md-6">
                                                         <div class="inputer">
                                                             <div class="input-wrapper-no-line">
@@ -98,7 +102,10 @@
                                                 </div><!--.form-group-->
                                             {% elif q.question_type == 'choice-yesnocomment' %}
                                                 <div class="form-group">
-                                                    <label class="control-label col-md-4">{{ q.text }}</label>
+                                                    <label class="control-label col-md-4">
+                                                        {{ q.text }}
+                                                        {% if q.required %}<span class="required-star">*</span>{% endif %}
+                                                    </label>
                                                     <div class="col-md-6">
                                                         <div class="inputer">
                                                             <div class="input-wrapper-no-line">
@@ -120,7 +127,10 @@
                                                 </div><!--.form-group-->
                                             {% elif q.question_type == 'open' %}
                                                 <div class="form-group">
-                                                    <label class="control-label col-md-4">{{ q.text }}</label>
+                                                    <label class="control-label col-md-4">
+                                                        {{ q.text }}
+                                                        {% if q.required %}<span class="required-star">*</span>{% endif %}
+                                                    </label>
                                                     <div class="col-md-6">
                                                         <div class="inputer">
                                                             <div class="input-wrapper">
@@ -135,6 +145,7 @@
                                                 <div class="form-group">
                                                     <label class="control-label col-md-4">
                                                         {{ q.text }}
+                                                        {% if q.required %}<span class="required-star">*</span>{% endif %}
                                                     </label>
                                                     <div class="col-md-6">
                                                         <div class="inputer">
@@ -151,7 +162,10 @@
                                                 </div><!--.form-group-->
                                             {% elif q.question_type == 'open-textfield' %}
                                                 <div class="form-group">
-                                                    <label class="control-label col-md-4">{{ q.text }}</label>
+                                                    <label class="control-label col-md-4">
+                                                        {{ q.text }}
+                                                        {% if q.required %}<span class="required-star">*</span>{% endif %}
+                                                    </label>
                                                     <div class="col-md-6">
                                                         <div class="inputer">
                                                             <div class="input-wrapper">
@@ -164,7 +178,10 @@
 
                                             {% elif q.question_type == 'choice-multiple' %}
                                                 <div class="form-group">
-                                                    <label class="control-label col-md-4">{{ q.text }}</label>
+                                                    <label class="control-label col-md-4">
+                                                        {{ q.text }}
+                                                        {% if q.required %}<span class="required-star">*</span>{% endif %}
+                                                    </label>
                                                     <div class="col-md-6">
                                                         <div class="inputer">
                                                             <div class="input-wrapper-no-line">
@@ -183,7 +200,10 @@
                                                 </div><!--.form-group-->
                                             {% elif q.question_type == 'range' %}
                                                 <div class="form-group">
-                                                    <label class="control-label col-md-4">{{ q.text }}</label>
+                                                    <label class="control-label col-md-4">
+                                                        {{ q.text }}
+                                                        {% if q.required %}<span class="required-star">*</span>{% endif %}
+                                                    </label>
                                                     <div class="col-md-6">
                                                         <div class="inputer">
                                                             <div class="input-wrapper-no-line js-slider-wrapper questionnaire-slider-wrapper">
@@ -197,7 +217,10 @@
                                                 </div><!--.form-group-->
                                             {% elif q.question_type == 'number' %}
                                                 <div class="form-group">
-                                                    <label class="control-label col-md-4">{{ q.text }}</label>
+                                                    <label class="control-label col-md-4">
+                                                        {{ q.text }}
+                                                        {% if q.required %}<span class="required-star">*</span>{% endif %}
+                                                    </label>
                                                     <div class="col-md-6">
                                                         <div class="inputer">
                                                             <div class="input-wrapper">

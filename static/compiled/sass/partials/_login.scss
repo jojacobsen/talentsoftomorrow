@@ -3,6 +3,17 @@ body.is-login {
   background-color: #fff;
   min-height: 380px;
   position: relative;
+
+  .alert {
+    position: absolute;
+    width: 100%;
+    z-index: 30;
+  }
+
+  .alert-spacer {
+    height: 61px;
+    width: 100%;
+  }
 }
 
 .login-logo {
