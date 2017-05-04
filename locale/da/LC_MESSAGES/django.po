@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-28 16:54+0200\n"
-"PO-Revision-Date: 2017-04-28 14:54+0000\n"
+"POT-Creation-Date: 2017-05-04 10:33+0200\n"
+"PO-Revision-Date: 2017-05-04 08:33+0000\n"
 "Last-Translator: b'  <>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -81,10 +81,6 @@ msgid "Dear"
 msgstr "Kære"
 
 #: apps/accounts/templates/password_reset/invite_email.txt:4
-#| msgid ""
-#| "Your coach has invited you to the Talents of Tomorrow athlete app. It's a "
-#| "system that helps your coach prevent overuse injuries by tracking the "
-#| "talents' daily wellbeing and training load."
 msgid ""
 "Your coach has invited you to the Talents of Tomorrow athlete app. It's a "
 "system that helps your coach prevent overuse injuries by tracking your daily"
@@ -122,12 +118,15 @@ msgid "New password set"
 msgstr "Kodeordet er gemt"
 
 #: apps/accounts/templates/password_reset/recovery_done.html:8
+#| msgid ""
+#| "Your password was successfully saved. You can now use it to log into the "
+#| "system. We have sent you an email with your username."
 msgid ""
 "Your password was successfully saved. You can now use it to log into the "
-"system. We have sent you an email with your username."
+"system. Please find your username in the email we sent you."
 msgstr ""
-"Dit kodeord er blevet gemt, og kan nu bruges til at logge ind i systemet. Vi"
-" har sendt dig en email med dit brugernavn."
+"Dit kodeord er blevet gemt, og kan nu bruges til at logge ind i systemet. "
+"Find venligst dit brugernavn i den email, vi sendte dig."
 
 #: apps/accounts/templates/password_reset/recovery_done.html:9
 msgid "Go to login"
@@ -285,27 +284,31 @@ msgstr ""
 msgid "Please login with your Player Account."
 msgstr "Log venligst ind med din konto."
 
-#: apps/questionnaire/models.py:28
+#: apps/questionnaire/models.py:27
 msgid "Text"
 msgstr "Tekst"
 
-#: apps/questionnaire/models.py:35
+#: apps/questionnaire/models.py:34
 msgid "Open: A simple one line input box"
 msgstr "Åben: en simpel one-liner"
 
-#: apps/questionnaire/models.py:36
+#: apps/questionnaire/models.py:35
 msgid "Textfield: A box for lengthy answers"
 msgstr "Tekstfelt: en boks til lange svar"
 
-#: apps/questionnaire/models.py:42
+#: apps/questionnaire/models.py:36
+msgid "Choice: A list of choices to choose from"
+msgstr "Valg: En liste over valg at vælge imellem"
+
+#: apps/questionnaire/models.py:41
 msgid "Range: A range of options from which can be chosen"
 msgstr "Range: en række af muligheder"
 
-#: apps/questionnaire/models.py:43
+#: apps/questionnaire/models.py:42
 msgid "Number: A number"
 msgstr "Nummer"
 
-#: apps/questionnaire/models.py:44
+#: apps/questionnaire/models.py:43
 msgid "Comment: Not a question, but only a comment displayed to the user"
 msgstr "Kommentar."
 
@@ -339,25 +342,28 @@ msgstr "Dato"
 msgid "Pick a date"
 msgstr "Vælg dato"
 
-#: apps/questionnaire/templates/questionnaire/wizard.html:104
+#: apps/questionnaire/templates/questionnaire/wizard.html:103
 msgid "Comments"
 msgstr "Kommentarer"
 
-#: apps/questionnaire/templates/questionnaire/wizard.html:208
+#: apps/questionnaire/templates/questionnaire/wizard.html:225
 msgid "Previous"
 msgstr "Forrige"
 
-#: apps/questionnaire/templates/questionnaire/wizard.html:209
+#: apps/questionnaire/templates/questionnaire/wizard.html:226
 msgid "Next"
 msgstr "Næste"
 
-#: apps/questionnaire/templates/questionnaire/wizard.html:211
+#: apps/questionnaire/templates/questionnaire/wizard.html:228
 msgid "SAVE"
 msgstr "GEM"
 
 #: apps/questionnaire/views.py:80
-msgid "Your Questionnaire has been saved!"
-msgstr "Tak. Formularen er gemt!"
+msgid "Your answers are saved. Good job!"
+msgstr "Dine svar er gemt. Godt klaret!"
+
+#~ msgid "Your Questionnaire has been saved!"
+#~ msgstr "Tak. Formularen er gemt!"
 
 #~ msgid "Dear %(user.player.first_name)s,"
 #~ msgstr "Kære %(user.player.first_name)s,"
