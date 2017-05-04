@@ -3,6 +3,7 @@ from accounts.filters import PlayerFilter
 from accounts.serializers import NewPlayerSerializer, PlayerSerializer, PlayersSerializer, CurrentPlayerSerializer, \
     CurrentClubSerializer, CurrentCoachSerializer, CoachSerializer, TeamSerializer, TeamCreateSerializer
 
+from django.utils import translation
 from django.utils import timezone
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
@@ -209,6 +210,9 @@ class PlayerInviteView(APIView):
         form_data = {
             'username_or_email': player.user.email
         }
+        user_language = player.club.language
+        translation.activate(user_language)
+        request.session[translation.LANGUAGE_SESSION_KEY] = user_language
         invite_form = PasswordRecoveryForm(form_data)
         if invite_form.is_valid():
             r = Recover(request=request,

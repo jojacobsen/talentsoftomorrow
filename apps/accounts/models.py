@@ -2,6 +2,7 @@ import uuid
 from django.db import models
 from django.contrib.auth.models import User
 from fernet_fields import EncryptedTextField
+from django.conf import settings
 
 
 def user_directory_path(instance, filename):
@@ -13,6 +14,7 @@ def user_directory_path(instance, filename):
 class Club(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100, null=True)
+    language = models.CharField(max_length=7, choices=settings.LANGUAGES, default='en')
     SYSTEM_CHOICES = (
         ('SI', 'Metric'),
         ('Imp', 'Imperial'),
