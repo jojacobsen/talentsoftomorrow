@@ -5,7 +5,7 @@
 
 {% trans "You can set your new password by following this link:" %}
 
-https://{{ site.domain }}{% url "password_reset_reset" token %}
+https://athlete.talentstomorrow.com{% url "password_reset_reset" token %}
 
 {% trans "Afterwards you are ready to login here:" %}
 

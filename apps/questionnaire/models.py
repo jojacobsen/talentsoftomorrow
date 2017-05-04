@@ -1,7 +1,6 @@
 from django.db import models
 from accounts.models import Club, Player
 from django.contrib.postgres.fields import JSONField
-from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
 
@@ -34,7 +33,7 @@ class Question(models.Model):
         #('choice-yesnocomment', _('Choice & Comment: Yes or No with a chance to comment on the answer')),
         ('open', _('Open: A simple one line input box')),
         ('open-textfield', _('Textfield: A box for lengthy answers')),
-        #('choice', _('Choice: A list of choices to choose from')),
+        ('choice', _('Choice: A list of choices to choose from')),
         #('choice-freeform', _('Choice & Free Form: A list of choices with a chance to enter something else')),
         #('choice-multiple', _('Multiple Choice: A list of choices with multiple answers')),
         #('choice-multiple-freeform', _('Multiple Choice & Free Form: '
@@ -57,11 +56,11 @@ class Question(models.Model):
 class Choice(models.Model):
     question = models.ForeignKey(Question)
     sort = models.IntegerField()
-    value = models.CharField(u"Short Value", max_length=64)
+    value = models.CharField(u"Coach Text", max_length=64)
     text = models.CharField(u"Choice Text", max_length=200)
 
     def __unicode__(self):
-        return u'(%s) %d. %s' % (self.question.number, self.sortid, self.text)
+        return u'(%s) %d. %s' % (self.question.text, self.sortid, self.text)
 
 
 class Submission(models.Model):
