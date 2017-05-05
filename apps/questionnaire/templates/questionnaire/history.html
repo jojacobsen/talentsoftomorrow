@@ -170,7 +170,7 @@
                 dataRow.questions.push({
                     slug: "{{ a.question.slug }}",
                     label: "{{ a.question.text }}",
-                    answer: "{{ a.answer }}",
+                    answer: "{{ a.answer|linebreaksbr }}",
                     date: "{{ s.date|date:'SHORT_DATE_FORMAT' }}"
                 });
             {% endfor %}

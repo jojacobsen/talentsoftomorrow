@@ -45,7 +45,7 @@ var History = {
       var answer = parseInt(item.answer) * 10
 
       template = template + '<li>' +
-        '<div class="tpl-answer" style="width: ' + answer + '%;"></div>'+
+        '<div class="tpl-answer" style="width: ' + answer + '%;" title="' + item.answer + '"></div>'+
         '<div class="tpl-label">' + item.label + '</div>' +
         ' </li>'
     })
