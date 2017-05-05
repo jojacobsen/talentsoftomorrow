@@ -7,18 +7,14 @@ class SubmissionSerializer(serializers.BaseSerializer):
     def to_representation(self, instance):
         answers = list()
         for a in instance.answer_set.filter():
+            question = a.question
             answers.append({
-                'question': a.question.text,
-                'question_type': a.question.question_type,
-                'question_id': a.question.id,
-                'question_slug': a.question.slug,
-                'question_sort': a.question.sort,
+                'question': question.text,
+                'question_type': question.question_type,
+                'question_id': question.id,
+                'question_slug': question.slug,
+                'question_sort': question.sort,
                 'answer': a.answer,
-                'section': {
-                    'heading': a.question.section.heading,
-                    'id': a.question.section.id,
-                    'sort': a.question.section.sort
-                }
             })
         if answers:
             answers = sorted(answers, key=lambda k: k['question_sort'])
