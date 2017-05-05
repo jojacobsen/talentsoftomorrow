@@ -15,13 +15,13 @@
 
 {% block body %}
     {% include 'player_dashboard/sidebar.html' %}
-
+    <div class="js-measurement-system" data-id="{{ measurement_system }}"></div>
     <div class="content">
 
 		<div class="page-header full-content bg-brown">
 			<div class="row">
 				<div class="col-sm-6">
-					<h1>{{ questionnaire.name }}</h1>
+					<h1>{{ questionnaire.name }} </h1>
 				</div><!--.col-->
 				<div class="col-sm-6 hidden-xs">
 
@@ -217,7 +217,7 @@
                                                 </div><!--.form-group-->
                                             {% elif q.question_type == 'number' %}
                                                 <div class="form-group">
-                                                    <label class="control-label col-md-4">
+                                                    <label class="control-label col-md-4 js-label-{{ q.slug }}">
                                                         {{ q.text }}
                                                         {% if q.required %}<span class="required-star">*</span>{% endif %}
                                                     </label>
@@ -277,6 +277,7 @@
     <script src="{% static "plugins/twitter-bootstrap-wizard/jquery.bootstrap.wizard.min.js" %}"></script>
     <script src="{% static "plugins/bootstrap-switch/dist/js/bootstrap-switch.min.js" %}"></script>
     <script src="{% static "plugins/switchery/dist/switchery.min.js" %}"></script>
+    <script src="{% static "js/questionnaire.js" %}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker.min.css" rel="stylesheet">
 	<!-- END PLUGINS AREA -->
@@ -299,6 +300,7 @@
 		FormsNoUISlider.init();
 		Pleasure.init();
         BsDatepicker.init();
+        Questionnaire.init();
     });
     </script>
     <!-- END INITIALIZATION-->
