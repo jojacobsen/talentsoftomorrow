@@ -20,6 +20,7 @@ class QuestionnaireFormView(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(QuestionnaireFormView, self).get_context_data(**kwargs)
+        context['measurement_system'] = self.request.user.player.club.measurement_system
         context['menu_item'] = kwargs['object'].slug
         return context
 
