@@ -143,6 +143,44 @@ class CurrentPlayerSerializer(serializers.ModelSerializer):
         fields = ('id', 'user', 'club', 'gender', 'birthday', 'first_name', 'last_name')
 
 
+class ClubCreateSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(max_length=30, min_length=5, write_only=True, required=True)
+    username = serializers.CharField(write_only=True)
+    password = serializers.CharField(write_only=True)
+    first_name = serializers.CharField(write_only=True)
+    last_name = serializers.CharField(write_only=True)
+
+    class Meta:
+        model = Club
+        fields = ('username', 'password', 'name', 'email', 'first_name', 'last_name', 'gender', 'measurement_system')
+
+    def create(self, validated_data):
+        email = validated_data.pop('email')
+        username = validated_data.pop('username')
+        first_name = validated_data.pop('first_name')
+        last_name = validated_data.pop('last_name')
+        password = validated_data.pop('password')
+        if User.objects.filter(username=username).exists():
+            raise exceptions.NotAcceptable("Username exists")
+        if User.objects.filter(email=email).exists():
+            raise exceptions.NotAcceptable("Email address exists")
+
+        user = User.objects.create_user(
+            username=username, password=password,
+            email=email, first_name=first_name,
+            last_name=last_name
+        )
+
+        validated_data['user'] = user
+        # Add the group
+        club_group = Group.objects.get(name='Club')
+        user.groups.add(club_group)
+
+        # Create club
+        club = Club.objects.create(**validated_data)
+        return club
+
+
 class NewPlayerSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(max_length=None, min_length=5, allow_blank=True, write_only=True, required=False)
 

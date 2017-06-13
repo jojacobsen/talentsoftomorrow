@@ -1,12 +1,12 @@
 from accounts.models import Player, Club, Coach, Team
 from accounts.filters import PlayerFilter
 from accounts.serializers import NewPlayerSerializer, PlayerSerializer, PlayersSerializer, CurrentPlayerSerializer, \
-    CurrentClubSerializer, CurrentCoachSerializer, CoachSerializer, TeamSerializer, TeamCreateSerializer
+    CurrentClubSerializer, CurrentCoachSerializer, CoachSerializer, TeamSerializer, TeamCreateSerializer, ClubCreateSerializer
 
 from django.utils import translation
 from django.utils import timezone
 from rest_framework.views import APIView
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
 from rest_framework import generics, exceptions
@@ -14,6 +14,11 @@ from rest_framework import filters
 from django.http import HttpResponse
 from password_reset.views import Recover
 from password_reset.forms import PasswordRecoveryForm
+from rest_framework_jwt.settings import api_settings
+
+
+jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
+jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
 
 
 class JSONResponse(HttpResponse):
@@ -24,6 +29,21 @@ class JSONResponse(HttpResponse):
         content = JSONRenderer().render(data)
         kwargs['content_type'] = 'application/json'
         super(JSONResponse, self).__init__(content, **kwargs)
+
+
+class ClubCreateView(generics.CreateAPIView):
+    permission_classes = (AllowAny,)
+
+    def create(self, request, *args, **kwargs):
+        data = JSONParser().parse(request)
+        serializer = ClubCreateSerializer(data=data, context={'request': request})
+        if not serializer.is_valid():
+            # Response error message if JSON Format is incorrect
+            return JSONResponse(serializer.errors, status=400)
+        serializer.save()
+        payload = jwt_payload_handler(serializer.instance.user)
+        token = jwt_encode_handler(payload)
+        return JSONResponse({'token': token})
 
 
 class PlayerCreateView(generics.CreateAPIView):

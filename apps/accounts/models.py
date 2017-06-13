@@ -15,6 +15,13 @@ class Club(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100, null=True)
     language = models.CharField(max_length=7, choices=settings.LANGUAGES, default='en')
+
+    GENDER_CHOICES = (
+        ('M', 'Male'),
+        ('F', 'Female'),
+    )
+    gender = models.CharField(max_length=10, choices=GENDER_CHOICES, default='M')
+
     SYSTEM_CHOICES = (
         ('SI', 'Metric'),
         ('Imp', 'Imperial'),
