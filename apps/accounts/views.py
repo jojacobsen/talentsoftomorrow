@@ -255,12 +255,12 @@ class PasswordResetView(APIView):
         form_data = {
             'username_or_email': email
         }
-        invite_form = PasswordRecoveryForm(form_data)
-        if invite_form.is_valid():
+        recovery_form = PasswordRecoveryForm(form_data)
+        if recovery_form.is_valid():
             r = Recover(request=request,
                         email_template_name='password_reset/recovery_email_api.txt',
                         email_subject_template_name='password_reset/recovery_email_api_subject.txt')
-            r.form_valid(invite_form)
+            r.form_valid(recovery_form)
             return HttpResponse(status=200)
         else:
             return HttpResponse(status=400)
