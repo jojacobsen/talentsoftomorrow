@@ -18,6 +18,6 @@ urlpatterns = [
     url(r'^team/list/$', views.TeamListView.as_view(), name='team-list'),
     url(r'^team/(?P<pk>[0-9]+)/$', views.TeamView.as_view(), name='team'),
     url(r'^signup/$', views.ClubCreateView.as_view(), name='club-create'),
-    url(r'^password_reset/(?P<email>\w+|[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4})/$', views.PasswordResetView.as_view(),
+    url(r'^password-reset/(?P<email>\w+|[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4})/$', views.PasswordResetView.as_view(),
         name='club-password-reset'),
 ]
