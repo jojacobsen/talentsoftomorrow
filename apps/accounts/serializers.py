@@ -5,6 +5,7 @@ from .utils import create_username, lab_key_generator
 from collections import OrderedDict
 from rest_framework.fields import SkipField
 from rest_framework.relations import PKOnlyObject
+from rest_framework.validators import UniqueValidator
 
 
 class GroupSerializer(serializers.ModelSerializer):
@@ -144,8 +145,14 @@ class CurrentPlayerSerializer(serializers.ModelSerializer):
 
 
 class ClubCreateSerializer(serializers.ModelSerializer):
-    email = serializers.EmailField(max_length=30, min_length=5, write_only=True, required=True)
-    username = serializers.CharField(write_only=True)
+    email = serializers.EmailField(max_length=30, min_length=5, write_only=True, required=True,
+                                   validators=[UniqueValidator(queryset=User.objects.all(),
+                                                               message='Email address exists.')]
+                                   )
+    username = serializers.CharField(write_only=True,
+                                     validators=[UniqueValidator(queryset=User.objects.all(),
+                                                                 message='Username exists.')]
+                                     )
     password = serializers.CharField(write_only=True)
     first_name = serializers.CharField(write_only=True)
     last_name = serializers.CharField(write_only=True)
@@ -160,10 +167,6 @@ class ClubCreateSerializer(serializers.ModelSerializer):
         first_name = validated_data.pop('first_name')
         last_name = validated_data.pop('last_name')
         password = validated_data.pop('password')
-        if User.objects.filter(username=username).exists():
-            raise exceptions.NotAcceptable("Username exists")
-        if User.objects.filter(email=email).exists():
-            raise exceptions.NotAcceptable("Email address exists")
 
         user = User.objects.create_user(
             username=username, password=password,
