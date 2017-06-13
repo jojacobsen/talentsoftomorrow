@@ -1,0 +1,15 @@
+{% load i18n %}
+{% trans "Dear" %} {{ user.username }},
+
+{% blocktrans with domain=site.domain %}You have requested a password reset on app.talentstomorrow.com .{% endblocktrans %}
+
+{% trans "You can set your new password by following this link:" %}
+
+https://api.talentstomorrow.com{% url "password_reset_reset" token %}
+
+{% trans "Afterwards you are ready to login here:" %}
+
+{% trans "Link:" %} https://app.talentstomorrow.com
+{% trans "Username:" %} {{ username }}
+
+{% trans "If you don't want to reset your password, simply ignore this email and it will stay unchanged." %}

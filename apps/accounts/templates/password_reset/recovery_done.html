@@ -6,7 +6,7 @@
 {% block content %}
   <div class="system-form">
   	<p>{% trans "Your password was successfully saved. You can now use it to log into the system. Please find your username in the email we sent you." %}</p>
-    <a href="/" class="btn btn-primary">{% trans "Go to login"%}</a>
+    <a href="{% if domain == 'athlete.talentstomorrow.com' %}/{% else %}https://app.talentstomorrow.com{% endif %}" class="btn btn-primary">{% trans "Go to login"%}</a>
   </div>
 {% endblock %}
 
