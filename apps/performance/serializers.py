@@ -200,3 +200,7 @@ class BenchmarkSerializer(serializers.BaseSerializer):
             }
         }
 
+
+class ImportSerializer(serializers.BaseSerializer):
+    file = serializers.FileField(write_only=True)
+

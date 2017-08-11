@@ -1,5 +1,5 @@
 from performance.serializers import PerformanceSerializer, MeasurementSerializer, \
-    PerformancePlayerSerializer, BenchmarkSerializer
+    PerformancePlayerSerializer, BenchmarkSerializer, ImportSerializer
 from performance.models import Performance
 from performance.filters import PerformanceFilter
 from accounts.models import Player
@@ -7,10 +7,11 @@ from accounts.filters import PlayerFilter
 
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.renderers import JSONRenderer
-from rest_framework.parsers import JSONParser
+from rest_framework.parsers import JSONParser, FileUploadParser
 from rest_framework import generics, exceptions
 from rest_framework import filters
 from django.http import HttpResponse
+from rest_framework.views import APIView
 
 
 class JSONResponse(HttpResponse):
@@ -160,3 +161,25 @@ class BenchmarkListView(generics.ListAPIView):
         else:
             raise exceptions.PermissionDenied('User has no permission to access user data of player.')
         return queryset
+
+
+class PerformanceImportView(APIView):
+    permission_classes = (IsAuthenticated,)
+    parser_classes = (FileUploadParser,)
+
+    def put(self, request, filename, format=None):
+        data = request.FILES['file']
+        serializer = ImportSerializer(data=data)
+        if not serializer.is_valid():
+            return JSONResponse(serializer.errors, status=400)
+
+        return JSONResponse([], status=204)
+
+
+class TemplateDownloadView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, filename, format=None):
+        file_obj = request.FILES['file']
+        # do some stuff with uploaded file
+        return JSONResponse([], status=204)
