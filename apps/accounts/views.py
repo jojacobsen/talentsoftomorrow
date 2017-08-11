@@ -1,4 +1,6 @@
 from accounts.models import Player, Club, Coach, Team
+from performance.models import Performance
+from profile.models import BioAge
 from accounts.filters import PlayerFilter
 from accounts.serializers import NewPlayerSerializer, PlayerSerializer, PlayersSerializer, CurrentPlayerSerializer, \
     CurrentClubSerializer, CurrentCoachSerializer, CoachSerializer, TeamSerializer, TeamCreateSerializer
@@ -220,3 +222,30 @@ class PlayerInviteView(APIView):
             return HttpResponse(status=200)
         else:
             return HttpResponse(status=400)
+
+
+class AccountState(generics.RetrieveAPIView):
+    permission_classes = (IsAuthenticated,)
+    # Parse JSON
+    parser_classes = (JSONParser,)
+
+    def get(self, request, *args, **kwargs):
+        group = self.request.user.groups.values_list('name', flat=True)
+        if 'Club' in group:
+            club = self.request.user.club
+        elif 'Coach' in group:
+            club = self.request.user.coach.club
+        else:
+            raise exceptions.PermissionDenied('User has no permission to access user data of player.')
+
+        has_talents = Player.objects.filter(club=club, archived=False).exists()
+        has_test = Performance.objects.filter(player__club=club, player__archived=False).exists()
+        has_bioage = BioAge.objects.filter(player__club=club, player__archived=False).exists()
+        return JSONResponse({
+            "accountState": {
+                "hasTalents": has_talents,
+                "hasTestData": has_test,
+                "hasBioAge": has_bioage,
+            }
+        })
+

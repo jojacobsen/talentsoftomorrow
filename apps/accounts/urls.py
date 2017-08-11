@@ -17,4 +17,5 @@ urlpatterns = [
     url(r'^team/create/$', views.TeamCreateView.as_view(), name='team-create'),
     url(r'^team/list/$', views.TeamListView.as_view(), name='team-list'),
     url(r'^team/(?P<pk>[0-9]+)/$', views.TeamView.as_view(), name='team'),
+    url(r'^state/$', views.AccountState.as_view(), name='account-state'),
 ]
