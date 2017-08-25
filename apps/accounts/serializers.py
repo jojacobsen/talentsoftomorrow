@@ -189,7 +189,7 @@ class NewPlayerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Player
-        fields = ('birthday', 'first_name', 'last_name', 'gender', 'email', 'active', 'archived')
+        fields = ('id', 'birthday', 'first_name', 'last_name', 'gender', 'email', 'active', 'archived')
 
     def validate(self, data):
         group = self.context['request'].user.groups.values_list('name', flat=True)

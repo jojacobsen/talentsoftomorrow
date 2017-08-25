@@ -20,4 +20,5 @@ urlpatterns = [
     url(r'^signup/$', views.ClubCreateView.as_view(), name='club-create'),
     url(r'^password-reset/(?P<email>\w+|[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4})/$', views.PasswordResetView.as_view(),
         name='club-password-reset'),
+    url(r'^state/$', views.AccountState.as_view(), name='account-state'),
 ]
