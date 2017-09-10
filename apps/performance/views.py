@@ -4,6 +4,7 @@ from performance.models import Performance
 from performance.filters import PerformanceFilter
 from accounts.models import Player
 from accounts.filters import PlayerFilter
+from profile.serializers import HeightSerializer, WeightSerializer, SittingHeightSerializer
 
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.renderers import JSONRenderer
@@ -170,15 +171,62 @@ class PerformanceImportView(APIView):
     parser_classes = (FileUploadParser,)
 
     def put(self, request, filename, format=None):
-        performance_data = request.FILES['file'].get_records(sheet_name='Performance', name_columns_by_row=0)
-        if performance_data:
-            serializer = PerformanceSerializer(data=performance_data, many=True, context={'request': request})
-            if not serializer.is_valid():
-                # Response error message if JSON Format is incorrect
-                return JSONResponse(serializer.errors, status=400)
-            serializer.save()
+        try:
+            height_data = request.FILES['file'].get_records(sheet_name='Height', name_columns_by_row=0)
+        except ValueError:
+            height_data = None
 
-        return JSONResponse(serializer.data)
+        if height_data:
+            height_serializer = HeightSerializer(data=height_data, many=True, context={'request': request})
+            if not height_serializer.is_valid():
+                # Response error message if JSON Format is incorrect
+                return JSONResponse(height_serializer.errors, status=400)
+
+        try:
+            weight_data = request.FILES['file'].get_records(sheet_name='Weight', name_columns_by_row=0)
+        except ValueError:
+            weight_data = None
+
+        if weight_data:
+            weight_serializer = WeightSerializer(data=weight_data, many=True, context={'request': request})
+            if not weight_serializer.is_valid():
+                # Response error message if JSON Format is incorrect
+                return JSONResponse(weight_serializer.errors, status=400)
+
+        try:
+            sitting_height_data = request.FILES['file'].get_records(sheet_name='Sitting Height', name_columns_by_row=0)
+        except ValueError:
+            sitting_height_data = None
+
+        if sitting_height_data:
+            sitting_height_serializer = SittingHeightSerializer(
+                data=sitting_height_data,
+                many=True, context={'request': request})
+            if not sitting_height_serializer.is_valid():
+                # Response error message if JSON Format is incorrect
+                return JSONResponse(sitting_height_serializer.errors, status=400)
+
+        try:
+            performance_data = request.FILES['file'].get_records(sheet_name='Performance', name_columns_by_row=0)
+        except ValueError:
+            performance_data = None
+
+        if performance_data:
+            performance_serializer = PerformanceSerializer(data=performance_data, many=True, context={'request': request})
+            if not performance_serializer.is_valid():
+                # Response error message if JSON Format is incorrect
+                return JSONResponse(performance_serializer.errors, status=400)
+
+        if height_data:
+            height_serializer.save()
+        if weight_data:
+            weight_serializer.save()
+        if sitting_height_data:
+            sitting_height_serializer.save()
+        if performance_data:
+            performance_serializer.save()
+
+        return JSONResponse('Import successful', status=204)
 
 
 class TemplateDownloadView(APIView):
@@ -186,5 +234,4 @@ class TemplateDownloadView(APIView):
 
     def get(self, request, format=None):
         book = create_excel_template(request)
-        return django_excel.make_response(book, "xlsx",
-                                   file_name="ToT_template")
+        return django_excel.make_response(book, "xlsx", file_name="ToT_template")

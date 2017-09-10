@@ -1,6 +1,7 @@
 import django_excel as excel
 from datetime import date
 from rest_framework import exceptions
+import collections
 
 from accounts.models import Player
 
@@ -119,5 +120,5 @@ def create_excel_template(request):
         'Weight': weight,
         'Sitting Height': sitting_height,
     }
-    book = excel.pe.Book(sheets=sheets)
+    book = excel.pe.Book(sheets=collections.OrderedDict(sheets))
     return book
