@@ -1,5 +1,5 @@
 from performance.serializers import PerformanceSerializer, MeasurementSerializer, \
-    PerformancePlayerSerializer, BenchmarkSerializer, ImportSerializer
+    PerformancePlayerSerializer, BenchmarkSerializer
 from performance.models import Performance
 from performance.filters import PerformanceFilter
 from accounts.models import Player
@@ -12,6 +12,8 @@ from rest_framework import generics, exceptions
 from rest_framework import filters
 from django.http import HttpResponse
 from rest_framework.views import APIView
+import django_excel
+from performance.excel import create_excel_template
 
 
 class JSONResponse(HttpResponse):
@@ -168,18 +170,21 @@ class PerformanceImportView(APIView):
     parser_classes = (FileUploadParser,)
 
     def put(self, request, filename, format=None):
-        data = request.FILES['file']
-        serializer = ImportSerializer(data=data)
-        if not serializer.is_valid():
-            return JSONResponse(serializer.errors, status=400)
+        performance_data = request.FILES['file'].get_records(sheet_name='Performance', name_columns_by_row=0)
+        if performance_data:
+            serializer = PerformanceSerializer(data=performance_data, many=True, context={'request': request})
+            if not serializer.is_valid():
+                # Response error message if JSON Format is incorrect
+                return JSONResponse(serializer.errors, status=400)
+            serializer.save()
 
-        return JSONResponse([], status=204)
+        return JSONResponse(serializer.data)
 
 
 class TemplateDownloadView(APIView):
     permission_classes = (IsAuthenticated,)
 
-    def get(self, request, filename, format=None):
-        file_obj = request.FILES['file']
-        # do some stuff with uploaded file
-        return JSONResponse([], status=204)
+    def get(self, request, format=None):
+        book = create_excel_template(request)
+        return django_excel.make_response(book, "xlsx",
+                                   file_name="ToT_template")

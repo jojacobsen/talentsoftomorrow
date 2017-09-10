@@ -199,8 +199,3 @@ class BenchmarkSerializer(serializers.BaseSerializer):
                 'benchmark_bio_ave': benchmark_bio_ave
             }
         }
-
-
-class ImportSerializer(serializers.BaseSerializer):
-    file = serializers.FileField(write_only=True)
-
