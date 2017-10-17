@@ -100,7 +100,7 @@ def create_excel_template(request):
                             colnames=[
                                 'player',
                                 'player name',
-                                'height',
+                                'weight',
                                 'unit',
                                 'date']
                             )
